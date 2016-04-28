@@ -1,0 +1,21 @@
+<resources>
+    <string name="title_activity_login">Ingresar</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_female">Mujer</string>
+    <string name="prompt_male">Hombre</string>
+    <string name="prompt_username">Usuario</string>
+    <string name="prompt_alias">Alias</string>
+    <string name="prompt_password">Clave</string>
+    <string name="prompt_sex">Sexo</string>
+    <string name="action_register">Registrarse</string>
+    <string name="action_ask_register">No tenes usuario? Registrate en Match</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="action_sign_in_short">Entrar</string>
+
+    <string name="error_invalid_email">Usuario invalido</string>
+    <string name="error_invalid_password">Clave muy corta</string>
+    <string name="error_incorrect_password">Clave incorrecta</string>
+    <string name="error_field_required">Campo requerido</string>
+</resources>
