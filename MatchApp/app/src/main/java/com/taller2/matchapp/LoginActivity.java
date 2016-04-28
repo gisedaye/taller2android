@@ -2,12 +2,10 @@ package com.taller2.matchapp;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
-
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,14 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.config.Configuration;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * A login screen that offers login via username/password.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String LOGIN_URL = "/api/accounts/login";
 
@@ -51,7 +47,15 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Set up the login form.
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        setupLoginForm();
+    }
+
+    private void setupLoginForm() {
         mUsernameView = (EditText) findViewById(R.id.username);
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -134,7 +138,6 @@ public class LoginActivity extends Activity {
     }
 
     private void goToRegisterPage() {
-        finish();
         Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(i);
     }
@@ -142,13 +145,13 @@ public class LoginActivity extends Activity {
     private void userLogin(String mUsername, String mPassword) {
         JSONObject obj = new JSONObject();
         try {
-            obj.put(KEY_USERNAME,mUsername);
-            obj.put(KEY_PASSWORD,mPassword);
+            obj.put(KEY_USERNAME, mUsername);
+            obj.put(KEY_PASSWORD, mPassword);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + LOGIN_URL,obj,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + LOGIN_URL, obj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -158,12 +161,12 @@ public class LoginActivity extends Activity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if(message.equals("Successful login.")){
+                        if (message.equals("Successful login.")) {
                             Intent i = new Intent(LoginActivity.this, MatchActivity.class);
                             finish();
                             startActivity(i);
-                        }else{
-                            Toast.makeText(LoginActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_LONG).show();
                             showProgress(false);
                         }
                     }
@@ -172,7 +175,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG ).show();
+                        Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -184,37 +187,26 @@ public class LoginActivity extends Activity {
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 }
 
