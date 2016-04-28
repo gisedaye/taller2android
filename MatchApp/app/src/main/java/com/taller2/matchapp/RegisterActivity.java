@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.config.Configuration;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -161,36 +163,38 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void userRegister(String mUsername, Character mSex, String mAlias, String mEmail, String mPassword) {
-        JSONObject obj = new JSONObject();
+        JSONObject requestBody = new JSONObject();
         try {
-            obj.put(KEY_USERNAME, mUsername);
-            obj.put(KEY_PASSWORD, mPassword);
+            requestBody.put(KEY_USERNAME, mUsername);
+            requestBody.put(KEY_PASSWORD, mPassword);
 
 //          Commented until we have all fields on the svc
-//          obj.put(KEY_SEX,mSex);
-//          obj.put(KEY_ALIAS,mAlias);
-//          obj.put(KEY_EMAIL,mEmail);
+//          requestBody.put(KEY_SEX,mSex);
+//          requestBody.put(KEY_ALIAS,mAlias);
+//          requestBody.put(KEY_EMAIL,mEmail);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + REGISTER_URL, obj,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + REGISTER_URL, requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        String message = null;
-                        try {
-                            message = response.getJSONObject("data").getString("message");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (message.equals("Successful signup")) {
-                            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                            finish();
-                            startActivity(i);
-                        } else {
+                        JSONObject data = response.optJSONObject("data");
+                        String message = data.optString("message");
+                        if (TextUtils.isEmpty(message) && message.equals("Successful signup")) {
                             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }, 2000);
+                        } else if (TextUtils.isEmpty(message)) {
+                            Toast.makeText(RegisterActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
                             showProgress(false);
                         }
                     }
@@ -199,7 +203,15 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         showProgress(false);
-                        Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        try {
+                            String responseBody = new String(error.networkResponse.data, "utf-8");
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            JSONArray jsonArray = jsonObject.optJSONArray("errors");
+                            String message = jsonArray.getJSONObject(0).getString("message");
+                            Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(RegisterActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 

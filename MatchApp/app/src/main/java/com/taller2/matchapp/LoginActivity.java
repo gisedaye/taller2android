@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.config.Configuration;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -175,7 +176,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        try {
+                            String responseBody = new String(error.networkResponse.data, "utf-8");
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            JSONArray jsonArray = jsonObject.optJSONArray("errors");
+                            String message = jsonArray.getJSONObject(0).getString("message");
+                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 });
 
