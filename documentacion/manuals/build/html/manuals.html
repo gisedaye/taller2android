@@ -122,7 +122,60 @@
 <h2>Manual de programador<a class="headerlink" href="#manual-de-programador" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="appserver">
 <h3>Appserver<a class="headerlink" href="#appserver" title="Permalink to this headline">¶</a></h3>
-<p>Correr el appserver (Ver manual de instalacion)</p>
+<div class="section" id="arquitectura">
+<h4>Arquitectura<a class="headerlink" href="#arquitectura" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="signup">
+<h5>Signup<a class="headerlink" href="#signup" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Request a AppServer con los datos del profile y intereses completos.</li>
+<li>Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).</li>
+<li>Guardo la información del profile en SharedServer.</li>
+<li>El AppServer guarda username y password.</li>
+<li>Vuelvo con un Successful SignUp all cliente.</li>
+</ul>
+</div>
+<div class="section" id="login">
+<h5>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Request a AppServer con username/password</li>
+<li>Busco el usuario en el AppServer:</li>
+<li>En el caso que exista devuelvo accessToken</li>
+<li>Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.</li>
+<li>Busco el usuario en el SharedServer y devuelvo username/password</li>
+<li>Guardo username/password y accesstoken/username en el AppServer</li>
+<li>Vuelvo al cliente con el access token</li>
+</ul>
+</div>
+<div class="section" id="like-dislike">
+<h5>Like/Dislike<a class="headerlink" href="#like-dislike" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Request a AppServer con el id</li>
+<li>Guardamos el id en el array de keptAccounts</li>
+<li>Si hay un match lo guardamos</li>
+</ul>
+</div>
+<div class="section" id="getcandidates">
+<h5>GetCandidates<a class="headerlink" href="#getcandidates" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Request a AppServer  GET /candidates con location.</li>
+<li>Busco el usuario en el AppServer, obtengo el username</li>
+<li>Request a SharedServer con username</li>
+<li>SharedServer determina los candidatos de acuerdo a los intereses del usuario</li>
+<li>Devuelvo los candidatos al AppServer y filtro por likes/dislikes</li>
+<li>Devuelvo los candidatos filtrados al cliente</li>
+</ul>
+</div>
+<div class="section" id="getmatches">
+<h5>GetMatches<a class="headerlink" href="#getmatches" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Request al AppServer GET /matches</li>
+<li>Obtenemos la lista de matches</li>
+<li>Request a SharedServer con la lista</li>
+<li>Obtenemos los perfiles asociados</li>
+<li>Devuelvo los matches al cliente</li>
+</ul>
+</div>
+</div>
 <div class="section" id="correr-unit-tests">
 <h4>Correr Unit Tests<a class="headerlink" href="#correr-unit-tests" title="Permalink to this headline">¶</a></h4>
 <p>En la consola desde la carpeta build ejecutar el comando</p>
@@ -131,8 +184,9 @@
 </div>
 <div class="section" id="testear-endpoints-manualmente">
 <h4>Testear Endpoints Manualmente<a class="headerlink" href="#testear-endpoints-manualmente" title="Permalink to this headline">¶</a></h4>
-<div class="section" id="signup">
-<h5>SignUp<a class="headerlink" href="#signup" title="Permalink to this headline">¶</a></h5>
+<p>Correr el appserver (Ver manual de instalacion)</p>
+<div class="section" id="id1">
+<h5>SignUp<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/signup</span></tt></p>
 <p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
@@ -140,8 +194,8 @@
 <span class="pre">&quot;password&quot;:</span> <span class="pre">&quot;P4ssw0rd&quot;</span>
 <span class="pre">}</span></tt></p>
 </div>
-<div class="section" id="login">
-<h5>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id2">
+<h5>Login<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/login</span></tt></p>
 <p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
@@ -169,8 +223,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Shared Server<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Shared Server<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="testear-manualmente">
 <h4>Testear manualmente<a class="headerlink" href="#testear-manualmente" title="Permalink to this headline">¶</a></h4>
 <div class="section" id="listado-de-usuarios">
@@ -243,8 +297,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Cliente<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Cliente<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><dl class="first docutils">
 <dt>Setear ip de computadora desde la consola ingrese:</dt>
@@ -262,8 +316,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>Shared Server<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Shared Server<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>Ingresar a <a class="reference external" href="https://sharedserver.herokuapp.com/">https://sharedserver.herokuapp.com/</a></p>
 </div>
 </div>
@@ -366,10 +420,18 @@
 </li>
 <li><a class="reference internal" href="#manual-de-programador">Manual de programador</a><ul>
 <li><a class="reference internal" href="#appserver">Appserver</a><ul>
+<li><a class="reference internal" href="#arquitectura">Arquitectura</a><ul>
+<li><a class="reference internal" href="#signup">Signup</a></li>
+<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#like-dislike">Like/Dislike</a></li>
+<li><a class="reference internal" href="#getcandidates">GetCandidates</a></li>
+<li><a class="reference internal" href="#getmatches">GetMatches</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#correr-unit-tests">Correr Unit Tests</a></li>
 <li><a class="reference internal" href="#testear-endpoints-manualmente">Testear Endpoints Manualmente</a><ul>
-<li><a class="reference internal" href="#signup">SignUp</a></li>
-<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#id1">SignUp</a></li>
+<li><a class="reference internal" href="#id2">Login</a></li>
 <li><a class="reference internal" href="#matches">Matches</a></li>
 <li><a class="reference internal" href="#like">Like</a></li>
 <li><a class="reference internal" href="#disike">Disike</a></li>
@@ -377,7 +439,7 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id1">Shared Server</a><ul>
+<li><a class="reference internal" href="#id3">Shared Server</a><ul>
 <li><a class="reference internal" href="#testear-manualmente">Testear manualmente</a><ul>
 <li><a class="reference internal" href="#listado-de-usuarios">Listado de  usuarios</a></li>
 <li><a class="reference internal" href="#vista-de-un-usuario">Vista de un usuario</a></li>
@@ -391,8 +453,8 @@
 </li>
 <li><a class="reference internal" href="#manual-de-instalacion">Manual de instalacion</a><ul>
 <li><a class="reference internal" href="#application-server">Application Server</a></li>
-<li><a class="reference internal" href="#id2">Cliente</a></li>
-<li><a class="reference internal" href="#id3">Shared Server</a></li>
+<li><a class="reference internal" href="#id4">Cliente</a></li>
+<li><a class="reference internal" href="#id5">Shared Server</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#entrega">Entrega</a><ul>

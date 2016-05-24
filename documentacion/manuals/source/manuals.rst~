@@ -35,12 +35,15 @@ https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 
 - Se encontrara con la pantalla de login
 
+.. image:: Screenshots/login.png
+
 - Si ya posee un usuario registrado, ingrese los campos requeridos de usuario y clave y luego haga tap en el boton de entrar.
 - Si los datos son los correctos se lo redireccionara a la pantalla de busqueda de matchs
 - Si los datos son incorrectos aparecera un mensaje de error y debera volver a intentar loguearse
 
 - Si no posee un usuario debera crear uno haciendo tap en el texto “Registrate en Match”
 - Se redireccionara a la pantalla de registro
+.. image:: Screenshots/registro.png
 
 - Llene los datos requeridos para crear el usuario y haga tap en registrarse
 - Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion
@@ -54,6 +57,7 @@ Shared Server
 Para dar de alta un usuario haga click en “Alta usuario”
 
 Se redireccionara a la pantalla de alta de usuario
+.. image:: Screenshots/user.png
 
 Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
 
@@ -62,7 +66,7 @@ Si el usuario se creo correctamente se mostrara el texto “Created”
 Para ver los usuarios registrados ingrese haga click en “Ver usuarios”
 
 Se redireccionara a la pantalla de listado de usuarios
-
+.. image:: Screenshots/users.png
 
 ============================================
 Manual de programador

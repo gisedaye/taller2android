@@ -72,10 +72,60 @@ Se redireccionara a la pantalla de listado de usuarios
 Manual de programador
 ============================================
 
+
 Appserver
 --------------------------------------------
 
-Correr el appserver (Ver manual de instalacion)
+Arquitectura
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Signup
+"""""""""
+
+- Request a AppServer con los datos del profile y intereses completos.
+- Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).
+- Guardo la información del profile en SharedServer.
+- El AppServer guarda username y password.
+- Vuelvo con un Successful SignUp all cliente.
+
+Login
+"""""""""
+
+- Request a AppServer con username/password
+- Busco el usuario en el AppServer:
+- En el caso que exista devuelvo accessToken
+- Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.
+- Busco el usuario en el SharedServer y devuelvo username/password
+- Guardo username/password y accesstoken/username en el AppServer
+- Vuelvo al cliente con el access token
+
+Like/Dislike
+"""""""""
+
+- Request a AppServer con el id
+- Guardamos el id en el array de keptAccounts
+- Si hay un match lo guardamos
+
+GetCandidates
+"""""""""
+
+- Request a AppServer  GET /candidates con location.
+- Busco el usuario en el AppServer, obtengo el username
+- Request a SharedServer con username
+- SharedServer determina los candidatos de acuerdo a los intereses del usuario 
+- Devuelvo los candidatos al AppServer y filtro por likes/dislikes
+- Devuelvo los candidatos filtrados al cliente
+
+
+GetMatches
+"""""""""
+
+- Request al AppServer GET /matches
+- Obtenemos la lista de matches
+- Request a SharedServer con la lista
+- Obtenemos los perfiles asociados
+- Devuelvo los matches al cliente
+
 
 Correr Unit Tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,6 +135,8 @@ En la consola desde la carpeta build ejecutar el comando
 
 Testear Endpoints Manualmente
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Correr el appserver (Ver manual de instalacion)
 
 SignUp
 """""""""
