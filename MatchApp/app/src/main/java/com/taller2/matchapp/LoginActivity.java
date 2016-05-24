@@ -97,41 +97,45 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
+        Intent i = new Intent(LoginActivity.this, MatchActivity.class);
+        finish();
+        startActivity(i);
+
         // Reset errors.
-        mUsernameView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid username
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            userLogin(username, password);
-        }
+//        mUsernameView.setError(null);
+//        mPasswordView.setError(null);
+//
+//        // Store values at the time of the login attempt.
+//        String username = mUsernameView.getText().toString();
+//        String password = mPasswordView.getText().toString();
+//
+//        boolean cancel = false;
+//        View focusView = null;
+//
+//        // Check for a valid password, if the user entered one.
+//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+//            mPasswordView.setError(getString(R.string.error_invalid_password));
+//            focusView = mPasswordView;
+//            cancel = true;
+//        }
+//
+//        // Check for a valid username
+//        if (TextUtils.isEmpty(username)) {
+//            mUsernameView.setError(getString(R.string.error_field_required));
+//            focusView = mUsernameView;
+//            cancel = true;
+//        }
+//
+//        if (cancel) {
+//            // There was an error; don't attempt login and focus the first
+//            // form field with an error.
+//            focusView.requestFocus();
+//        } else {
+//            // Show a progress spinner, and kick off a background task to
+//            // perform the user login attempt.
+//            showProgress(true);
+//            userLogin(username, password);
+//        }
     }
 
     private boolean isPasswordValid(String password) {
@@ -157,12 +161,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         String message = null;
+                        String token = null;
                         try {
                             message = response.getJSONObject("data").getString("message");
+                            token = response.getJSONObject("data").getString("token");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         if (message.equals("Successful login.")) {
+                            //Save token to sharedPref
+                            Configuration.setToken(LoginActivity.this, token);
                             Intent i = new Intent(LoginActivity.this, MatchActivity.class);
                             finish();
                             startActivity(i);
