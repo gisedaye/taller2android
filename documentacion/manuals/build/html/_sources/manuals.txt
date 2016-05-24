@@ -49,6 +49,14 @@ https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 - Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion
 - Si los datos son erroneos aparecera un mensaje de error y debera reintentar el registro.
 
+- Al loguearse se encontrara en la tabla de busqueda de matches
+.. image:: Screenshots/match.png
+
+- Podra navegar entre los candidatos haciendo swipe en la pantalla
+- Podra darle un like o un dislike al candidato haciendo click en los botones flotantes
+- Si hay match de ambos lados se podra iniciar un chat entre los 2 usuarios, se abrira la pantalla de chat.
+.. image:: Screenshots/chat.png
+
 Shared Server
 --------------------------------------
 
@@ -57,6 +65,7 @@ Shared Server
 Para dar de alta un usuario haga click en “Alta usuario”
 
 Se redireccionara a la pantalla de alta de usuario
+
 .. image:: Screenshots/user.png
 
 Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
@@ -66,7 +75,8 @@ Si el usuario se creo correctamente se mostrara el texto “Created”
 Para ver los usuarios registrados ingrese haga click en “Ver usuarios”
 
 Se redireccionara a la pantalla de listado de usuarios
-.. image:: Screenshots/users.png
+
+.. image:: Screenshots/userslist.png
 
 ============================================
 Manual de programador
