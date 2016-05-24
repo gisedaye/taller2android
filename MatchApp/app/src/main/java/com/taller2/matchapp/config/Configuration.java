@@ -30,4 +30,9 @@ public class Configuration {
         editor.putString(TOKEN, token);
         editor.commit();
     }
+
+    public static String getToken(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
+        return sharedPref.getString(TOKEN, null);
+    }
 }
