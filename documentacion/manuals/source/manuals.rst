@@ -29,54 +29,54 @@ Cliente
 - Instalar apk en el telefono celular
 https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 
-- Ejecutar el Application server 
+- Ejecutar el Application server en su pc
 
-- Abrir aplicacion
+- Abrir aplicacion en el celular
 
 - Se encontrara con la pantalla de login
 
 .. image:: Screenshots/login.png
 
-- Si ya posee un usuario registrado, ingrese los campos requeridos de usuario y clave y luego haga tap en el boton de entrar.
-- Si los datos son los correctos se lo redireccionara a la pantalla de busqueda de matchs
-- Si los datos son incorrectos aparecera un mensaje de error y debera volver a intentar loguearse
+- Si ya posee un usuario registrado, ingrese los campos requeridos de usuario y clave y luego haga tap en el boton de entrar. Si los datos son los correctos se lo redireccionara a la pantalla de busqueda de matchs
+- Si los datos son incorrectos aparecera un mensaje de error y debera volver a intentar loguearse.
 
-- Si no posee un usuario debera crear uno haciendo tap en el texto “Registrate en Match”
-- Se redireccionara a la pantalla de registro
+- Si no posee un usuario debera crear uno haciendo tap en el texto “Registrate en Match” de la pantalla de login. Se lo redireccionara a la pantalla de registro.
 .. image:: Screenshots/registro.png
 
-- Llene los datos requeridos para crear el usuario y haga tap en registrarse
-- Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion
+- Llene los datos requeridos para crear el usuario y haga tap en registrarse para crear el nuevo usuario. Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion.
 - Si los datos son erroneos aparecera un mensaje de error y debera reintentar el registro.
 
-- Al loguearse se encontrara en la tabla de busqueda de matches
+- Al loguearse se lo redireccionara a la pantalla de busqueda de matches
 .. image:: Screenshots/match.png
 
-- Podra navegar entre los candidatos haciendo swipe en la pantalla
-- Podra darle un like o un dislike al candidato haciendo click en los botones flotantes
-- Si hay match de ambos lados se podra iniciar un chat entre los 2 usuarios, se abrira la pantalla de chat.
+- Podra navegar entre los candidatos haciendo swipe en la pantalla, podra moverse a la derecha o a la izquierda.
+- Podra darle un like o un dislike al candidato haciendo click en los botones flotantes.
+
+- Si hay match de ambos lados se abrira la pantalla de chat y podran mandarse mensajes entre ambos usuarios.
 .. image:: Screenshots/chat.png
+
+- Podra ver sus matches disponibles desde la pantalla de matches disponibles, ingresando desde el menu lateral.
+.. image:: Screenshots/matches-disponibles.png
+
+- Podra cambiar sus intereses desde su perfil, ingresando desde el menu lateral.
+.. image:: Screenshots/interests.png
 
 Shared Server
 --------------------------------------
 
 - Ingrese a https://sharedserver.herokuapp.com/
 
-Para dar de alta un usuario haga click en “Alta usuario”
-
-Se redireccionara a la pantalla de alta de usuario
-
+- Para dar de alta un usuario haga click en “Alta usuario”. Se lo redireccionara a la pantalla de alta de usuario
 .. image:: Screenshots/user.png
 
-Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
+- Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
+- Si el usuario se creo correctamente se mostrara el texto “Created”
 
-Si el usuario se creo correctamente se mostrara el texto “Created”
-
-Para ver los usuarios registrados ingrese haga click en “Ver usuarios”
-
-Se redireccionara a la pantalla de listado de usuarios
-
+- Para ver los usuarios registrados ingrese haga click en “Ver usuarios”. Se redireccionara a la pantalla de listado de usuarios
 .. image:: Screenshots/userslist.png
+
+- Para borrar un usuario haga click en el boton Delete.
+- Para editar los datos de un usuario haga click en el boton Edit. Se lo redireccionara a la pantalla de Modificar usuario.
 
 ============================================
 Manual de programador
@@ -275,8 +275,15 @@ Cliente
 
 Shared Server
 --------------------------------------------
+- Para correr con docker:
+	- En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.
+	- Luego ejecutar los siguientes comandos:
+		- sudo service mongodb stop
+		- sudo docker-compose up
+	- Para detener la aplicacion correr en la consola:
+		- sudo docker-compose stop
 
-Ingresar a https://sharedserver.herokuapp.com/
+- Para ver la app ingresar a https://sharedserver.herokuapp.com/
 
 
 ============================================
@@ -289,20 +296,31 @@ Changelog
     - Setup de la aplicación Heroku
     - Conexión con Postgres
     - Webapp en node.js con listado y Alta, baja, vista de usuarios, edit de usuarios
+	- Listado de intereses
+	- Alta de categorias e intereses.
 - Application Server
     - CMake
+	- Conexion appServer con SharedServer
     - Conexión con mongoose-cpp a RocksDB
     - Endpoints signup/login/like/dislike
+	- Logica de Matches
     - Unit tests
     - Logs
     - Ci-travis
     - Integration tests
+	- Medir code coverage de unit tests
+	- Docker
+	- Retornar access token encriptado en login
 - Cliente
     - Pantalla de Login
     - Pantalla de Registro
-    - Pantalla de match
+    - Pantalla de candidatos
+	- Funcionalidad de like/dislike
+	- Pantalla de matches
     - Pantalla de chat	
     - Integración con Appserver mediante Volley
+	- Manejo de sessiones con el auth token
+	- Obtener punto geografico del usuario
 - Documentacion en Sphinx
 
 Division de tareas
@@ -319,7 +337,7 @@ Links útiles
 Repositorios
 ^^^^^^^^^^^^^
 - SharedServer: https://github.com/PabloFederico/SharedServer
-- ApplicationSever: https://bitbucket.org/fjfarina/tp75521c 
+- ApplicationSever: https://github.com/nicolas-vazquez/tp75521c
 - Cliente: https://github.com/gisedaye/taller2android/ 
 
 Aplicación web
