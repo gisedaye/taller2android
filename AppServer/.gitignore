@@ -1,0 +1,18 @@
+#CMake
+
+CMakeLists.txt.user
+install_manifest.txt
+
+# qtcreator generated files
+*.pro.user*
+
+#Build folder
+
+/build
+
+#Temp install folder
+/temp_install
+
+#Idea files
+/.idea
+

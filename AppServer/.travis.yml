@@ -1,0 +1,20 @@
+language: cpp
+
+compiler:
+  - gcc
+
+before_install:
+  - sudo pip install cpp-coveralls
+
+install:
+  - chmod +x install.sh
+  - ./install.sh
+
+before_script:
+  - cd build
+  - sudo cmake ..
+  - sudo make
+
+script:
+  - ctest
+
