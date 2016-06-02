@@ -5,9 +5,9 @@
 FROM ubuntu:14.04
 RUN  apt-get update \
   && apt-get install -y \
-  && wget \
-  && make \
-  && unzip \
+  wget \
+  make \
+  unzip \
   && rm -rf /var/lib/apt/lists/* 
 MAINTAINER gisedaye gisedaye
 COPY ./ /home
