@@ -22,39 +22,43 @@ Manual de proyecto
 +-------------------------------------+--------------------------------------+
 
 ============================================
-Cliente
+Tecnologias utilizadas
 ============================================
-- Android version 23
-- Volley
-- Material Design
 
-============================================
+Cliente
+----------------------------------------
+
+- Android SDK compatible hasta v23
+- Volley
+- Material Design para templates
+
+
 Application Server
-============================================
-- cmake
-- ci-travis
-- mongoose-cpp
-- rocksDB
+----------------------------------------
+- Cmake
+- Ci-Travis
+- Mongoose-cpp
+- RocksDB
 - Docker
 - Code coverage
-- unit tests
-- tests con postman y con python
+- Unit tests
+- Tests de endpoints con postman y con python
 
-============================================
+
 Shared Server
-============================================
-- heroku
-- express + node.js
-- postrgres
-- web
-- test con postman
+----------------------------------------
+- Heroku
+- Conexion heroku con DB con Express + Node.js
+- BD Postrgres
+- App web con jquery+bootstrap
+- Test  de endpoints con postman
+- Docker
 
 
-============================================
 Proyecto
-============================================
-- trello
-- documentacion sphinx
-- git
-- dockerhub
+----------------------------------------
+- Trello, manejo de tickets
+- Documentacion en sphinx
+- Repositorios git
+- Dockerhub para imagenes de docker
 

@@ -70,6 +70,8 @@ Shared Server
 .. image:: Screenshots/user.png
 
 - Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
+- Se le podran agregar intereses al usuario en la vista de alta
+
 - Si el usuario se creo correctamente se mostrara el texto “Created”
 
 - Para ver los usuarios registrados ingrese haga click en “Ver usuarios”. Se redireccionara a la pantalla de listado de usuarios
@@ -77,4 +79,9 @@ Shared Server
 
 - Para borrar un usuario haga click en el boton Delete.
 - Para editar los datos de un usuario haga click en el boton Edit. Se lo redireccionara a la pantalla de Modificar usuario.
+- Se le podran modificar los intereses al usuario en la vista de edicion
 
+- Se podra ver el listado de intereses haciendo click en "Ver intereses"
+- Se podran dar de alta intereses en distintas categorias haciendo click en el boton de "Alta interes".
+- Se podra modificar un interes haciendo click en el boton de "Editar" del listado de intereses.
+- Se podra borrar un interes haciendo click en el boton de "Delete" del listado de intereses.

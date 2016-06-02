@@ -25,16 +25,16 @@ Manual de programador
 Arquitectura
 ============================================
 
+.. image:: Screenshots/architecture.png
+
 Appserver
 --------------------------------------------
-
-Arquitectura
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A continuacion se dara una breve descripcion de los distintos endpoits del appserver y como se manejan para obtener la informacion.
 
 Signup
 """""""""
 
-- Request a AppServer con los datos del profile y intereses completos.
+- Desde el cliente request a AppServer con los datos del profile y intereses completos.
 - Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).
 - Guardo la información del profile en SharedServer.
 - El AppServer guarda username y password.
@@ -43,7 +43,7 @@ Signup
 Login
 """""""""
 
-- Request a AppServer con username/password
+- Desde el cliente request a AppServer con username/password
 - Busco el usuario en el AppServer:
 - En el caso que exista devuelvo accessToken
 - Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.
@@ -54,14 +54,14 @@ Login
 Like/Dislike
 """""""""
 
-- Request a AppServer con el id
+- Desde el cliente request a AppServer con el id
 - Guardamos el id en el array de keptAccounts
 - Si hay un match lo guardamos
 
 GetCandidates
 """""""""
 
-- Request a AppServer  GET /candidates con location.
+- Desde el cliente request a AppServer  GET /candidates con location.
 - Busco el usuario en el AppServer, obtengo el username
 - Request a SharedServer con username
 - SharedServer determina los candidatos de acuerdo a los intereses del usuario 
@@ -72,12 +72,74 @@ GetCandidates
 GetMatches
 """""""""
 
-- Request al AppServer GET /matches
+- Desde el cliente request al AppServer GET /matches
 - Obtenemos la lista de matches
 - Request a SharedServer con la lista
 - Obtenemos los perfiles asociados
 - Devuelvo los matches al cliente
 
+
+Sharedserver
+--------------------------------------------
+Listado de usuarios
+""""""""""""""""""
+- Request GET /users/
+- Busca a todos los usuarios del sharedserver
+- Devuelve array de usuarios con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata
+
+Alta de usuario
+""""""""""""""""""
+- Request POST /users/ con parametros: name, alias, email, sex, age, interests, location 
+- Crea al usuario  en el sharedserver
+
+Consulta perfil de usuario
+""""""""""""""""""
+- Request GET /users/+id
+- Busca en el shared server usuario con ese id
+- Devuelve un objeto user con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata
+
+Edicion de usuario
+""""""""""""""""""
+- Request PUT /users/+id con parametros: id, name, alias, email, sex, age, photo_profile, interests, location 
+- Modifica al usuario  en el sharedserver
+
+Actualización foto perfil
+""""""""""""""""""
+- Request PUT /users/+id/photo con parametro: photo en base64
+- Agrega una foto de perfil al usuario con id +id.
+
+Baja de usuario
+""""""""""""""""""
+- Request DELETE /users/+id
+- Elimina al usuario del sharedserver
+
+Listado de intereses
+""""""""""""""""""
+- Request GET /interests/
+- Busca a todos los intereses del sharedserver
+- Devuelve array de intereses con: category, value
+
+Alta de interes
+""""""""""""""""""
+- Request POST /interests/ con parametros: category, value
+- Crea al interes en el sharedserver en esa categoria
+
+Client
+--------------------------------------------
+- Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike
+- Vistas:
+	- LoginActivity	
+	- RegisterActivity
+	- MatchActivity
+	- MenuFragments (items del menu)
+	- MatchFragments (candidatos para match)
+
+============================================
+Testing
+============================================
+
+Appserver
+--------------------------------------------
 
 Correr Unit Tests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -177,11 +239,40 @@ Alta de usuario
 "Longitude":"22322"
 }``
 
+Edit de usuario
+"""""""""
+
+``PUT https://sharedserver.herokuapp.com/users/1``
+
+``{
+"id": 1,
+"name":"Name",
+"Alias":"aliiaass",
+"email":"mail@mail.com", 
+"latitude":"21222", 
+"Longitude":"22322"
+}``
+
 
 Baja de usuario
 """""""""
 
 ``DELETE https://sharedserver.herokuapp.com/users/20``
+
+Listado de  intereses
+"""""""""
+
+``GET https://sharedserver.herokuapp.com/interests``
+
+Alta de interes
+"""""""""
+
+``POST https://sharedserver.herokuapp.com/interests``
+
+``{
+"category":"Music",
+"value":"One Direction"
+}``
 
 
 ============================================
