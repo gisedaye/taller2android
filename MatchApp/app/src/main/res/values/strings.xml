@@ -7,13 +7,20 @@
     <string name="title_activity_register">Registrarse</string>
     <string name="title_activity_match">MatchApp</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Candidatos </string>
+    <string name="title_section2">Matches</string>
 
     <string name="profile_name">Minion, Minion</string>
     <string name="profile_age">25</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="unknow_error">Unknow error</string>
+    <string name="title_activity_left_menu">LeftMenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="openDrawer">Open navigation drawer</string>
+    <string name="closeDrawer">Close navigation drawer</string>
 </resources>

@@ -1,24 +1,47 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <TableLayout
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context="info.androidhive.fab.MainActivity">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
-        <ImageView
-            android:id="@+id/image"
+        android:layout_height="match_parent" >
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            android:src="@drawable/profile_photo" />
-        <TextView style="?android:textAppearanceMedium"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@string/profile_name"
-            android:background="#bcbcbc" />
-    </TableLayout>
-</ScrollView>
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/profile_photo" />
+            <TextView style="?android:textAppearanceMedium"
+                android:padding="16dp"
+                android:lineSpacingMultiplier="1.2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@string/profile_name"
+                android:background="#bcbcbc" />
+        </TableLayout>
+    </ScrollView>
+
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/like"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right" android:layout_margin="28dp"
+    android:src="@drawable/ic_done_white_24dp" />
+
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/dislike"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|left" android:layout_margin="28dp"
+    android:src="@drawable/ic_clear_white_24dp" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -6,15 +6,6 @@
               android:orientation="vertical"
               tools:context="com.taller2.matchapp.LoginActivity">
 
-	<android.support.v7.widget.Toolbar
-		android:id="@+id/toolbar"
-		android:layout_width="match_parent"
-		android:layout_height="?attr/actionBarSize"
-		android:background="?attr/colorPrimary"
-		android:elevation="@dimen/elevation"
-		android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
-
-
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
