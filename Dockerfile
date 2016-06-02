@@ -10,6 +10,7 @@ RUN  apt-get update \
   make \
   gcc \
   unzip \
+  cmake \
   && rm -rf /var/lib/apt/lists/* 
 MAINTAINER gisedaye gisedaye
 COPY ./ /home
