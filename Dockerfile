@@ -12,6 +12,21 @@ RUN  apt-get update \
   gcc \
   unzip \
   cmake \
+  build-essential \
+  python \
+  git \
+  zip \
+  valgrind \
+  tree \
+  vim \
+  nano \
+  libsnappy-dev \
+  zlib1g-dev \
+  libbz2-dev \
+  libgflags-dev \
+  tar \
+  curl \
+  lcov \
   && rm -rf /var/lib/apt/lists/* 
 MAINTAINER gisedaye gisedaye
 COPY ./ /home
