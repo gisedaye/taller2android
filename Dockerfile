@@ -11,8 +11,9 @@ RUN  apt-get update \
   make \
   gcc \
   unzip \
+  libcppunit-dev \
+  libcppunit-doc \
   cmake \
-  build-essential \
   python \
   git \
   zip \
