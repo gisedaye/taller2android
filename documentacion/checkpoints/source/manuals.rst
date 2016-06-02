@@ -29,7 +29,7 @@ Changelog
     - Conexión con Postgres
     - Webapp en node.js con listado y Alta, baja, vista de usuarios, edit de usuarios
     - Listado de intereses
-    - Alta de categorias e intereses.
+    - Alta de intereses en categorias.
 - Application Server
     - CMake
     - Conexion appServer con SharedServer
@@ -50,6 +50,7 @@ Changelog
     - Funcionalidad de like/dislike
     - Integración con Appserver mediante Volley
     - Manejo de sessiones con el auth token
+	- Menu lateral
 - Documentacion en Sphinx
 
 ============================================
@@ -73,6 +74,11 @@ Repositorios
 - ApplicationSever: https://github.com/nicolas-vazquez/tp75521c
 - Cliente: https://github.com/gisedaye/taller2android/ 
 
+DockerHub
+^^^^^^^^^^^^^
+https://hub.docker.com/r/gisedaye/taller2android/
+
+
 Aplicación web
 ^^^^^^^^^^^^^
 https://sharedserver.herokuapp.com/
@@ -82,6 +88,8 @@ Funcionalidades:
  - Add POST /users
  - View GET /users/{userId}
  - Delete DELETE /users/{userId}
+ - List GET /interests
+ - Add POST /interests
 
 
 
