@@ -223,7 +223,6 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Shows the progress UI and hides the register form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
