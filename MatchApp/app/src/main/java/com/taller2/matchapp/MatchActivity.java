@@ -20,7 +20,6 @@ public class MatchActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_match);
 
         mCardContainer = (CardContainer) findViewById(R.id.layoutview);
@@ -31,35 +30,35 @@ public class MatchActivity extends ActionBarActivity {
 
         adapter.setShouldFillCardBackground(true);
 
-        adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-        adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-        adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-        adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title1", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title2", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title3", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title4", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title5", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title6", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title1", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title2", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title3", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title4", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title5", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title6", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title1", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title2", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title3", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title4", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title5", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title6", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title1", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title2", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title3", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title4", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title5", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title6", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title1", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title2", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
+        adapter.add(new CardModel("Title3", "Person Name (26)", r.getDrawable(R.drawable.picture3)));
+        adapter.add(new CardModel("Title4", "Person Name (26)", r.getDrawable(R.drawable.picture1)));
+        adapter.add(new CardModel("Title5", "Person Name (26)", r.getDrawable(R.drawable.picture2)));
 
         CardModel cardModel = new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1));
         cardModel.setOnClickListener(new CardModel.OnClickListener() {

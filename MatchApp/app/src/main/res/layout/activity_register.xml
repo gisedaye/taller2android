@@ -6,13 +6,9 @@
               android:orientation="vertical"
               tools:context="com.taller2.matchapp.RegisterActivity">
 
-	<android.support.v7.widget.Toolbar
+	<include
 		android:id="@+id/my_toolbar"
-		android:layout_width="match_parent"
-		android:layout_height="?attr/actionBarSize"
-		android:background="?attr/colorPrimary"
-		android:elevation="@dimen/elevation"
-		android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+		layout="@layout/toolbar"/>
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	              xmlns:tools="http://schemas.android.com/tools"
