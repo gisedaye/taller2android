@@ -1,42 +1,75 @@
 package com.taller2.matchapp.http;
 
+import android.content.Context;
+import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.taller2.matchapp.R;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by fedefarina on 28/04/16.
  */
 public abstract class MathAppJsonRequest extends JsonObjectRequest {
 
-    public interface OnError {
-        void onError(JSONArray array);
+    private int statusCode;
+    WeakReference<Context> contextWr;
+
+    public MathAppJsonRequest(Context context, String url, JSONObject jsonRequest) {
+        super(url, jsonRequest, null, null);
+        contextWr = new WeakReference<>(context);
     }
 
-
-    int statusCode;
-
-    public MathAppJsonRequest(String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(url, jsonRequest, listener, errorListener);
-    }
-
-    public MathAppJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(method, url, jsonRequest, listener, errorListener);
+    public MathAppJsonRequest(Context context, int method, String url, JSONObject jsonRequest) {
+        super(method, url, jsonRequest, null, null);
+        contextWr = new WeakReference<>(context);
     }
 
     @Override
-    protected VolleyError parseNetworkError(VolleyError volleyError) {
-        return super.parseNetworkError(volleyError);
+    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+        statusCode = response.statusCode;
+        return super.parseNetworkResponse(response);
+    }
+
+    @Override
+    protected void deliverResponse(JSONObject response) {
+        try {
+            JSONObject data = response.getJSONObject("data");
+            if (statusCode == expectedCode()) {
+                onSuccess(data);
+            } else {
+                JSONArray jsonArray = response.optJSONArray("errors");
+                String message = jsonArray.getJSONObject(0).getString("message");
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deliverError(VolleyError error) {
+        Toast.makeText(getContext(), getContext().getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
+        onError();
+    }
+
+    public Context getContext() {
+        return contextWr.get();
+    }
+
+    public void onError() {
+
+    }
+
+    public void onSuccess(JSONObject data) {
+
     }
 
     public abstract int expectedCode();
-
-
-    public abstract void onErrorListener();
 }
