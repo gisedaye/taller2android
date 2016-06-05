@@ -1,11 +1,7 @@
 package com.taller2.matchapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,44 +11,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.config.Configuration;
-import org.json.JSONArray;
+import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A login screen that offers login via username/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String LOGIN_URL = "/api/accounts/login";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
 
-    // UI references.
+    private View mProgressView;
     private EditText mUsernameView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
     private TextView mRegisterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
         setupLoginForm();
     }
 
@@ -86,8 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                 goToRegisterPage();
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
@@ -109,8 +93,8 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -127,15 +111,8 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
             userLogin(username, password);
         }
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 3;
     }
 
     private void goToRegisterPage() {
@@ -144,79 +121,48 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void userLogin(String mUsername, String mPassword) {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put(KEY_USERNAME, mUsername);
-            obj.put(KEY_PASSWORD, mPassword);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        JSONObject requestBody = buildLoginBody(mUsername, mPassword);
+        if (requestBody != null) {
+            getActivityIndicator().show();
+
+            final MathAppJsonRequest mathAppJsonRequest = new MathAppJsonRequest(this, Configuration.getURL(this) + LOGIN_URL, requestBody) {
+                @Override
+                public int expectedCode() {
+                    return HttpsURLConnection.HTTP_ACCEPTED;
+                }
+
+                @Override
+                public void onSuccess(JSONObject data) {
+                    String token = data.optString("token");
+                    Configuration.setToken(LoginActivity.this, token);
+                    Intent i = new Intent(LoginActivity.this, MatchActivity.class);
+                    finish();
+                    startActivity(i);
+                }
+
+                @Override
+                public void onError() {
+                    getActivityIndicator().hide();
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+            requestQueue.add(mathAppJsonRequest);
         }
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + LOGIN_URL, obj,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        String message = null;
-                        try {
-                            message = response.getJSONObject("data").getString("message");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (message.equals("Successful login.")) {
-                            Intent i = new Intent(LoginActivity.this, MatchActivity.class);
-                            finish();
-                            startActivity(i);
-                        } else {
-                            Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-                            showProgress(false);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        showProgress(false);
-                        try {
-                            String responseBody = new String(error.networkResponse.data, "utf-8");
-                            JSONObject jsonObject = new JSONObject(responseBody);
-                            JSONArray jsonArray = jsonObject.optJSONArray("errors");
-                            String message = jsonArray.getJSONObject(0).getString("message");
-                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
-
-
-        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-        requestQueue.add(jsonObjectRequest);
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    public void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+    private JSONObject buildLoginBody(String mUsername, String mPassword) {
+        JSONObject requestBody = null;
+        try {
+            requestBody = new JSONObject();
+            requestBody.putOpt(KEY_USERNAME, mUsername);
+            requestBody.putOpt(KEY_PASSWORD, mPassword);
+        } catch (JSONException e) {
+            Toast.makeText(this, "Missing username or password", Toast.LENGTH_LONG).show();
+        }
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+        return requestBody;
     }
 }
 
