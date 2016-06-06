@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject data) {
                     String token = data.optString("token");
-                    Configuration.setToken(LoginActivity.this, token);
+                    //Configuration.setToken(LoginActivity.this, token);
                     Intent i = new Intent(LoginActivity.this, MatchActivity.class);
                     finish();
                     startActivity(i);
