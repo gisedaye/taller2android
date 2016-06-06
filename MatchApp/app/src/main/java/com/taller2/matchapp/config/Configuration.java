@@ -19,7 +19,7 @@ public class Configuration {
      */
     public static String getURL(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
-        String ip = sharedPref.getString(APP_SERVER_IP, "192.168.0.106");
+        String ip = sharedPref.getString(APP_SERVER_IP, "192.168.1.36");
         String port = sharedPref.getString(APP_SERVER_PORT, "8083");
         return "http://"+ip+":"+port;
     }

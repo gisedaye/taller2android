@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 /**
@@ -44,9 +45,8 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
             if (statusCode == expectedCode()) {
                 onSuccess(data);
             } else {
-                JSONArray jsonArray = response.optJSONArray("errors");
-                String message = jsonArray.getJSONObject(0).getString("message");
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                showFirstError(response);
+                onError(statusCode);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -55,15 +55,41 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
 
     @Override
     public void deliverError(VolleyError error) {
-        Toast.makeText(getContext(), getContext().getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
-        onError();
+        NetworkResponse response = error.networkResponse;
+        if (response != null) {
+            try {
+                String body = new String(error.networkResponse.data, "UTF-8");
+                JSONObject responseJSON = new JSONObject(body);
+
+                if (expectedCode() == response.statusCode) {
+                    JSONObject data = responseJSON.getJSONObject("data");
+                    onSuccess(data);
+                } else {
+                    showFirstError(responseJSON);
+                    onError(response.statusCode);
+                }
+            } catch (JSONException | UnsupportedEncodingException e) {
+                Toast.makeText(getContext(), getContext().getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+                onError(response.statusCode);
+            }
+        } else {
+            Toast.makeText(getContext(), getContext().getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    private void showFirstError(JSONObject responseJSON) throws JSONException {
+        JSONArray jsonArray = responseJSON.optJSONArray("errors");
+        String message = jsonArray.getJSONObject(0).getString("message");
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     public Context getContext() {
         return contextWr.get();
     }
 
-    public void onError() {
+    public void onError(int statusCode) {
 
     }
 

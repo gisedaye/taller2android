@@ -99,13 +99,13 @@ public class LoginActivity extends BaseActivity {
             cancel = true;
         }
 
-        // Check for a valid username
+       /* // Check for a valid username
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
         }
-
+*/
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -142,7 +142,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onError() {
+                public void onError(int statusCode) {
                     getActivityIndicator().hide();
                 }
             };
