@@ -1,96 +1,109 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.taller2.matchapp.LoginActivity">
+
+    <include
+            android:id="@+id/my_toolbar"
+            layout="@layout/toolbar"/>
+
+    <ScrollView
+            android:id="@+id/login_form"
+            android:padding="16dp"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                tools:context="com.taller2.matchapp.LoginActivity">
+                android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:padding="16dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/matchlogo"
+                    android:layout_gravity="center_horizontal"/>
 
-		<ScrollView
-			android:id="@+id/login_form"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-			<LinearLayout
-				android:id="@+id/email_login_form"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
-
-				<ImageView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/imageView"
-					android:src="@drawable/matchlogo"
-					android:layout_gravity="center_horizontal"/>
-
-				<android.support.design.widget.TextInputLayout
-					android:id="@+id/input_layout_username"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-					<EditText
-						android:id="@+id/username"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:hint="@string/prompt_username"
-						android:maxLines="1"
-						android:singleLine="true"/>
-				</android.support.design.widget.TextInputLayout>
+                <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_username"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
 
 
-				<android.support.design.widget.TextInputLayout
-					android:id="@+id/input_layout_password"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-					<EditText
-						android:id="@+id/password"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:hint="@string/prompt_password"
-						android:imeActionId="@+id/login"
-						android:imeActionLabel="@string/action_sign_in_short"
-						android:imeOptions="actionUnspecified"
-						android:inputType="textPassword"
-						android:maxLines="1"
-						android:singleLine="true"/>
-				</android.support.design.widget.TextInputLayout>
+                <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="@string/title_activity_login"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
 
-				<Button
-					android:id="@+id/email_sign_in_button"
-					style="?android:textAppearanceSmall"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="16dp"
-					android:text="@string/action_sign_in"
-					android:textStyle="bold"/>
+            <LinearLayout
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <Button
+                        android:id="@+id/email_sign_in_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_gravity="bottom"
+                        android:text="@string/action_sign_in"
+                        android:textStyle="bold"/>
 
-				<TextView
-					android:id="@+id/link_register"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginBottom="24dp"
-					android:text="@string/action_ask_register"
-					android:gravity="center"
-					android:textSize="16dip"/>
+                <LinearLayout
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-			</LinearLayout>
-		</ScrollView>
-	</LinearLayout>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/action_ask_register"
+                            android:gravity="center"
+                            android:textSize="16sp"/>
 
-	<ProgressBar
-		android:id="@+id/login_progress"
-		style="?android:attr/progressBarStyleSmall"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerInParent="true"
-		android:visibility="gone"/>
+                    <TextView
+                            android:id="@+id/link_register"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/get_started"
+                            android:gravity="center"
+                            android:textSize="16sp"/>
+                </LinearLayout>
+            </LinearLayout>
 
-</RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
 

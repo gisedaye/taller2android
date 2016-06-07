@@ -69,14 +69,16 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
                     onError(response.statusCode);
                 }
             } catch (JSONException | UnsupportedEncodingException e) {
-                Toast.makeText(getContext(), getContext().getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getContext().getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
                 onError(response.statusCode);
             }
         } else {
-            Toast.makeText(getContext(), getContext().getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
+            onError(0);
         }
-
     }
+
+
 
 
     private void showFirstError(JSONObject responseJSON) throws JSONException {
@@ -87,6 +89,10 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
 
     public Context getContext() {
         return contextWr.get();
+    }
+
+    public void onNoConnection() {
+
     }
 
     public void onError(int statusCode) {

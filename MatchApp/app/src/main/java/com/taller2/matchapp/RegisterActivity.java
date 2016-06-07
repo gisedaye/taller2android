@@ -1,14 +1,9 @@
 package com.taller2.matchapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -29,15 +24,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private static final String REGISTER_URL = "/api/accounts/signup";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_SEX = "sex";
-    public static final String KEY_ALIAS = "alias";
-    public static final String KEY_EMAIL = "email";
 
 
     private static final char SEX_FEMALE = 'M';
@@ -45,8 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     // UI references.
     private EditText mUsernameView;
-    private EditText mAliasView;
-    private EditText mEmailView;
     private EditText mPasswordView;
     private RadioButton mSexFemale;
     private RadioButton mSexMale;
@@ -61,8 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Set up the register form.
         mUsernameView = (EditText) findViewById(R.id.username);
-        mAliasView = (EditText) findViewById(R.id.alias);
-        mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mSexFemale = (RadioButton) findViewById(R.id.sex_female);
         mSexMale = (RadioButton) findViewById(R.id.sex_male);
@@ -77,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         mRegisterFormView = findViewById(R.id.register_form);
-        mProgressView = findViewById(R.id.register_progress);
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -96,14 +84,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Reset errors.
         mUsernameView.setError(null);
-        mAliasView.setError(null);
-        mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
-        String alias = mAliasView.getText().toString();
-        String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         Character sexo = mSexFemale.isChecked() ? SEX_FEMALE : SEX_MALE;
 
@@ -117,30 +101,13 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        // Check for a valid alias.
-        if (TextUtils.isEmpty(alias)) {
-            mAliasView.setError(getString(R.string.error_field_required));
-            focusView = mAliasView;
-            cancel = true;
-        }
-
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (!TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -149,20 +116,12 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            userRegister(username, sexo, alias, email, password);
+            getActivityIndicator().show();
+            userRegister(username, sexo, password);
         }
     }
 
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 3;
-    }
-
-    private void userRegister(String mUsername, Character mSex, String mAlias, String mEmail, String mPassword) {
+    private void userRegister(String mUsername, Character mSex, String mPassword) {
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put(KEY_USERNAME, mUsername);
@@ -170,8 +129,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 //          Commented until we have all fields on the svc
 //          requestBody.put(KEY_SEX,mSex);
-//          requestBody.put(KEY_ALIAS,mAlias);
-//          requestBody.put(KEY_EMAIL,mEmail);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -194,15 +151,15 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }, 2000);
                         } else if (TextUtils.isEmpty(message)) {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
-                            showProgress(false);
+                            Toast.makeText(RegisterActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
+                            getActivityIndicator().hide();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        showProgress(false);
+                        getActivityIndicator().hide();
                         try {
                             String responseBody = new String(error.networkResponse.data, "utf-8");
                             JSONObject jsonObject = new JSONObject(responseBody);
@@ -210,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
                             String message = jsonArray.getJSONObject(0).getString("message");
                             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -218,31 +175,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
         requestQueue.add(jsonObjectRequest);
-    }
-
-    /**
-     * Shows the progress UI and hides the register form.
-     */
-    public void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
     }
 
     @Override
@@ -254,9 +186,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:

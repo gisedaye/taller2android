@@ -9,7 +9,7 @@
     <string name="title_section1">Candidates</string>
     <string name="title_section2">Matches</string>
 
-    <string name="unknow_error">Pleas try again.</string>
+    <string name="unknown_error">Please try again.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -24,12 +24,12 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_female">Female</string>
     <string name="prompt_male">Male</string>
-    <string name="prompt_username">User</string>
-    <string name="prompt_alias">Alias</string>
+    <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_sex">Gender</string>
     <string name="action_register">Register</string>
-    <string name="action_ask_register">Create account</string>
+    <string name="action_ask_register">Don’t have an account?</string>
+    <string name="get_started">Get started</string>
     <string name="action_sign_in">Sign up</string>
     <string name="action_sign_in_short">Sign up</string>
 
