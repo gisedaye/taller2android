@@ -74,11 +74,9 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
             }
         } else {
             Toast.makeText(getContext(), getContext().getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
-            onError(0);
+            onNoConnection();
         }
     }
-
-
 
 
     private void showFirstError(JSONObject responseJSON) throws JSONException {

@@ -141,7 +141,7 @@ public class LoginActivity extends BaseActivity {
             final MathAppJsonRequest mathAppJsonRequest = new MathAppJsonRequest(this, Configuration.getURL(this) + LOGIN_URL, requestBody) {
                 @Override
                 public int expectedCode() {
-                    return HttpsURLConnection.HTTP_ACCEPTED;
+                    return HttpsURLConnection.HTTP_OK;
                 }
 
                 @Override

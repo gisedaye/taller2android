@@ -2,7 +2,6 @@ package com.taller2.matchapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -13,16 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.config.Configuration;
-import org.json.JSONArray;
+import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -102,7 +99,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
@@ -126,55 +123,42 @@ public class RegisterActivity extends BaseActivity {
         try {
             requestBody.put(KEY_USERNAME, mUsername);
             requestBody.put(KEY_PASSWORD, mPassword);
-
-//          Commented until we have all fields on the svc
-//          requestBody.put(KEY_SEX,mSex);
+            requestBody.put(KEY_SEX, mSex);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.getURL(this) + REGISTER_URL, requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        JSONObject data = response.optJSONObject("data");
-                        String message = data.optString("message");
-                        if (TextUtils.isEmpty(message) && message.equals("Successful signup")) {
-                            Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                            }, 2000);
-                        } else if (TextUtils.isEmpty(message)) {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
-                            getActivityIndicator().hide();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        getActivityIndicator().hide();
-                        try {
-                            String responseBody = new String(error.networkResponse.data, "utf-8");
-                            JSONObject jsonObject = new JSONObject(responseBody);
-                            JSONArray jsonArray = jsonObject.optJSONArray("errors");
-                            String message = jsonArray.getJSONObject(0).getString("message");
-                            Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, Configuration.getURL(this) + REGISTER_URL, requestBody) {
 
+            @Override
+            public void onSuccess(JSONObject data) {
+                String message = data.optString("message");
+                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                //todo hacer que triga un token guardarlo y ir a la MainActivity
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public int expectedCode() {
+                return HttpsURLConnection.HTTP_OK;
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                getActivityIndicator().hide();
+            }
+
+            @Override
+            public void onNoConnection() {
+                getActivityIndicator().hide();
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(registerRequest);
     }
 
     @Override
