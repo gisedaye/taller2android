@@ -12,9 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.taller2.matchapp.config.Configuration;
+import com.taller2.matchapp.config.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,8 +23,6 @@ import org.json.JSONObject;
 import javax.net.ssl.HttpsURLConnection;
 
 public class RegisterActivity extends BaseActivity {
-
-    private static final String REGISTER_URL = "/api/accounts/signup";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
@@ -119,23 +118,23 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void userRegister(String mUsername, Character mSex, String mPassword) {
+
         JSONObject requestBody = new JSONObject();
+
         try {
             requestBody.put(KEY_USERNAME, mUsername);
             requestBody.put(KEY_PASSWORD, mPassword);
             requestBody.put(KEY_SEX, mSex);
-
         } catch (JSONException e) {
-            e.printStackTrace();
+            //Never will happen
         }
 
-        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, Configuration.getURL(this) + REGISTER_URL, requestBody) {
+        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, Request.Method.POST, MatchAPI.getRegisterEndpoint(), requestBody) {
 
             @Override
             public void onSuccess(JSONObject data) {
                 String message = data.optString("message");
                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-                //todo hacer que triga un token guardarlo y ir a la MainActivity
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();

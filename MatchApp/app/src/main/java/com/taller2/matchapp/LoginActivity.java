@@ -16,9 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.taller2.matchapp.config.Configuration;
+import com.taller2.matchapp.config.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,8 +30,6 @@ import javax.net.ssl.HttpsURLConnection;
  * A login screen that offers login via username/password.
  */
 public class LoginActivity extends BaseActivity {
-
-    private static final String LOGIN_URL = "/api/accounts/login";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
@@ -138,7 +137,7 @@ public class LoginActivity extends BaseActivity {
         if (requestBody != null) {
             getActivityIndicator().show();
 
-            final MathAppJsonRequest mathAppJsonRequest = new MathAppJsonRequest(this, Configuration.getURL(this) + LOGIN_URL, requestBody) {
+            final MathAppJsonRequest mathAppJsonRequest = new MathAppJsonRequest(this, Request.Method.POST, MatchAPI.getLoginEndpoint(), requestBody) {
                 @Override
                 public int expectedCode() {
                     return HttpsURLConnection.HTTP_OK;
@@ -146,8 +145,8 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(JSONObject data) {
-                    String token = data.optString("token");
-                    Configuration.setToken(LoginActivity.this, token);
+                    String token = data.optString("accessToken");
+                    MatchAPI.setToken(LoginActivity.this, token);
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(i);

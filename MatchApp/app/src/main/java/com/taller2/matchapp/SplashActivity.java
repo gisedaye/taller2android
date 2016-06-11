@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import com.taller2.matchapp.config.Configuration;
+import com.taller2.matchapp.config.MatchAPI;
 
 /**
  * Created by federicofarina on 6/7/16.
@@ -22,7 +22,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 //If user is logged in
-                if (Configuration.getToken(SplashActivity.this) == null) {
+                if (MatchAPI.getToken(SplashActivity.this) == null) {
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
