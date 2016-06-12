@@ -16,7 +16,7 @@ public class MatchAPI {
     private static final String CONNECTION_CONFIG = "connection_config";
     private static final String TOKEN = "SESSION_TOKEN";
 
-    private static final String APP_SERVER_IP = "192.168.1.47";
+    private static final String APP_SERVER_IP = "192.168.127.1";
     private static final String APP_SERVER_PORT = "8083";
 
     private static String getAppServerURL() {

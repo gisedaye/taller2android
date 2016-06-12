@@ -1,11 +1,15 @@
 package com.taller2.matchapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -14,12 +18,14 @@ import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.config.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends BaseActivity {
@@ -77,37 +83,46 @@ public class MainActivity extends BaseActivity {
                 String dataString = data.toString().replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
                 try {
                     data = new JSONObject(dataString);
+
+
+                    JSONObject profile = data.optJSONObject("profile");
+
+                    String name = profile.optString("name");
+                    String age = profile.optString("age");
+
+                    String description = String.format("%s (%s)", name, age);
+
+                    String imageData = profile.optString("image");
+                    byte[] decodedBytes = Base64.decode(imageData, 0);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+
+                    CardModel cardModel = new CardModel("New candidate!", description, bitmap);
+                    cardModel.setOnClickListener(new CardModel.OnClickListener() {
+                        @Override
+                        public void OnClickListener() {
+                            Log.i("Swipeable Cards", "I am pressing the card");
+                        }
+                    });
+
+                    cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
+                        @Override
+                        public void onLike() {
+                            Log.i("Swipeable Cards", "I like the card");
+                        }
+
+                        @Override
+                        public void onDislike() {
+                            Log.i("Swipeable Cards", "I dislike the card");
+                        }
+                    });
+
+                    adapter.add(cardModel);
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    getActivityIndicator().hide();
+                    Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG);
                 }
-
-                JSONObject profile = data.optJSONObject("profile");
-
-                String name = profile.optString("name");
-                String age = profile.optString("age");
-
-                String description = String.format("%s (%s)", name, age);
-
-                CardModel cardModel = new CardModel("New candidate!", description, getResources().getDrawable(R.drawable.picture1));
-                cardModel.setOnClickListener(new CardModel.OnClickListener() {
-                    @Override
-                    public void OnClickListener() {
-                        Log.i("Swipeable Cards", "I am pressing the card");
-                    }
-                });
-
-                cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
-                    @Override
-                    public void onLike() {
-                        Log.i("Swipeable Cards", "I like the card");
-                    }
-
-                    @Override
-                    public void onDislike() {
-                        Log.i("Swipeable Cards", "I dislike the card");
-                    }
-                });
-                adapter.add(cardModel);
-                adapter.notifyDataSetChanged();
             }
 
             @Override
