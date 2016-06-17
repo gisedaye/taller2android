@@ -41,7 +41,15 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
+
             JSONObject data = response.getJSONObject("data");
+
+            //Sacar esto cuando lo resolvamos en el appServer
+            String dataString = data.toString().replace("\\\"", "\"").replace("\"{", "{")
+                    .replace("}\"", "}").replace("\\/", "/").replace("\"[", "[").replace("]\"", "]");
+
+
+            data = new JSONObject(dataString);
             if (statusCode == expectedCode()) {
                 onSuccess(data);
             } else {

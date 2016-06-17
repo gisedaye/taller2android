@@ -18,7 +18,6 @@ import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -76,13 +75,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(JSONObject data) {
                 Log.d("Response: ", data.toString());
-
-                //Sacar esto cuando lo resolvamos en el appServer
-                String dataString = data.toString().replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
                 try {
-                    data = new JSONObject(dataString);
-
-
                     JSONObject profile = data.optJSONObject("profile");
 
                     String name = profile.optString("name");
@@ -117,7 +110,7 @@ public class MainActivity extends BaseActivity {
 
                     adapter.add(cardModel);
                     adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     getActivityIndicator().hide();
                     Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG);
                 }

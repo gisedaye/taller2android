@@ -1,16 +1,20 @@
 package com.taller2.matchapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -24,36 +28,41 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterActivity extends BaseActivity {
 
+    private static final String KEY_AGE = "age";
+    public static final String KEY_GENDER = "sex";
+    private static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
-    public static final String KEY_SEX = "sex";
+    private static final String KEY_PHOTO_PROFILE = "photo_profile";
 
-
-    private static final char SEX_FEMALE = 'M';
     private static final char SEX_MALE = 'H';
+    private static final char SEX_FEMALE = 'M';
 
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
 
     // UI references.
-    private EditText mUsernameView;
-    private EditText mPasswordView;
-    private RadioButton mSexFemale;
+    private EditText ageEt;
+    private EditText nameEt;
+    private EditText usernameEt;
+    private EditText passwordEt;
+    private RadioButton sexFemaleRb;
 
     private TextView interestTv;
     private Toolbar myToolbar;
-    private RadioButton mSexMale;
 
     private List<String> interests;
-    private boolean shouldFetchInterest;
     private Integer[] selectedInterestIndices = new Integer[]{};
 
     //Profile photo
+    private EditText emailEt;
     private Uri currentPhotoUri;
     private ImageView profileIv;
 
@@ -63,11 +72,12 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
 
         // Set up the register form.
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mSexFemale = (RadioButton) findViewById(R.id.sex_female);
-        mSexMale = (RadioButton) findViewById(R.id.sex_male);
-
+        usernameEt = (EditText) findViewById(R.id.username);
+        passwordEt = (EditText) findViewById(R.id.password);
+        sexFemaleRb = (RadioButton) findViewById(R.id.sex_female);
+        ageEt = (EditText) findViewById(R.id.age);
+        emailEt = (EditText) findViewById(R.id.email);
+        nameEt = (EditText) findViewById(R.id.email);
 
         Button mUserRegisterButton = (Button) findViewById(R.id.user_register_button);
         //noinspection ConstantConditions
@@ -140,31 +150,54 @@ public class RegisterActivity extends BaseActivity {
     private void attemptRegister() {
 
         // Reset errors.
-        mUsernameView.setError(null);
-        mPasswordView.setError(null);
+        usernameEt.setError(null);
+        passwordEt.setError(null);
+        ageEt.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        Character sexo = mSexFemale.isChecked() ? SEX_FEMALE : SEX_MALE;
+        String username = usernameEt.getText().toString();
+        String password = passwordEt.getText().toString();
+        Character gender = sexFemaleRb.isChecked() ? SEX_FEMALE : SEX_MALE;
+        String age = ageEt.getText().toString();
+        String email = emailEt.getText().toString();
+
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid username.
         if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
+            usernameEt.setError(getString(R.string.error_field_required));
+            focusView = usernameEt;
             cancel = true;
         }
 
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
+            passwordEt.setError(getString(R.string.error_field_required));
+            focusView = passwordEt;
             cancel = true;
         }
 
+        if (TextUtils.isEmpty(age)) {
+            ageEt.setError(getString(R.string.error_field_required));
+            focusView = ageEt;
+            cancel = true;
+        }
+
+        String currentEncodedImage = null;
+
+        if (currentPhotoUri != null) {
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), currentPhotoUri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] image = stream.toByteArray();
+                currentEncodedImage = Base64.encodeToString(image, Base64.DEFAULT);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -174,18 +207,21 @@ public class RegisterActivity extends BaseActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             getActivityIndicator().show();
-            userRegister(username, sexo, password);
+            userRegister(username, password, gender, age, email, currentEncodedImage);
         }
     }
 
-    private void userRegister(String mUsername, Character mSex, String mPassword) {
+    private void userRegister(String username, String password, Character mSex, String age, String email, String encodedImage) {
 
         JSONObject requestBody = new JSONObject();
 
         try {
-            requestBody.put(KEY_USERNAME, mUsername);
-            requestBody.put(KEY_PASSWORD, mPassword);
-            requestBody.put(KEY_SEX, mSex);
+            requestBody.put(KEY_USERNAME, username);
+            requestBody.put(KEY_PASSWORD, password);
+            requestBody.put(KEY_GENDER, mSex);
+            requestBody.put(KEY_AGE, age);
+            requestBody.put(KEY_EMAIL, email);
+            requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
         } catch (JSONException e) {
             //Never will happen
         }
@@ -249,13 +285,10 @@ public class RegisterActivity extends BaseActivity {
                 JSONArray interestsArray = data.optJSONArray("interests");
                 for (int index = 0; index < interestsArray.length(); index++) {
                     JSONObject interestJO = interestsArray.optJSONObject(index);
+                    interestJO = interestJO.optJSONObject("interest");
                     Interest interest = new Interest();
                     interest.fromJson(interestJO);
                     interests.add(interest.toString());
-                }
-                if (shouldFetchInterest) {
-                    showInterestsDialog();
-                    shouldFetchInterest = false;
                 }
             }
 
@@ -282,7 +315,6 @@ public class RegisterActivity extends BaseActivity {
     private void onEditInterests() {
         if (interests == null) {
             fetchInterests();
-            shouldFetchInterest = true;
             activityIndicator.show();
         } else {
             showInterestsDialog();
@@ -292,6 +324,7 @@ public class RegisterActivity extends BaseActivity {
     private void showInterestsDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.interests_dialog_title)
+                .theme(Theme.LIGHT)
                 .items(interests)
                 .itemsCallbackMultiChoice(selectedInterestIndices, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override

@@ -41,4 +41,6 @@
     <string name="interests">Interests</string>
     <string name="interests_fetch_failed">Interests fetch fail, please try again.</string>
     <string name="change_photo">Change</string>
+    <string name="age">Age</string>
+    <string name="prompt_name">Name</string>
 </resources>
