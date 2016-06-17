@@ -37,6 +37,7 @@ import java.util.List;
 public class RegisterActivity extends BaseActivity {
 
     private static final String KEY_AGE = "age";
+    private static final String KEY_NAME = "name";
     public static final String KEY_GENDER = "gender";
     private static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
@@ -47,6 +48,7 @@ public class RegisterActivity extends BaseActivity {
     private static final char SEX_FEMALE = 'M';
 
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
+
 
     // UI references.
     private EditText ageEt;
@@ -160,7 +162,7 @@ public class RegisterActivity extends BaseActivity {
         Character gender = sexFemaleRb.isChecked() ? SEX_FEMALE : SEX_MALE;
         String age = ageEt.getText().toString();
         String email = emailEt.getText().toString();
-
+        String name = nameEt.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -207,11 +209,11 @@ public class RegisterActivity extends BaseActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             getActivityIndicator().show();
-            userRegister(username, password, gender, age, email, currentEncodedImage);
+            userRegister(username, password, gender, age, email, currentEncodedImage, name);
         }
     }
 
-    private void userRegister(String username, String password, Character mSex, String age, String email, String encodedImage) {
+    private void userRegister(String username, String password, Character mSex, String age, String email, String encodedImage, String name) {
 
         JSONObject requestBody = new JSONObject();
 
@@ -219,8 +221,9 @@ public class RegisterActivity extends BaseActivity {
             requestBody.put(KEY_USERNAME, username);
             requestBody.put(KEY_PASSWORD, password);
             requestBody.put(KEY_GENDER, mSex);
-            requestBody.put(KEY_AGE, age);
+            requestBody.put(KEY_AGE, Integer.valueOf(age));
             requestBody.put(KEY_EMAIL, email);
+            requestBody.put(KEY_NAME, name);
             requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
         } catch (JSONException e) {
             //Never will happen
