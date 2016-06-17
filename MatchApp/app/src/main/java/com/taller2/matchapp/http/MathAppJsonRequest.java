@@ -48,7 +48,8 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
                 showFirstError(response);
                 onError(statusCode);
             }
-        } catch (JSONException e) {       }
+        } catch (JSONException e) {
+        }
     }
 
     @Override

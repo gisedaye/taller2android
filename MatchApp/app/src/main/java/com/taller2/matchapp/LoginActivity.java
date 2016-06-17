@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.taller2.matchapp.config.MatchAPI;
+import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;

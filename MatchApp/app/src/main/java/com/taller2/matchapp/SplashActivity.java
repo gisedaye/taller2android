@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import com.taller2.matchapp.config.MatchAPI;
+import com.taller2.matchapp.api.MatchAPI;
 
 /**
  * Created by federicofarina on 6/7/16.

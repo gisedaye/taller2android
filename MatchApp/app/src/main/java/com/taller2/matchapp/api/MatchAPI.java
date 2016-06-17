@@ -1,4 +1,4 @@
-package com.taller2.matchapp.config;
+package com.taller2.matchapp.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,7 @@ public class MatchAPI {
     private static final String CONNECTION_CONFIG = "connection_config";
     private static final String TOKEN = "SESSION_TOKEN";
 
-    private static final String APP_SERVER_IP = "192.168.127.1";
+    private static final String APP_SERVER_IP = "192.168.1.33";
     private static final String APP_SERVER_PORT = "8083";
 
     private static String getAppServerURL() {
@@ -45,7 +45,7 @@ public class MatchAPI {
         SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(TOKEN, token);
-        editor.commit();
+        editor.apply();
     }
 
 }

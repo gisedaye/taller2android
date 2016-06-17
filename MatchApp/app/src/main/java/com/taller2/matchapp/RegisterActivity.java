@@ -8,14 +8,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Toast;
+import android.widget.*;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.taller2.matchapp.config.MatchAPI;
+import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,10 +34,13 @@ public class RegisterActivity extends BaseActivity {
     private EditText mUsernameView;
     private EditText mPasswordView;
     private RadioButton mSexFemale;
-    private RadioButton mSexMale;
-    private View mProgressView;
-    private View mRegisterFormView;
+
+    private TextView interestTv;
     private Toolbar myToolbar;
+    private RadioButton mSexMale;
+
+    private Integer[] selectedInterestIndices = new Integer[]{};
+    private String[] interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class RegisterActivity extends BaseActivity {
 
 
         Button mUserRegisterButton = (Button) findViewById(R.id.user_register_button);
+        //noinspection ConstantConditions
         mUserRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,14 +63,24 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
-        mRegisterFormView = findViewById(R.id.register_form);
-
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        interestTv = (TextView) findViewById(R.id.interests);
+        //noinspection ConstantConditions
+        interestTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onEditInterests();
+            }
+        });
+
+        //Fetch interests from appServer
+        getInterests();
     }
 
     /**
@@ -176,5 +188,37 @@ public class RegisterActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getInterests() {
+        interests = new String[]{"music-band/aerosmith", "music-band/miranda", "music-band/La Portuaria"};
+    }
+
+    private void onEditInterests() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.interests_dialog_title)
+                .items(interests)
+                .itemsCallbackMultiChoice(selectedInterestIndices, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        selectedInterestIndices = which;
+                        if (which.length > 0) {
+                            StringBuilder labelBuilder = new StringBuilder();
+                            for (int index = 0; index < which.length; index++) {
+                                labelBuilder.append(interests[index]);
+                                if (index != which.length - 1) {
+                                    labelBuilder.append(" , ");
+                                }
+                            }
+                            interestTv.setText(labelBuilder.toString());
+                        } else {
+                            interestTv.setHint(R.string.interests_dialog_title);
+                        }
+
+                        return true;
+                    }
+                })
+                .positiveText(R.string.choose)
+                .show();
     }
 }

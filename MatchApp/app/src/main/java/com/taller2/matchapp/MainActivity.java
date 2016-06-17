@@ -16,16 +16,14 @@ import com.android.volley.toolbox.Volley;
 import com.andtinder.model.CardModel;
 import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
-import com.taller2.matchapp.config.MatchAPI;
+import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends BaseActivity {
