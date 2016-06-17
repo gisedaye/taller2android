@@ -37,7 +37,7 @@ import java.util.List;
 public class RegisterActivity extends BaseActivity {
 
     private static final String KEY_AGE = "age";
-    public static final String KEY_GENDER = "sex";
+    public static final String KEY_GENDER = "gender";
     private static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
@@ -77,7 +77,7 @@ public class RegisterActivity extends BaseActivity {
         sexFemaleRb = (RadioButton) findViewById(R.id.sex_female);
         ageEt = (EditText) findViewById(R.id.age);
         emailEt = (EditText) findViewById(R.id.email);
-        nameEt = (EditText) findViewById(R.id.email);
+        nameEt = (EditText) findViewById(R.id.name);
 
         Button mUserRegisterButton = (Button) findViewById(R.id.user_register_button);
         //noinspection ConstantConditions
