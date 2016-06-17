@@ -125,8 +125,6 @@
                             android:background="@color/colorPrimary"
                             android:layout_centerInParent="true"
                             android:scaleType="centerInside"/>
-
-
                 </LinearLayout>
 
 

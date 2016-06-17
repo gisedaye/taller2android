@@ -1,6 +1,7 @@
 package com.taller2.matchapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.soundcloud.android.crop.Crop;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Interest;
@@ -21,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,8 @@ public class RegisterActivity extends BaseActivity {
     private static final char SEX_FEMALE = 'M';
     private static final char SEX_MALE = 'H';
 
+    private static final int PICK_IMAGE_REQUEST_CODE = 1;
+
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
@@ -46,6 +52,10 @@ public class RegisterActivity extends BaseActivity {
     private List<String> interests;
     private boolean shouldFetchInterest;
     private Integer[] selectedInterestIndices = new Integer[]{};
+
+    //Profile photo
+    private Uri currentPhotoUri;
+    private ImageView profileIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +94,41 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+        profileIv = (ImageView) findViewById(R.id.profile_image);
+        profileIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage(PICK_IMAGE_REQUEST_CODE);
+            }
+        });
+
         //Fetch interests from appServer
         fetchInterests();
+    }
+
+    private void pickImage(int requestCode) {
+        Crop.pickImage(this, requestCode);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        super.onActivityResult(requestCode, resultCode, result);
+        if (requestCode == PICK_IMAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                beginCrop(result.getData());
+            } else {
+                profileIv.setImageDrawable(null);
+            }
+        } else if (requestCode == Crop.REQUEST_CROP) {
+            if (resultCode == RESULT_OK) {
+                Glide.with(this)
+                        .load(Crop.getOutput(result))
+                        .into(profileIv);
+            } else if (resultCode == Crop.RESULT_ERROR) {
+                Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
@@ -93,6 +136,7 @@ public class RegisterActivity extends BaseActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+
     private void attemptRegister() {
 
         // Reset errors.
@@ -272,5 +316,10 @@ public class RegisterActivity extends BaseActivity {
                 })
                 .positiveText(R.string.choose)
                 .show();
+    }
+
+    private void beginCrop(Uri source) {
+        currentPhotoUri = Uri.fromFile(new File(getCacheDir(), "cropped" + System.currentTimeMillis()));
+        Crop.of(source, currentPhotoUri).asSquare().start(this);
     }
 }

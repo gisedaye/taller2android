@@ -31,8 +31,9 @@
         <activity
                 android:name=".MainActivity"
                 android:windowSoftInputMode="adjustPan"
-                android:label="@string/title_activity_match">
-        </activity>
+                android:label="@string/title_activity_match"/>
+
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
     </application>
 
 </manifest>

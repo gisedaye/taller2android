@@ -69,8 +69,10 @@
                 <Button
                         android:id="@+id/email_sign_in_button"
                         style="?android:textAppearanceSmall"
+                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
                         android:layout_marginTop="16dp"
                         android:layout_gravity="bottom"
                         android:text="@string/title_activity_login"
