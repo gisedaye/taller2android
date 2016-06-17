@@ -28,66 +28,106 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
-                        android:id="@+id/input_layout_username"
+
+                <RelativeLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    <EditText
-                            android:id="@+id/username"
+                    <ImageView
+                            android:id="@+id/basic_profile"
+                            android:src="@mipmap/ic_person"
+                            android:layout_marginRight="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"/>
+
+                    <LinearLayout
+                            android:layout_toRightOf="@id/basic_profile"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/prompt_username"
-                            android:maxLines="1"
-                            android:singleLine="true"/>
-                </android.support.design.widget.TextInputLayout>
+                            android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputLayout
+                                android:id="@+id/input_layout_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp">
+
+                            <EditText
+                                    android:id="@+id/username"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/prompt_username"
+                                    android:maxLines="1"
+                                    android:singleLine="true"/>
+                        </android.support.design.widget.TextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
-                        android:id="@+id/input_layout_password"
+                        <android.support.design.widget.TextInputLayout
+                                android:id="@+id/input_layout_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp">
+
+                            <EditText
+                                    android:id="@+id/password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/prompt_password"
+                                    android:inputType="textPassword"
+                                    android:maxLines="1"
+                                    android:singleLine="true"/>
+                        </android.support.design.widget.TextInputLayout>
+
+
+                        <RadioGroup
+                                android:id="@+id/group_sex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_below="@+id/btnCustom">
+
+                            <RadioButton
+                                    android:id="@+id/sex_female"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/prompt_female"
+                                    android:checked="true"/>
+
+                            <RadioButton
+                                    android:id="@+id/sex_male"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/prompt_male"/>
+                        </RadioGroup>
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <EditText
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/prompt_password"
-                            android:inputType="textPassword"
-                            android:maxLines="1"
-                            android:singleLine="true"/>
-                </android.support.design.widget.TextInputLayout>
-
-
-                <TextView
-                        android:id="@+id/genderLabel"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="@string/prompt_sex"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"/>
+                        android:orientation="horizontal">
 
-                <RadioGroup
-                        android:id="@+id/group_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_below="@+id/btnCustom">
-
-                    <RadioButton
-                            android:id="@+id/sex_female"
+                    <ImageView
+                            android:src="@mipmap/ic_photo_camera"
+                            android:layout_marginRight="16dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/prompt_female"
-                            android:checked="true"/>
+                            android:layout_height="wrap_content"/>
 
-                    <RadioButton
-                            android:id="@+id/sex_male"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/prompt_male"/>
-                </RadioGroup>
+                    <ImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_user"
+                            android:background="@color/colorPrimary"
+                            android:layout_centerInParent="true"
+                            android:scaleType="centerInside"/>
+
+
+                </LinearLayout>
 
 
                 <TextView
@@ -96,8 +136,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:text="@string/interests"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginBottom="8dp"/>
 
                 <TextView
                         android:id="@+id/interests"
@@ -114,8 +153,10 @@
                     <Button
                             android:id="@+id/user_register_button"
                             style="?android:textAppearanceSmall"
+                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/colorPrimary"
                             android:layout_marginTop="16dp"
                             android:layout_gravity="bottom"
                             android:text="@string/action_register"
