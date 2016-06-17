@@ -28,9 +28,9 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
 
     public MathAppJsonRequest(Context context, int method, String url, JSONObject jsonRequest) {
         super(method, url, jsonRequest, null, null);
-
         contextWr = new WeakReference<>(context);
     }
+
 
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {

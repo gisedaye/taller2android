@@ -15,10 +15,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.model.Interest;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -39,8 +43,9 @@ public class RegisterActivity extends BaseActivity {
     private Toolbar myToolbar;
     private RadioButton mSexMale;
 
+    private List<String> interests;
+    private boolean shouldFetchInterest;
     private Integer[] selectedInterestIndices = new Integer[]{};
-    private String[] interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +85,7 @@ public class RegisterActivity extends BaseActivity {
         });
 
         //Fetch interests from appServer
-        getInterests();
+        fetchInterests();
     }
 
     /**
@@ -190,11 +195,57 @@ public class RegisterActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getInterests() {
-        interests = new String[]{"music-band/aerosmith", "music-band/miranda", "music-band/La Portuaria"};
+    private void fetchInterests() {
+
+        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, MatchAPI.getInterestsEndpoint()) {
+
+            @Override
+            public void onSuccess(JSONObject data) {
+                interests = new ArrayList<>();
+                JSONArray interestsArray = data.optJSONArray("interests");
+                for (int index = 0; index < interestsArray.length(); index++) {
+                    JSONObject interestJO = interestsArray.optJSONObject(index);
+                    Interest interest = new Interest();
+                    interest.fromJson(interestJO);
+                    interests.add(interest.toString());
+                }
+                if (shouldFetchInterest) {
+                    showInterestsDialog();
+                    shouldFetchInterest = false;
+                }
+            }
+
+            @Override
+            public int expectedCode() {
+                return HttpsURLConnection.HTTP_OK;
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                activityIndicator.hide();
+            }
+
+            @Override
+            public void onNoConnection() {
+                activityIndicator.hide();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        requestQueue.add(registerRequest);
     }
 
     private void onEditInterests() {
+        if (interests == null) {
+            fetchInterests();
+            shouldFetchInterest = true;
+            activityIndicator.show();
+        } else {
+            showInterestsDialog();
+        }
+    }
+
+    private void showInterestsDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.interests_dialog_title)
                 .items(interests)
@@ -205,7 +256,8 @@ public class RegisterActivity extends BaseActivity {
                         if (which.length > 0) {
                             StringBuilder labelBuilder = new StringBuilder();
                             for (int index = 0; index < which.length; index++) {
-                                labelBuilder.append(interests[index]);
+                                final String selectedInterest = interests.get(index);
+                                labelBuilder.append(selectedInterest);
                                 if (index != which.length - 1) {
                                     labelBuilder.append(" , ");
                                 }

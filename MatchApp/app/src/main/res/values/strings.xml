@@ -39,4 +39,5 @@
     <string name="choose">Choose</string>
     <string name="interests_dialog_title">Pick your interests</string>
     <string name="interests">Interests</string>
+    <string name="interests_fetch_failed">Interests fetch fail, please try again.</string>
 </resources>
