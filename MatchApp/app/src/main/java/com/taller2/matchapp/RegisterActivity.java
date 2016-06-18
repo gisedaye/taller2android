@@ -42,6 +42,7 @@ public class RegisterActivity extends BaseActivity {
     private static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
+    private static final String KEY_INTERESTS = "interests";
     private static final String KEY_PHOTO_PROFILE = "photo_profile";
 
     private static final char SEX_MALE = 'H';
@@ -86,7 +87,7 @@ public class RegisterActivity extends BaseActivity {
         mUserRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptRegister();
+                attempRegister();
             }
         });
 
@@ -149,7 +150,7 @@ public class RegisterActivity extends BaseActivity {
      * errors are presented and no actual login attempt is made.
      */
 
-    private void attemptRegister() {
+    private void attempRegister() {
 
         // Reset errors.
         usernameEt.setError(null);
@@ -224,6 +225,7 @@ public class RegisterActivity extends BaseActivity {
             requestBody.put(KEY_AGE, Integer.valueOf(age));
             requestBody.put(KEY_EMAIL, email);
             requestBody.put(KEY_NAME, name);
+            requestBody.put(KEY_INTERESTS, "[ '" + interestTv.getText().toString() + "' ]");
             requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
         } catch (JSONException e) {
             //Never will happen
@@ -284,6 +286,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onSuccess(JSONObject data) {
+                activityIndicator.hide();
                 interests = new ArrayList<>();
                 JSONArray interestsArray = data.optJSONArray("interests");
                 for (int index = 0; index < interestsArray.length(); index++) {
@@ -317,8 +320,8 @@ public class RegisterActivity extends BaseActivity {
 
     private void onEditInterests() {
         if (interests == null) {
-            fetchInterests();
             activityIndicator.show();
+            fetchInterests();
         } else {
             showInterestsDialog();
         }
@@ -336,10 +339,10 @@ public class RegisterActivity extends BaseActivity {
                         if (which.length > 0) {
                             StringBuilder labelBuilder = new StringBuilder();
                             for (int index = 0; index < which.length; index++) {
-                                final String selectedInterest = interests.get(index);
+                                final String selectedInterest = interests.get(index).toString();
                                 labelBuilder.append(selectedInterest);
                                 if (index != which.length - 1) {
-                                    labelBuilder.append(" , ");
+                                    labelBuilder.append(", ");
                                 }
                             }
                             interestTv.setText(labelBuilder.toString());

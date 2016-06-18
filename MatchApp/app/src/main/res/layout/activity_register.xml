@@ -134,7 +134,6 @@
                                     android:textColor="@color/black"
                                     android:inputType="textEmailAddress"
                                     android:maxLines="1"
-                                    android:maxLength="3"
                                     android:singleLine="true"/>
                         </android.support.design.widget.TextInputLayout>
 

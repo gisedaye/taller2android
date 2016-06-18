@@ -53,6 +53,6 @@ public class Interest implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s , %s", category, value);
+        return String.format("%s-%s", category, value);
     }
 }
