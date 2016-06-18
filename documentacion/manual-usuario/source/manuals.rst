@@ -1,11 +1,13 @@
 *********
 MatchApp
 
-Manual de usuario
+Manual de Usuario
 *********
 **Grupo 10**
 
-**Ayudante asignado: Christian Calonico**
+**Taller de Programación II**
+
+**Ayudante: Christian Calonico**
 
 **Integrantes:**
 
@@ -64,24 +66,34 @@ https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 Shared Server
 ============================================
 
-- Ingrese a https://sharedserver.herokuapp.com/
+- Para comenzar a utilizar el Shared Server, debe redirigirse con su navegador al sitio https://sharedserver.herokuapp.com/. Una vez ingresado allí, observará la portada inicial del sitio como la que se muestra a continuación:
+.. image:: Screenshots/shared_portada.png
 
-- Para dar de alta un usuario haga click en “Alta usuario”. Se lo redireccionara a la pantalla de alta de usuario
-.. image:: Screenshots/user.png
+- Para dar de alta un usuario haga click en “Alta usuario”. Se lo redireccionara a la pantalla para dar de alta al usuario
+.. image:: Screenshots/shared_altaUsuario.png
 
-- Ingrese lo datos requeridos y haga click en el boton “Alta Usuario”
-- Se le podran agregar intereses al usuario en la vista de alta
+- Al ingresar, se le mostrará una advertencia para poder activar la Geolocalización a fin de saber sus posiciones geográficas
+.. image:: Screenshots/shared_localizacion.png
 
-- Si el usuario se creo correctamente se mostrara el texto “Created”
+- Al aceptar, se mostrará en la parte inferior del formulario de carga de usuario, su localización
+.. image:: Screenshots/shared_localizacion2.png
 
-- Para ver los usuarios registrados ingrese haga click en “Ver usuarios”. Se redireccionara a la pantalla de listado de usuarios
-.. image:: Screenshots/userslist.png
+- Ingrese lo datos requeridos y haga click en el boton “Enviar” para agregar un usuario a Match App.
 
-- Para borrar un usuario haga click en el boton Delete.
-- Para editar los datos de un usuario haga click en el boton Edit. Se lo redireccionara a la pantalla de Modificar usuario.
-- Se le podran modificar los intereses al usuario en la vista de edicion
+- Para ver los usuarios registrados seleccione la opción "Usuarios" desde la portada del sitio. Se redireccionara a la pantalla de listado de usuarios
+.. image:: Screenshots/shared_listadoUsuarios.png
 
-- Se podra ver el listado de intereses haciendo click en "Ver intereses"
-- Se podran dar de alta intereses en distintas categorias haciendo click en el boton de "Alta interes".
-- Se podra modificar un interes haciendo click en el boton de "Editar" del listado de intereses.
-- Se podra borrar un interes haciendo click en el boton de "Delete" del listado de intereses.
+- Cada usuario se puede borrar, eliminandolo completamente de la aplicación. Para ello solo debe hacer click en el icono de borrado al lado de cada usuario. Además, se podran editar las propiedades de cada usuario, haciendo click en el icono en forma de lapiz al lado del usuario. Si se selecciona la edición de un usuario, la aplicación lo redireccionará a una nueva pantalla, como la que se muestra a continuación
+
+.. image:: Screenshots/shared_editUsuarios.png
+
+- La pantalla le mostrará los datos cargados por el usuario. Una vez finalizada la edición, click en "Enviar" para guardar los cambios
+
+- Además, se podran agregar y borrar los intereses permitidos en la aplicación. Para ingresar, dirigirse a la portada y seleccionar "Intereses" en el margen superior derecho. Esto lo llevará a la pantalla con el listado de intereses actuales
+.. image:: Screenshots/shared_listadoIntereses.png
+
+- Para dar de alta una nueva intereses, debe hacer click en el botón de "Alta interes". 
+.. image:: Screenshots/shared_altaInteres.png 
+
+- Luego de completar los campos, hacer click en Enviar para dar de alta el nuevo interés.
+- Se podra borrar un interes haciendo click en el botón que se encuentra al lado de cada interés.
