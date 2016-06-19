@@ -90,57 +90,62 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onSuccess(JSONObject data) {
-                Log.d("Response: ", data.toString());
                 try {
                     JSONObject profile = data.optJSONObject("profile");
+                    if (profile != null && !profile.isNull("alias")) {
+                        String age = profile.optString("age");
+                        String name = profile.optString("name");
+                        final String username = profile.optString("alias");
 
-                    String age = profile.optString("age");
-                    String name = profile.optString("name");
-                    final String username = profile.optString("alias");
+                        String description = String.format("%s (%s)", name, age);
 
-                    String description = String.format("%s (%s)", name, age);
+                        Bitmap bitmap = null;
+                        String imageData = profile.optString("photo_profile");
 
-                    Bitmap bitmap = null;
-                    String imageData = profile.optString("photo_profile");
+                        try {
+                            byte[] decodedBytes = Base64.decode(imageData, 0);
+                            bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                        } catch (Exception e) {
+                            Log.e("Bad base 64", imageData);
+                        }
 
-                    try {
-                        byte[] decodedBytes = Base64.decode(imageData, 0);
-                        bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                    } catch (Exception e) {
-                        Log.e("Bad base 64", imageData);
-                    }
+                        CardModel cardModel;
 
-                    CardModel cardModel;
+                        if (bitmap != null) {
+                            cardModel = new CardModel("New candidate!", description, bitmap);
+                        } else {
+                            cardModel = new CardModel("New candidate!", description, getDrawable(R.mipmap.ic_user));
+                        }
 
-                    if (bitmap != null) {
-                        cardModel = new CardModel("New candidate!", description, bitmap);
+                        cardModel.setOnClickListener(new CardModel.OnClickListener() {
+                            @Override
+                            public void OnClickListener() {
+                                Log.i("Swipeable Cards", "I am pressing the card");
+                            }
+                        });
+
+                        cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
+                            @Override
+                            public void onLike() {
+                                performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+                                fetchCandidates();
+                            }
+
+                            @Override
+                            public void onDislike() {
+                                performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
+                                fetchCandidates();
+                            }
+                        });
+
+                        adapter.add(cardModel);
+                        if (mCardContainer.getAdapter() != null) {
+                            mCardContainer.setAdapter(adapter);
+                        }
+                        adapter.notifyDataSetChanged();
                     } else {
-                        cardModel = new CardModel("New candidate!", description, getDrawable(R.mipmap.ic_user));
+                        Toast.makeText(MainActivity.this, getString(R.string.no_candidates), Toast.LENGTH_LONG).show();
                     }
-
-                    cardModel.setOnClickListener(new CardModel.OnClickListener() {
-                        @Override
-                        public void OnClickListener() {
-                            Log.i("Swipeable Cards", "I am pressing the card");
-                        }
-                    });
-
-                    cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
-                        @Override
-                        public void onLike() {
-                            performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
-                        }
-
-                        @Override
-                        public void onDislike() {
-                            performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
-                        }
-                    });
-
-
-                    adapter.add(cardModel);
-                    adapter.notifyDataSetChanged();
-                    mCardContainer.setAdapter(adapter);
                 } catch (Exception e) {
                     getActivityIndicator().hide();
                     Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();

@@ -1,6 +1,7 @@
 package com.taller2.matchapp.http;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -45,22 +46,26 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
+            JSONObject data = response.optJSONObject("data");
+            if (data != null) {
+                //Sacar esto cuando lo resolvamos en el appServer
+                String dataString = data.toString().replace("\\\"", "\"").replace("\"{", "{")
+                        .replace("}\"", "}").replace("\\/", "/").replace("\"[", "[").replace("]\"", "]");
 
-            JSONObject data = response.getJSONObject("data");
-
-            //Sacar esto cuando lo resolvamos en el appServer
-            String dataString = data.toString().replace("\\\"", "\"").replace("\"{", "{")
-                    .replace("}\"", "}").replace("\\/", "/").replace("\"[", "[").replace("]\"", "]");
-
-
-            data = new JSONObject(dataString);
-            if (statusCode == expectedCode()) {
-                onSuccess(data);
+                data = new JSONObject(dataString);
+                if (statusCode == expectedCode()) {
+                    onSuccess(data);
+                } else {
+                    showFirstError(response);
+                    onError(statusCode);
+                }
             } else {
-                showFirstError(response);
-                onError(statusCode);
+                if (statusCode == expectedCode()) {
+                    onSuccess(null);
+                }
             }
         } catch (JSONException e) {
+            Log.e("No valid JSON: ", e.toString());
         }
     }
 
