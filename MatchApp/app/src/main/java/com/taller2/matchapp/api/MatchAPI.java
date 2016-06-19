@@ -49,8 +49,15 @@ public class MatchAPI {
 
     public static void setToken(Context context, String token) {
         SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        final SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(TOKEN, token);
+        editor.apply();
+    }
+
+    public static void clearToken(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(TOKEN);
         editor.apply();
     }
 

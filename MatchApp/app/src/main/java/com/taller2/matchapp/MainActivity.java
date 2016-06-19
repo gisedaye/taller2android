@@ -1,5 +1,6 @@
 package com.taller2.matchapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -60,6 +61,21 @@ public class MainActivity extends BaseActivity {
         };
         drawer.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
+
+        final View logoutView = findViewById(R.id.logout);
+
+        //noinspection ConstantConditions
+        logoutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MatchAPI.clearToken(MainActivity.this);
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         adapter = new SimpleCardStackAdapter(this);
         adapter.setShouldFillCardBackground(true);
