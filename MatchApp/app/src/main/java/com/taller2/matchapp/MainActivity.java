@@ -139,10 +139,7 @@ public class MainActivity extends BaseActivity {
                         });
 
                         adapter.add(cardModel);
-                        if (mCardContainer.getAdapter() != null) {
-                            mCardContainer.setAdapter(adapter);
-                        }
-                        adapter.notifyDataSetChanged();
+                        mCardContainer.setAdapter(adapter);
                     } else {
                         Toast.makeText(MainActivity.this, getString(R.string.no_candidates), Toast.LENGTH_LONG).show();
                     }
