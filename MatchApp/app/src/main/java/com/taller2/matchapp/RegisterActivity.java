@@ -61,7 +61,7 @@ public class RegisterActivity extends BaseActivity {
     private TextView interestTv;
     private Toolbar myToolbar;
 
-    private List<String> interests;
+    private List<Interest> interests;
     private Integer[] selectedInterestIndices = new Integer[]{};
 
     //Profile photo
@@ -225,7 +225,13 @@ public class RegisterActivity extends BaseActivity {
             requestBody.put(KEY_AGE, Integer.valueOf(age));
             requestBody.put(KEY_EMAIL, email);
             requestBody.put(KEY_NAME, name);
-            requestBody.put(KEY_INTERESTS, "[ '" + interestTv.getText().toString() + "' ]");
+
+            JSONArray jsonArray=new JSONArray();
+            for(Interest interest: interests){
+                jsonArray.put(interest.toJson());
+            }
+
+            requestBody.put(KEY_INTERESTS, jsonArray);
             requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
         } catch (JSONException e) {
             //Never will happen
@@ -291,10 +297,9 @@ public class RegisterActivity extends BaseActivity {
                 JSONArray interestsArray = data.optJSONArray("interests");
                 for (int index = 0; index < interestsArray.length(); index++) {
                     JSONObject interestJO = interestsArray.optJSONObject(index);
-                    interestJO = interestJO.optJSONObject("interest");
                     Interest interest = new Interest();
                     interest.fromJson(interestJO);
-                    interests.add(interest.toString());
+                    interests.add(interest);
                 }
             }
 
