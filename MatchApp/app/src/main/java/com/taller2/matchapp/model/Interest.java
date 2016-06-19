@@ -1,7 +1,6 @@
 package com.taller2.matchapp.model;
 
 import com.taller2.matchapp.util.Serializable;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -11,17 +10,14 @@ public class Interest implements Serializable {
 
     public static final String VALUE = "value";
     public static final String CATEGORY = "category";
+    public static final String ID = "id";
 
+    public int id;
     public String value;
     public String category;
 
     public Interest() {
 
-    }
-
-    public Interest(String value, String category) {
-        this.value = value;
-        this.category = category;
     }
 
     public String getValue() {
@@ -32,21 +28,13 @@ public class Interest implements Serializable {
         return category;
     }
 
-    public JSONObject toJson() {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject();
-            jsonObject.putOpt(VALUE, value);
-            jsonObject.putOpt(CATEGORY, category);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jsonObject;
+    public Object toJson() {
+        return id;
     }
 
     @Override
     public void fromJson(JSONObject jsonObject) {
+        id = jsonObject.optInt(ID);
         value = jsonObject.optString(VALUE);
         category = jsonObject.optString(CATEGORY);
     }

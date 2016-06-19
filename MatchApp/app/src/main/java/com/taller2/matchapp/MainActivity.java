@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity {
 
                     String description = String.format("%s (%s)", name, age);
 
-                    String imageData = profile.optString("image");
+                    String imageData = profile.optString("photo_profile");
                     byte[] decodedBytes = Base64.decode(imageData, 0);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
