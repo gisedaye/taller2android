@@ -44,4 +44,6 @@
     <string name="age">Age</string>
     <string name="prompt_name">Name</string>
     <string name="logout">Logout</string>
+    <string name="liked">Liked!</string>
+    <string name="disliked">Disliked!</string>
 </resources>

@@ -26,6 +26,10 @@ public abstract class MathAppJsonRequest extends JsonObjectRequest {
         this(context, Method.GET, url, null);
     }
 
+    public MathAppJsonRequest(Context context, int method, String url) {
+        this(context, method, url, null);
+    }
+
     public MathAppJsonRequest(Context context, int method, String url, JSONObject jsonRequest) {
         super(method, url, jsonRequest, null, null);
         contextWr = new WeakReference<>(context);

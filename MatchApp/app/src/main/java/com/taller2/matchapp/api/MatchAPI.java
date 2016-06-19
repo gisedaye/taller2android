@@ -13,6 +13,9 @@ public class MatchAPI {
     private static final String INTERESTS_ENDPOINT = "/api/accounts/interests";
     private static final String CANDIDATES_ENDPOINT = "/api/matches/candidate";
 
+    private static final String LIKE_ENDPOINT = "/api/accounts/%s/like";
+    private static final String DISLIKE_ENDPOINT = "/api/accounts/%s/dislike";
+
 
     private static final String CONNECTION_CONFIG = "connection_config";
     private static final String TOKEN = "SESSION_TOKEN";
@@ -41,6 +44,13 @@ public class MatchAPI {
         return getAppServerURL() + CANDIDATES_ENDPOINT;
     }
 
+    public static String getLikeEndpoint(String username) {
+        return getAppServerURL() + String.format(LIKE_ENDPOINT, username);
+    }
+
+    public static String getDislikeEndpoint(String username) {
+        return getAppServerURL() + String.format(DISLIKE_ENDPOINT, username);
+    }
 
     public static String getToken(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);

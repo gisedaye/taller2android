@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.andtinder.model.CardModel;
@@ -94,8 +95,9 @@ public class MainActivity extends BaseActivity {
                 try {
                     JSONObject profile = data.optJSONObject("profile");
 
-                    String name = profile.optString("name");
                     String age = profile.optString("age");
+                    String name = profile.optString("name");
+                    final String username = profile.optString("alias");
 
                     String description = String.format("%s (%s)", name, age);
 
@@ -103,8 +105,8 @@ public class MainActivity extends BaseActivity {
                     byte[] decodedBytes = Base64.decode(imageData, 0);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
-
                     CardModel cardModel = new CardModel("New candidate!", description, bitmap);
+
                     cardModel.setOnClickListener(new CardModel.OnClickListener() {
                         @Override
                         public void OnClickListener() {
@@ -115,12 +117,12 @@ public class MainActivity extends BaseActivity {
                     cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
                         @Override
                         public void onLike() {
-                            Log.i("Swipeable Cards", "I like the card");
+                            performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
                         }
 
                         @Override
                         public void onDislike() {
-                            Log.i("Swipeable Cards", "I dislike the card");
+                            performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
                         }
                     });
 
@@ -128,8 +130,43 @@ public class MainActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     getActivityIndicator().hide();
-                    Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG);
+                    Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
                 }
+            }
+
+            @Override
+            public int expectedCode() {
+                return HttpsURLConnection.HTTP_OK;
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                getActivityIndicator().hide();
+            }
+
+            @Override
+            public void onNoConnection() {
+                getActivityIndicator().hide();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", MatchAPI.getToken(MainActivity.this));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        requestQueue.add(registerRequest);
+    }
+
+    private void performAction(final String endpoint, final String message) {
+        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, Request.Method.PUT, endpoint) {
+
+            @Override
+            public void onSuccess(JSONObject data) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
