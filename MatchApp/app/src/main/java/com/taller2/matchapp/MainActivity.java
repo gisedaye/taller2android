@@ -101,11 +101,23 @@ public class MainActivity extends BaseActivity {
 
                     String description = String.format("%s (%s)", name, age);
 
+                    Bitmap bitmap = null;
                     String imageData = profile.optString("photo_profile");
-                    byte[] decodedBytes = Base64.decode(imageData, 0);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
-                    CardModel cardModel = new CardModel("New candidate!", description, bitmap);
+                    try {
+                        byte[] decodedBytes = Base64.decode(imageData, 0);
+                        bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    } catch (Exception e) {
+                        Log.e("Bad base 64", imageData);
+                    }
+
+                    CardModel cardModel;
+
+                    if (bitmap != null) {
+                        cardModel = new CardModel("New candidate!", description, bitmap);
+                    } else {
+                        cardModel = new CardModel("New candidate!", description, getDrawable(R.mipmap.ic_user));
+                    }
 
                     cardModel.setOnClickListener(new CardModel.OnClickListener() {
                         @Override
