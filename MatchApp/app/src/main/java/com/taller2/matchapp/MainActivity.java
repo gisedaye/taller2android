@@ -80,7 +80,6 @@ public class MainActivity extends BaseActivity {
 
         adapter = new SimpleCardStackAdapter(this);
         adapter.setShouldFillCardBackground(true);
-        mCardContainer.setAdapter(adapter);
         fetchCandidates();
     }
 
@@ -138,8 +137,10 @@ public class MainActivity extends BaseActivity {
                         }
                     });
 
+
                     adapter.add(cardModel);
                     adapter.notifyDataSetChanged();
+                    mCardContainer.setAdapter(adapter);
                 } catch (Exception e) {
                     getActivityIndicator().hide();
                     Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
