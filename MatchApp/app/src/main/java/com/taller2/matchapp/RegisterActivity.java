@@ -79,8 +79,8 @@ public class RegisterActivity extends BaseActivity {
         passwordEt = (EditText) findViewById(R.id.password);
         sexFemaleRb = (RadioButton) findViewById(R.id.sex_female);
         ageEt = (EditText) findViewById(R.id.age);
-        emailEt = (EditText) findViewById(R.id.email);
-        nameEt = (EditText) findViewById(R.id.name);
+        emailEt = (EditText) findViewById(R.id.emailEt);
+        nameEt = (EditText) findViewById(R.id.nameEt);
 
         Button mUserRegisterButton = (Button) findViewById(R.id.user_register_button);
         //noinspection ConstantConditions

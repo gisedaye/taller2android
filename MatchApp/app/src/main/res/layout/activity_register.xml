@@ -88,7 +88,7 @@
                                 android:layout_height="50dp">
 
                             <EditText
-                                    android:id="@+id/name"
+                                    android:id="@+id/nameEt"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="@string/prompt_name"
@@ -126,7 +126,7 @@
                                 android:layout_height="50dp">
 
                             <EditText
-                                    android:id="@+id/email"
+                                    android:id="@+id/emailEt"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="@string/prompt_email"
