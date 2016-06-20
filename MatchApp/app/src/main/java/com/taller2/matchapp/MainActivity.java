@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.model.Profile;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -77,8 +79,18 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        Profile profile = Session.getInstance(this).getProfile();
+        String imageData = profile.getProilePhoto();
 
-
+        try {
+            byte[] decodedBytes = Base64.decode(imageData, 0);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            ImageView profileIv = (ImageView) findViewById(R.id.profile_image);
+            //noinspection ConstantConditions
+            profileIv.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.e("Bad base 64", imageData);
+        }
 
         adapter = new SimpleCardStackAdapter(this);
         adapter.setShouldFillCardBackground(true);

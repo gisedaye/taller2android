@@ -34,7 +34,7 @@ public class Profile implements Serializable, Parcelable {
         }
     };
 
-    public Profile(){
+    public Profile() {
 
     }
 
@@ -80,5 +80,9 @@ public class Profile implements Serializable, Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getProilePhoto() {
+        return photo_profile;
     }
 }

@@ -63,6 +63,10 @@ public class Session {
         }
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
     public String getToken() {
         return token;
     }
