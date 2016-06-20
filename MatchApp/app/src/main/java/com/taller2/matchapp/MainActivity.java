@@ -20,6 +20,7 @@ import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import lombok.core.Main;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -69,7 +70,7 @@ public class MainActivity extends BaseActivity {
         logoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MatchAPI.clearToken(MainActivity.this);
+                Session.getInstance(MainActivity.this).logout();
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -167,7 +168,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("Authorization", MatchAPI.getToken(MainActivity.this));
+                params.put("Authorization", Session.getInstance(MainActivity.this).getToken());
                 return params;
             }
         };
@@ -202,7 +203,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("Authorization", MatchAPI.getToken(MainActivity.this));
+                params.put("Authorization", Session.getInstance(MainActivity.this).getToken());
                 return params;
             }
         };

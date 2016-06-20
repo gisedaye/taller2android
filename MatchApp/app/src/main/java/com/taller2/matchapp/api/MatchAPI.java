@@ -16,10 +16,6 @@ public class MatchAPI {
     private static final String LIKE_ENDPOINT = "/api/accounts/%s/like";
     private static final String DISLIKE_ENDPOINT = "/api/accounts/%s/dislike";
 
-
-    private static final String CONNECTION_CONFIG = "connection_config";
-    private static final String TOKEN = "SESSION_TOKEN";
-
     private static final String APP_SERVER_IP = "192.168.1.133";
     private static final String APP_SERVER_PORT = "8083";
 
@@ -51,24 +47,4 @@ public class MatchAPI {
     public static String getDislikeEndpoint(String username) {
         return getAppServerURL() + String.format(DISLIKE_ENDPOINT, username);
     }
-
-    public static String getToken(Context context) {
-        SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
-        return sharedPref.getString(TOKEN, null);
-    }
-
-    public static void setToken(Context context, String token) {
-        SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(TOKEN, token);
-        editor.apply();
-    }
-
-    public static void clearToken(Context context) {
-        SharedPreferences sharedPref = context.getSharedPreferences(CONNECTION_CONFIG, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-        editor.remove(TOKEN);
-        editor.apply();
-    }
-
 }

@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject data) {
                     String token = data.optString("accessToken");
-                    MatchAPI.setToken(LoginActivity.this, token);
+                    Session.getInstance(LoginActivity.this).setToken(token);
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(i);

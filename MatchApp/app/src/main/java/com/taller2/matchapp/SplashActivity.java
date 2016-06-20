@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import com.taller2.matchapp.api.MatchAPI;
 
 /**
  * Created by federicofarina on 6/7/16.
@@ -21,16 +20,14 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Intent intent = new Intent();
                 //If user is logged in
-                if (MatchAPI.getToken(SplashActivity.this) == null) {
-                    Intent intent = new Intent();
-                    intent.setClass(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent();
+                if (Session.getInstance(SplashActivity.this).isLoggedIn()) {
                     intent.setClass(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
+                } else {
+                    intent.setClass(SplashActivity.this, LoginActivity.class);
                 }
+                    startActivity(intent);
                 finish();
             }
         }, START_DELAY);
