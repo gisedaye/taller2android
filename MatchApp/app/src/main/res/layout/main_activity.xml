@@ -1,89 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v4.widget.DrawerLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/drawer"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:elevation="7dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="7dp">
 
-	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-			<include
-				android:id="@+id/tool_bar"
-				android:layout_alignParentTop="true"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				layout="@layout/toolbar"/>
+            <include
+                    android:id="@+id/tool_bar"
+                    android:layout_alignParentTop="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    layout="@layout/toolbar"/>
 
-			<de.hdodenhof.circleimageview.CircleImageView
-				android:id="@+id/profile_image"
-				android:layout_centerInParent="true"
-				android:background="@color/card_bg"
-				android:layout_width="96dp"
-				android:layout_height="96dp"
-				android:src="@mipmap/ic_user"
-				app:civ_border_width="2dp"
-				app:civ_border_color="#FF000000"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_centerInParent="true"
+                    android:background="@color/card_bg"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@mipmap/ic_user"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorPrimary"/>
 
-			<com.andtinder.view.CardContainer
-				android:id="@+id/layoutview"
-				android:layout_centerInParent="true"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				app:orientation="ordered"/>
-
-
-		</RelativeLayout>
-	</FrameLayout>
-
-	<RelativeLayout
-		android:id="@+id/drawer_main_content"
-		android:orientation="vertical"
-		android:background="@color/white"
-		android:layout_gravity="start"
-		android:layout_width="@dimen/drawer_width"
-		android:layout_height="match_parent">
-
-		<LinearLayout
-			android:padding="20dp"
-			android:layout_alignParentTop="true"
-			android:background="@color/card_bg"
-			android:layout_width="match_parent"
-			android:layout_height="200dp">
-
-			<ImageView
-				android:id="@+id/imageView"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:src="@drawable/match_logo"
-				android:layout_gravity="center"/>
-		</LinearLayout>
+            <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_centerInParent="true"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:indeterminateDrawable="@drawable/progress"
+                    android:layout_width="146dp"
+                    android:layout_height="146dp"/>
 
 
-		<LinearLayout
-			android:layout_alignParentBottom="true"
-			android:layout_width="match_parent"
-			android:background="@color/card_bg"
-			android:layout_height="70dp">
+            <TextView
+                    android:id="@+id/candidatesStateTv"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/profile_image"
+                    android:text="@string/searching_new_candidate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-			<TextView
-				android:id="@+id/logout"
-				android:text="@string/logout"
-				android:gravity="center_vertical"
-				android:paddingLeft="16dp"
-				android:paddingRight="16dp"
-				android:textSize="18sp"
-				android:textColor="@color/black"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"/>
-		</LinearLayout>
-	</RelativeLayout>
+
+            <com.andtinder.view.CardContainer
+                    android:id="@+id/layoutview"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:orientation="ordered"/>
+
+            <RelativeLayout
+                    android:paddingLeft="75dp"
+                    android:paddingRight="75dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/dislikeIv"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:src="@mipmap/ic_dislike"
+                        android:scaleType="fitXY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:id="@+id/likeIv"
+                        android:src="@mipmap/ic_like"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:scaleType="fitXY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+            android:id="@+id/drawer_main_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_gravity="start"
+            android:layout_width="@dimen/drawer_width"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:padding="20dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/card_bg"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/match_logo"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:background="@color/card_bg"
+                android:layout_height="70dp">
+
+            <TextView
+                    android:id="@+id/logout"
+                    android:text="@string/logout"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

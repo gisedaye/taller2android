@@ -16,7 +16,7 @@ public class MatchAPI {
     private static final String LIKE_ENDPOINT = "/api/accounts/%s/like";
     private static final String DISLIKE_ENDPOINT = "/api/accounts/%s/dislike";
 
-    private static final String APP_SERVER_IP = "192.168.1.133";
+    private static final String APP_SERVER_IP = "192.168.1.33";
     private static final String APP_SERVER_PORT = "8083";
 
     private static String getAppServerURL() {

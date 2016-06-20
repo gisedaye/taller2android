@@ -46,5 +46,6 @@
     <string name="logout">Logout</string>
     <string name="liked">Liked!</string>
     <string name="disliked">Disliked!</string>
-    <string name="no_candidates">No candidates!</string>
+    <string name="searching_new_candidate">Fetching for a new candidate…</string>
+    <string name="no_more_candidates">There´s no more candidates.</string>
 </resources>

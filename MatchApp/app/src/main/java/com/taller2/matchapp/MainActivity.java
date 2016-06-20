@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,12 +38,19 @@ public class MainActivity extends BaseActivity {
     private SimpleCardStackAdapter adapter;
     private ActionBarDrawerToggle drawerToggle;
 
+    private View progressBar;
+    private TextView candidatesTv;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
         mCardContainer = (CardContainer) findViewById(R.id.layoutview);
+
+        progressBar = findViewById(R.id.progress);
+        candidatesTv = (TextView) findViewById(R.id.candidatesStateTv);
+
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -100,7 +108,8 @@ public class MainActivity extends BaseActivity {
 
     void fetchCandidates() {
 
-        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint()) {
+        progressBar.setVisibility(View.VISIBLE);
+        final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint()) {
 
             @Override
             public void onSuccess(JSONObject data) {
@@ -155,7 +164,8 @@ public class MainActivity extends BaseActivity {
                         adapter.add(cardModel);
                         mCardContainer.setAdapter(adapter);
                     } else {
-                        Toast.makeText(MainActivity.this, getString(R.string.no_candidates), Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+                        candidatesTv.setText(R.string.no_more_candidates);
                     }
                 } catch (Exception e) {
                     getActivityIndicator().hide();
@@ -170,12 +180,12 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onError(int statusCode) {
-                getActivityIndicator().hide();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onNoConnection() {
-                getActivityIndicator().hide();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -187,11 +197,13 @@ public class MainActivity extends BaseActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(registerRequest);
+        requestQueue.add(getCandidatesRequest);
     }
 
     private void performAction(final String endpoint, final String message) {
-        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, Request.Method.PUT, endpoint) {
+
+
+        final MathAppJsonRequest likeOrDislikeRequest = new MathAppJsonRequest(this, Request.Method.PUT, endpoint) {
 
             @Override
             public void onSuccess(JSONObject data) {
@@ -222,6 +234,6 @@ public class MainActivity extends BaseActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(registerRequest);
+        requestQueue.add(likeOrDislikeRequest);
     }
 }
