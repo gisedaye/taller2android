@@ -20,7 +20,6 @@ import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
-import lombok.core.Main;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -39,7 +38,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match);
+        setContentView(R.layout.main_activity);
 
         mCardContainer = (CardContainer) findViewById(R.id.layoutview);
 
@@ -77,6 +76,8 @@ public class MainActivity extends BaseActivity {
                 finish();
             }
         });
+
+
 
 
         adapter = new SimpleCardStackAdapter(this);

@@ -21,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.model.Profile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +42,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -146,7 +147,15 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject data) {
                     String token = data.optString("accessToken");
-                    Session.getInstance(LoginActivity.this).setToken(token);
+                    JSONObject profileJSON = data.optJSONObject("profile");
+
+                    //Save session info
+                    Session instance = Session.getInstance(LoginActivity.this);
+                    instance.setToken(token);
+                    Profile profile = new Profile();
+                    profile.fromJson(profileJSON);
+                    instance.setProfile(profile);
+
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(i);

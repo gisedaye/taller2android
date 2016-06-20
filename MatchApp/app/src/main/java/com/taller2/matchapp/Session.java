@@ -52,7 +52,7 @@ public class Session {
     }
 
     public void setToken(String token) {
-        sharedPreferencesEditor.valueForKey(TOKEN, token);
+        sharedPreferencesEditor.setValueForKey(TOKEN, token);
     }
 
     public void setProfile(Profile profile) {
