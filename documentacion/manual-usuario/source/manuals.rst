@@ -66,7 +66,7 @@ https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 Shared Server
 ============================================
 
-- Para comenzar a utilizar el Shared Server, debe redirigirse con su navegador al sitio https://sharedserver.herokuapp.com/. Una vez ingresado allí, observará la portada inicial del sitio como la que se muestra a continuación:
+- Para comenzar a utilizar el Shared Server, debe redirigirse con su navegador al sitio https://tallerdeprogramacionii-1c2016.herokuapp.com/. Una vez ingresado allí, observará la portada inicial del sitio como la que se muestra a continuación:
 .. image:: Screenshots/shared_portada.png
 
 - Para dar de alta un usuario haga click en “Alta usuario”. Se lo redireccionara a la pantalla para dar de alta al usuario

@@ -74,14 +74,9 @@ Repositorios
 - ApplicationSever: https://github.com/nicolas-vazquez/tp75521c
 - Cliente: https://github.com/gisedaye/taller2android/ 
 
-DockerHub
-^^^^^^^^^^^^^
-https://hub.docker.com/r/gisedaye/taller2android/
-
-
 Aplicación web
 ^^^^^^^^^^^^^
-https://sharedserver.herokuapp.com/
+https://tallerdeprogramacionii-1c2016.herokuapp.com/
 
 Funcionalidades:
  - List GET /users
