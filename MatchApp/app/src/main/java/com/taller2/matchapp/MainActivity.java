@@ -123,9 +123,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final CardModel model = adapter.pop();
-                if(model!=null){
-                    Profile profile= (Profile) model.getData();
-                    String username=profile.getAlias();
+                if (model != null) {
+                    Profile profile = (Profile) model.getData();
+                    String username = profile.getAlias();
                     performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
                 }
             }
@@ -138,9 +138,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final CardModel model = adapter.pop();
-                if(model!=null){
-                    Profile profile= (Profile) model.getData();
-                    String username=profile.getAlias();
+                if (model != null) {
+                    Profile profile = (Profile) model.getData();
+                    String username = profile.getAlias();
                     performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.liked));
                 }
             }
@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity {
 
                     if (profileJSON != null && !profileJSON.isNull("alias")) {
 
-                        Profile profile = new Profile();
+                        final Profile profile = new Profile();
 
                         profile.fromJson(profileJSON);
                         String age = profile.getAge() + "";
@@ -196,7 +196,10 @@ public class MainActivity extends BaseActivity {
                         cardModel.setOnClickListener(new CardModel.OnClickListener() {
                             @Override
                             public void OnClickListener() {
-                                Log.i("Swipeable Cards", "I am pressing the card");
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, ProfileDetailActivity.class);
+                                intent.putExtra(ProfileDetailActivity.PROFILE_EXTRA, profile);
+                                startActivity(intent);
                             }
                         });
 

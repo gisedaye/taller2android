@@ -52,11 +52,13 @@ public class Session {
     }
 
     public void setToken(String token) {
+        this.token = token;
         sharedPreferencesEditor.setValueForKey(TOKEN, token);
     }
 
     public void setProfile(Profile profile) {
         try {
+            this.profile = profile;
             sharedPreferencesEditor.setJSONObjectForKey(PROFILE, (JSONObject) profile.toJson());
         } catch (JSONException e) {
             //Will not happen

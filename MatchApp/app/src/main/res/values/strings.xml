@@ -48,4 +48,6 @@
     <string name="disliked">Disliked!</string>
     <string name="searching_new_candidate">Fetching for a new candidate…</string>
     <string name="no_more_candidates">There´s no more candidates.</string>
+    <string name="info">Info</string>
+    <string name="profile">Profile</string>
 </resources>
