@@ -41,7 +41,6 @@
                     android:layout_width="146dp"
                     android:layout_height="146dp"/>
 
-
             <TextView
                     android:id="@+id/candidatesStateTv"
                     android:textColor="@color/black"
@@ -56,6 +55,7 @@
 
             <com.andtinder.view.CardContainer
                     android:id="@+id/layoutview"
+                    android:layout_margin="25dp"
                     android:layout_centerInParent="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +89,6 @@
                         android:layout_height="wrap_content"/>
 
 
-
                 <ImageView
                         android:id="@+id/likeIv"
                         android:src="@mipmap/ic_like"
@@ -111,6 +110,9 @@
             android:background="@color/white"
             android:layout_gravity="start"
             android:layout_width="@dimen/drawer_width"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_height="match_parent">
 
         <LinearLayout
