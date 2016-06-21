@@ -8,7 +8,7 @@ public class MatchAPI {
     private static final String LOGIN_ENDPOINT = "/api/accounts/login";
     private static final String REGISTER_ENDPOINT = "/api/accounts/signup";
     private static final String INTERESTS_ENDPOINT = "/api/accounts/interests";
-    private static final String CANDIDATES_ENDPOINT = "/api/matches/candidates?latitude=%s&&longitude=%s&&radius=%s";
+    private static final String CANDIDATES_ENDPOINT = "/api/matches/candidates?latitude=%s&longitude=%s&radius=%s";
 
     private static final String LIKE_ENDPOINT = "/api/accounts/%s/like";
     private static final String DISLIKE_ENDPOINT = "/api/accounts/%s/dislike";
