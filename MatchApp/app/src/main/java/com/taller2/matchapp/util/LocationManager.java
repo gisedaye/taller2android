@@ -83,14 +83,17 @@ public class LocationManager {
         String gpsProvider = android.location.LocationManager.GPS_PROVIDER;
 
         //It may take a while to receive the first location update, so If an immediate location is required we use getLastKnownLocation.
-        if (isNotLocated())
+        if (isNotLocated()) {
             lastLocation = locationManager.getLastKnownLocation(networkProvider);
+        }
 
-        if (lastLocation == null)
+        if (lastLocation == null) {
             lastLocation = locationManager.getLastKnownLocation(gpsProvider);
+        }
 
-        if (isLocationExpired() && !waitingLocation)
+        if (isLocationExpired() && !waitingLocation) {
             requestUpdate();
+        }
 
         return lastLocation;
     }
