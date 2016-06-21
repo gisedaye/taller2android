@@ -122,7 +122,12 @@ public class MainActivity extends BaseActivity {
         likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+                final CardModel model = adapter.pop();
+                if(model!=null){
+                    Profile profile= (Profile) model.getData();
+                    String username=profile.getAlias();
+                    performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+                }
             }
         });
 
@@ -132,7 +137,12 @@ public class MainActivity extends BaseActivity {
         dislikeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+                final CardModel model = adapter.pop();
+                if(model!=null){
+                    Profile profile= (Profile) model.getData();
+                    String username=profile.getAlias();
+                    performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.liked));
+                }
             }
         });
 
@@ -203,6 +213,7 @@ public class MainActivity extends BaseActivity {
                                 fetchCandidates();
                             }
                         });
+
 
                         adapter.add(cardModel);
                         mCardContainer.setAdapter(adapter);

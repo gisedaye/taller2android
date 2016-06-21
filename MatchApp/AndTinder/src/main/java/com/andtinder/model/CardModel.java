@@ -54,6 +54,10 @@ public class CardModel {
         data = object;
     }
 
+    public Object getData() {
+        return data;
+    }
+
     public String getDescription() {
         return description;
     }
