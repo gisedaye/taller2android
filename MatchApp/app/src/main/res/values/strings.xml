@@ -10,6 +10,7 @@
     <string name="title_section2">Matches</string>
 
     <string name="unknown_error">Please try again.</string>
+    <string name="cant_fetch_location">Can´t fetch location, enable it in your device and try again.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -56,5 +57,6 @@
     <string name="gender_">Gender:</string>
     <string name="info">Profile</string>
     <string name="email_">Email:</string>
+    <string name="my_matches">My matches</string>
 
 </resources>

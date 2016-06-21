@@ -116,11 +116,12 @@
             android:layout_height="match_parent">
 
         <LinearLayout
+                android:id="@+id/drawerHeader"
                 android:padding="20dp"
                 android:layout_alignParentTop="true"
                 android:background="@color/card_bg"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="100dp">
 
             <ImageView
                     android:id="@+id/imageView"
@@ -132,7 +133,10 @@
 
 
         <LinearLayout
+                android:id="@+id/drawerFooter"
                 android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:background="@color/card_bg"
@@ -142,8 +146,6 @@
                     android:id="@+id/settings"
                     android:text="@string/settings"
                     android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
@@ -153,12 +155,35 @@
                     android:id="@+id/logout"
                     android:text="@string/logout"
                     android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"/>
         </LinearLayout>
+
+
+        <LinearLayout
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_above="@id/drawerFooter"
+                android:layout_below="@id/drawerHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/interestsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_matches"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

@@ -173,116 +173,120 @@ public class MainActivity extends BaseActivity {
 
         Location lastLocation = LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
 
-        String latitude = lastLocation.getLatitude() + "";
-        String longitude = lastLocation.getLongitude() + "";
+        if (lastLocation != null) {
 
-        //fixme
-        String radius = "5";
+            //fixme
+            String radius = "5";
+            String latitude = lastLocation.getLatitude() + "";
+            String longitude = lastLocation.getLongitude() + "";
 
-        final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint(latitude, longitude, radius)) {
+            final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint(latitude, longitude, radius)) {
 
-            @Override
-            public void onSuccess(JSONObject data) {
-                fetching = false;
-                try {
-                    JSONObject profileJSON = data.optJSONObject("profile");
+                @Override
+                public void onSuccess(JSONObject data) {
+                    fetching = false;
+                    try {
+                        JSONObject profileJSON = data.optJSONObject("profile");
 
-                    if (profileJSON != null && !profileJSON.isNull("alias")) {
+                        if (profileJSON != null && !profileJSON.isNull("alias")) {
 
-                        final Profile profile = new Profile();
+                            final Profile profile = new Profile();
 
-                        profile.fromJson(profileJSON);
-                        String age = profile.getAge() + "";
-                        String name = profile.getName();
-                        final String username = profile.getAlias();
+                            profile.fromJson(profileJSON);
+                            String age = profile.getAge() + "";
+                            String name = profile.getName();
+                            final String username = profile.getAlias();
 
-                        String description = String.format("%s (%s)", name, age);
+                            String description = String.format("%s (%s)", name, age);
 
-                        Bitmap bitmap = null;
-                        String imageData = profile.getProfilePhoto();
+                            Bitmap bitmap = null;
+                            String imageData = profile.getProfilePhoto();
 
-                        try {
-                            byte[] decodedBytes = Base64.decode(imageData, 0);
-                            bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                        } catch (Exception e) {
-                            Log.e("Bad base 64", imageData);
-                        }
+                            try {
+                                byte[] decodedBytes = Base64.decode(imageData, 0);
+                                bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                            } catch (Exception e) {
+                                Log.e("Bad base 64", imageData);
+                            }
 
-                        CardModel cardModel;
+                            CardModel cardModel;
 
-                        if (bitmap != null) {
-                            cardModel = new CardModel(description, bitmap);
+                            if (bitmap != null) {
+                                cardModel = new CardModel(description, bitmap);
+                            } else {
+                                cardModel = new CardModel(description, getDrawable(R.mipmap.ic_user));
+                            }
+
+                            cardModel.setData(profile);
+                            cardModel.setOnClickListener(new CardModel.OnClickListener() {
+                                @Override
+                                public void OnClickListener() {
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this, ProfileDetailActivity.class);
+                                    intent.putExtra(ProfileDetailActivity.PROFILE_EXTRA, profile);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
+                                @Override
+                                public void onLike() {
+                                    adapter.pop();
+                                    performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+                                    fetchCandidates();
+                                }
+
+                                @Override
+                                public void onDislike() {
+                                    adapter.pop();
+                                    performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
+                                    fetchCandidates();
+                                }
+                            });
+
+
+                            adapter.add(cardModel);
+                            mCardContainer.setAdapter(adapter);
                         } else {
-                            cardModel = new CardModel(description, getDrawable(R.mipmap.ic_user));
+                            progressBar.setVisibility(View.GONE);
+                            candidatesTv.setText(R.string.no_more_candidates);
                         }
-
-                        cardModel.setData(profile);
-                        cardModel.setOnClickListener(new CardModel.OnClickListener() {
-                            @Override
-                            public void OnClickListener() {
-                                Intent intent = new Intent();
-                                intent.setClass(MainActivity.this, ProfileDetailActivity.class);
-                                intent.putExtra(ProfileDetailActivity.PROFILE_EXTRA, profile);
-                                startActivity(intent);
-                            }
-                        });
-
-                        cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
-                            @Override
-                            public void onLike() {
-                                adapter.pop();
-                                performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
-                                fetchCandidates();
-                            }
-
-                            @Override
-                            public void onDislike() {
-                                adapter.pop();
-                                performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
-                                fetchCandidates();
-                            }
-                        });
-
-
-                        adapter.add(cardModel);
-                        mCardContainer.setAdapter(adapter);
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        candidatesTv.setText(R.string.no_more_candidates);
+                    } catch (Exception e) {
+                        getActivityIndicator().hide();
+                        Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
                     }
-                } catch (Exception e) {
-                    getActivityIndicator().hide();
-                    Toast.makeText(MainActivity.this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
                 }
-            }
 
-            @Override
-            public int expectedCode() {
-                return HttpsURLConnection.HTTP_OK;
-            }
+                @Override
+                public int expectedCode() {
+                    return HttpsURLConnection.HTTP_OK;
+                }
 
-            @Override
-            public void onError(int statusCode) {
-                fetching = false;
-                progressBar.setVisibility(View.GONE);
-            }
+                @Override
+                public void onError(int statusCode) {
+                    fetching = false;
+                    progressBar.setVisibility(View.GONE);
+                }
 
-            @Override
-            public void onNoConnection() {
-                fetching = false;
-                progressBar.setVisibility(View.GONE);
-            }
+                @Override
+                public void onNoConnection() {
+                    fetching = false;
+                    progressBar.setVisibility(View.GONE);
+                }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", Session.getInstance(MainActivity.this).getToken());
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(getCandidatesRequest);
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Authorization", Session.getInstance(MainActivity.this).getToken());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+            requestQueue.add(getCandidatesRequest);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            candidatesTv.setText(R.string.cant_fetch_location);
+        }
     }
 
     private void performAction(final String endpoint, final String message) {
