@@ -111,6 +111,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!fetching) {
+                    adapter.pop();
                     fetchCandidates();
                 }
             }
@@ -206,12 +207,14 @@ public class MainActivity extends BaseActivity {
                         cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
                             @Override
                             public void onLike() {
+                                adapter.pop();
                                 performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
                                 fetchCandidates();
                             }
 
                             @Override
                             public void onDislike() {
+                                adapter.pop();
                                 performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
                                 fetchCandidates();
                             }

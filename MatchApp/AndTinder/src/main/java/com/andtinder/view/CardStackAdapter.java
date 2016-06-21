@@ -84,10 +84,17 @@ public abstract class CardStackAdapter extends BaseCardStackAdapter {
     }
 
     public CardModel pop() {
+
+        if (mData.size() == 0) {
+            return null;
+        }
+
         CardModel model;
+
         synchronized (mLock) {
             model = mData.remove(mData.size() - 1);
         }
+        
         notifyDataSetChanged();
         return model;
     }
