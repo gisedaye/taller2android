@@ -62,8 +62,8 @@
                     app:orientation="ordered"/>
 
             <RelativeLayout
-                    android:paddingLeft="75dp"
-                    android:paddingRight="75dp"
+                    android:paddingLeft="65dp"
+                    android:paddingRight="65dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
                     android:layout_alignParentBottom="true"
@@ -78,6 +78,17 @@
                         android:scaleType="fitXY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:id="@+id/refreshIv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@mipmap/ic_refresh"
+                        android:scaleType="fitXY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
 
                 <ImageView
                         android:id="@+id/likeIv"

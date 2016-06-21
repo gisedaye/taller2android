@@ -1,66 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	android:id="@+id/global_container"
-	android:layout_gravity="center"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="300dp"
-	android:layout_height="300dp">
 
-	<TextView
-		android:id="@+id/title"
-		android:textColor="@android:color/primary_text_light"
-		android:textSize="24sp"
-		android:textStyle="bold"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/card_bg"
-		tools:text="Title"
-		android:padding="10dp"/>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        card_view:cardCornerRadius="4dp">
 
-	<View
-		android:id="@+id/divider_title"
-		android:layout_width="fill_parent"
-		android:layout_height="2dp"
-		android:layout_below="@id/title"
-		android:background="@color/card_outline"/>
+    <RelativeLayout
+            android:id="@+id/global_container"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-	<ImageView
-		android:id="@+id/image"
-		android:layout_width="match_parent"
-		android:layout_height="200dp"
-		android:layout_centerInParent="true"
-		android:layout_below="@id/divider_title"
-		android:layout_alignWithParentIfMissing="true"
-		android:scaleType="centerCrop"
-		tools:src="@drawable/picture1"/>
-
-	<View
-		android:id="@+id/divider_bottom"
-		android:layout_width="fill_parent"
-		android:layout_height="2dp"
-		android:layout_below="@id/image"
-		android:background="@color/card_outline"/>
-
-	<View
-		android:layout_width="fill_parent"
-		android:layout_height="10dp"
-		android:layout_below="@+id/divider_bottom"
-		android:background="@color/card_bg"/>
-
-	<TextView
-		android:id="@+id/description"
-		style="@android:style/TextAppearance.Inverse"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/image"
-		android:gravity="center_vertical"
-		android:background="@color/card_bg"
-		android:ellipsize="end"
-		android:padding="10dp"
-		android:lines="1"
-		android:textColor="@android:color/secondary_text_light"
-		tools:text="Person Name (26)"/>
+        <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignWithParentIfMissing="true"
+                android:scaleType="centerCrop"/>
 
 
-</RelativeLayout>
+        <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:padding="10dp"
+                android:lines="1"
+                android:textColor="@android:color/black"
+                tools:text="Person Name (26)"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+

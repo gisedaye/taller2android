@@ -3,32 +3,28 @@
  *
  * @Author: Enrique López Mañas <eenriquelopez@gmail.com>
  * http://www.lopez-manas.com
- *
+ * <p/>
  * TAndTinder is a native library for Android that provide a
  * Tinder card like effect. A card can be constructed using an
  * image and displayed with animation effects, dismiss-to-like
  * and dismiss-to-unlike, and use different sorting mechanisms.
- *
+ * <p/>
  * AndTinder is compatible with API Level 13 and upwards
- *
  * @copyright: Enrique López Mañas
  * @license: Apache License 2.0
  */
 
 package com.andtinder.model;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class CardModel {
 
-	private String   title;
-	private String   description;
-	private Drawable cardImageDrawable;
-	private Drawable cardLikeImageDrawable;
-	private Drawable cardDislikeImageDrawable;
+    private Object data;
+    private String description;
+    private Drawable cardImageDrawable;
 
     private OnCardDismissedListener mOnCardDismissedListener = null;
 
@@ -36,6 +32,7 @@ public class CardModel {
 
     public interface OnCardDismissedListener {
         void onLike();
+
         void onDislike();
     }
 
@@ -43,72 +40,42 @@ public class CardModel {
         void OnClickListener();
     }
 
-	public CardModel() {
-		this(null, null, (Drawable)null);
-	}
+    public CardModel(String description, Drawable cardImage) {
+        this.description = description;
+        this.cardImageDrawable = cardImage;
+    }
 
-	public CardModel(String title, String description, Drawable cardImage) {
-		this.title = title;
-		this.description = description;
-		this.cardImageDrawable = cardImage;
-	}
+    public CardModel(String description, Bitmap cardImage) {
+        this.description = description;
+        this.cardImageDrawable = new BitmapDrawable(null, cardImage);
+    }
 
-	public CardModel(String title, String description, Bitmap cardImage) {
-		this.title = title;
-		this.description = description;
-		this.cardImageDrawable = new BitmapDrawable(null, cardImage);
-	}
+    public void setData(Object object) {
+        data = object;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Drawable getCardImageDrawable() {
+        return cardImageDrawable;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Drawable getCardImageDrawable() {
-		return cardImageDrawable;
-	}
-
-	public void setCardImageDrawable(Drawable cardImageDrawable) {
-		this.cardImageDrawable = cardImageDrawable;
-	}
-
-	public Drawable getCardLikeImageDrawable() {
-		return cardLikeImageDrawable;
-	}
-
-	public void setCardLikeImageDrawable(Drawable cardLikeImageDrawable) {
-		this.cardLikeImageDrawable = cardLikeImageDrawable;
-	}
-
-	public Drawable getCardDislikeImageDrawable() {
-		return cardDislikeImageDrawable;
-	}
-
-	public void setCardDislikeImageDrawable(Drawable cardDislikeImageDrawable) {
-		this.cardDislikeImageDrawable = cardDislikeImageDrawable;
-	}
-
-    public void setOnCardDismissedListener( OnCardDismissedListener listener ) {
+    public void setOnCardDismissedListener(OnCardDismissedListener listener) {
         this.mOnCardDismissedListener = listener;
     }
 
     public OnCardDismissedListener getOnCardDismissedListener() {
-       return this.mOnCardDismissedListener;
+        return this.mOnCardDismissedListener;
     }
 
 
-    public void setOnClickListener( OnClickListener listener ) {
+    public void setOnClickListener(OnClickListener listener) {
         this.mOnClickListener = listener;
     }
 

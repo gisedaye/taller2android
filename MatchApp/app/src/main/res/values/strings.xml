@@ -35,7 +35,7 @@
     <string name="error_invalid_email">Invalid user</string>
     <string name="error_field_required">Required field</string>
     <string name="error_no_internet">Verify your connection and try again</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="choose">Choose</string>
     <string name="interests_dialog_title">Pick your interests</string>
     <string name="interests">Interests</string>

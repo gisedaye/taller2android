@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
 
     private View progressBar;
     private TextView candidatesTv;
+    private boolean fetching = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,42 +89,83 @@ public class MainActivity extends BaseActivity {
         });
 
         Profile profile = Session.getInstance(this).getProfile();
-        String imageData = profile.getProilePhoto();
 
         try {
+            String imageData = profile.getProilePhoto();
             byte[] decodedBytes = Base64.decode(imageData, 0);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
             ImageView profileIv = (ImageView) findViewById(R.id.profile_image);
             //noinspection ConstantConditions
             profileIv.setImageBitmap(bitmap);
         } catch (Exception e) {
-            Log.e("Bad base 64", imageData);
+            Log.e("Bad base 64", profile == null ? "" : profile.getProilePhoto());
         }
 
         adapter = new SimpleCardStackAdapter(this);
-        adapter.setShouldFillCardBackground(true);
+        adapter.setShouldFillCardBackground(false);
+
+
+        final View refreshIv = findViewById(R.id.refreshIv);
+        //noinspection ConstantConditions
+        refreshIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fetching) {
+                    fetchCandidates();
+                }
+            }
+        });
+
+
+        final View likeIv = findViewById(R.id.likeIv);
+        //noinspection ConstantConditions
+        likeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+            }
+        });
+
+
+        final View dislikeIv = findViewById(R.id.dislikeIv);
+        //noinspection ConstantConditions
+        dislikeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
+            }
+        });
+
+        //Fetch candidates when init
         fetchCandidates();
     }
 
 
     void fetchCandidates() {
 
+        fetching = true;
         progressBar.setVisibility(View.VISIBLE);
         final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint()) {
 
             @Override
             public void onSuccess(JSONObject data) {
+                fetching = false;
                 try {
-                    JSONObject profile = data.optJSONObject("profile");
-                    if (profile != null && !profile.isNull("alias")) {
-                        String age = profile.optString("age");
-                        String name = profile.optString("name");
-                        final String username = profile.optString("alias");
+                    JSONObject profileJSON = data.optJSONObject("profile");
+
+                    if (profileJSON != null && !profileJSON.isNull("alias")) {
+
+                        Profile profile = new Profile();
+
+                        profile.fromJson(profileJSON);
+                        String age = profile.getAge() + "";
+                        String name = profile.getName();
+                        final String username = profile.getAlias();
 
                         String description = String.format("%s (%s)", name, age);
 
                         Bitmap bitmap = null;
-                        String imageData = profile.optString("photo_profile");
+                        String imageData = profile.getProilePhoto();
 
                         try {
                             byte[] decodedBytes = Base64.decode(imageData, 0);
@@ -135,11 +177,12 @@ public class MainActivity extends BaseActivity {
                         CardModel cardModel;
 
                         if (bitmap != null) {
-                            cardModel = new CardModel("New candidate!", description, bitmap);
+                            cardModel = new CardModel(description, bitmap);
                         } else {
-                            cardModel = new CardModel("New candidate!", description, getDrawable(R.mipmap.ic_user));
+                            cardModel = new CardModel(description, getDrawable(R.mipmap.ic_user));
                         }
 
+                        cardModel.setData(profile);
                         cardModel.setOnClickListener(new CardModel.OnClickListener() {
                             @Override
                             public void OnClickListener() {
@@ -180,11 +223,13 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onError(int statusCode) {
+                fetching = false;
                 progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onNoConnection() {
+                fetching = false;
                 progressBar.setVisibility(View.GONE);
             }
 

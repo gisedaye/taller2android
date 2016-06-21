@@ -63,7 +63,7 @@ public class Profile implements Serializable, Parcelable {
             profile.putOpt(PHOTO_PROFILE, photo_profile);
             profile.putOpt(ALIAS, alias);
         } catch (JSONException e) {
-            e.printStackTrace();
+            //Will be OK
         }
         return profile;
     }
@@ -84,5 +84,21 @@ public class Profile implements Serializable, Parcelable {
 
     public String getProilePhoto() {
         return photo_profile;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
