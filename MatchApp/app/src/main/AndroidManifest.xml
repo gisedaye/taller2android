@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.taller2.matchapp">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -36,6 +38,9 @@
                 android:name=".MainActivity"
                 android:windowSoftInputMode="adjustPan"
                 android:label="@string/title_activity_match"/>
+
+        <activity android:name=".SettingsActivity"
+                  android:label="@string/settings"/>
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
     </application>

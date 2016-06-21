@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import com.taller2.matchapp.util.LocationManager;
 
 /**
  * Created by federicofarina on 6/7/16.
@@ -16,6 +17,9 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
+
+        //Fetch last location
+        LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
 
         new Handler().postDelayed(new Runnable() {
             @Override

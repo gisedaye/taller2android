@@ -3,6 +3,7 @@ package com.taller2.matchapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +24,7 @@ import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Profile;
+import com.taller2.matchapp.util.LocationManager;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -85,6 +87,18 @@ public class MainActivity extends BaseActivity {
                 intent.setClass(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+
+        final View settingsView = findViewById(R.id.settings);
+        //noinspection ConstantConditions
+        settingsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -156,7 +170,16 @@ public class MainActivity extends BaseActivity {
 
         fetching = true;
         progressBar.setVisibility(View.VISIBLE);
-        final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint()) {
+
+        Location lastLocation = LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
+
+        String latitude = lastLocation.getLatitude() + "";
+        String longitude = lastLocation.getLongitude() + "";
+
+        //fixme
+        String radius = "5";
+
+        final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint(latitude, longitude, radius)) {
 
             @Override
             public void onSuccess(JSONObject data) {
