@@ -226,9 +226,9 @@ public class RegisterActivity extends BaseActivity {
             requestBody.put(KEY_EMAIL, email);
             requestBody.put(KEY_NAME, name);
 
-            JSONArray jsonArray=new JSONArray();
-            for(Interest interest: interests){
-                jsonArray.put(interest.toJson());
+            JSONArray jsonArray = new JSONArray();
+            for (Interest interest : interests) {
+                jsonArray.put(interest.id);
             }
 
             requestBody.put(KEY_INTERESTS, jsonArray);

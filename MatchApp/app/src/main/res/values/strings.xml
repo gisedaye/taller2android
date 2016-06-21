@@ -42,12 +42,19 @@
     <string name="interests_fetch_failed">Interests fetch fail, please try again.</string>
     <string name="change_photo">Change</string>
     <string name="age">Age</string>
-    <string name="prompt_name">Name</string>
+    <string name="name">Name</string>
     <string name="logout">Logout</string>
     <string name="liked">Liked!</string>
     <string name="disliked">Disliked!</string>
     <string name="searching_new_candidate">Fetching for a new candidate…</string>
     <string name="no_more_candidates">There´s no more candidates.</string>
-    <string name="info">Info</string>
     <string name="profile">Profile</string>
+
+    <string name="username_">Username:</string>
+    <string name="name_">Name:</string>
+    <string name="age_">Age:</string>
+    <string name="gender_">Gender:</string>
+    <string name="info">Profile</string>
+    <string name="email_">Email:</string>
+
 </resources>

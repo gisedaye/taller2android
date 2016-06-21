@@ -1,6 +1,7 @@
 package com.taller2.matchapp.model;
 
 import com.taller2.matchapp.util.Serializable;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,16 +21,24 @@ public class Interest implements Serializable {
 
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public String getCategory() {
         return category;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public Object toJson() {
-        return id;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.putOpt(ID, id);
+            jsonObject.putOpt(VALUE, value);
+            jsonObject.putOpt(CATEGORY, category);
+        } catch (JSONException e) {
+            //Never will happend
+        }
+        return jsonObject;
     }
 
     @Override

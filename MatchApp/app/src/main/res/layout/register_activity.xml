@@ -91,7 +91,7 @@
                                     android:id="@+id/nameEt"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/prompt_name"
+                                    android:hint="@string/name"
                                     android:textColor="@color/black"
                                     android:inputType="text"
                                     android:maxLines="1"

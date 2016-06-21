@@ -9,9 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.taller2.matchapp.model.Interest;
 import com.taller2.matchapp.model.Profile;
+
+import java.util.List;
 
 /**
  * Created by federicofarina on 6/20/16.
@@ -44,17 +48,70 @@ public class ProfileDetailActivity extends BaseActivity {
 
     private void showProfileData() {
         String name = currentProfile.getName();
-        String email = currentProfile.getAlias();
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         //noinspection ConstantConditions
         collapsingToolbar.setTitle(name);
 
-        TextView description = (TextView) findViewById(R.id.description);
-        //noinspection ConstantConditions
-        description.setText(email);
+        String email = currentProfile.getEmail();
+        int age = currentProfile.getAge();
+        String gender = currentProfile.getGender();
 
-        String profilePhoto = currentProfile.getProilePhoto();
+        if (!TextUtils.isEmpty(name)) {
+            TextView nameTv = (TextView) findViewById(R.id.nameTv);
+            //noinspection ConstantConditions
+            nameTv.setText(name);
+        } else {
+            //noinspection ConstantConditions
+            findViewById(R.id.nameLayout).setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(email)) {
+            TextView emailTv = (TextView) findViewById(R.id.emailTv);
+            //noinspection ConstantConditions
+            emailTv.setText(email);
+        } else {
+            //noinspection ConstantConditions
+            findViewById(R.id.emailLayout).setVisibility(View.GONE);
+        }
+
+
+        if (age != 0) {
+            TextView ageTv = (TextView) findViewById(R.id.ageTv);
+            //noinspection ConstantConditions
+            ageTv.setText(age + "");
+        } else {
+            //noinspection ConstantConditions
+            findViewById(R.id.ageLayout).setVisibility(View.GONE);
+        }
+
+
+        if (!TextUtils.isEmpty(gender)) {
+            TextView genderTv = (TextView) findViewById(R.id.genderTv);
+            //noinspection ConstantConditions
+            genderTv.setText(gender);
+        } else {
+            //noinspection ConstantConditions
+            findViewById(R.id.genderLayout).setVisibility(View.GONE);
+        }
+
+        String profilePhoto = currentProfile.getProfilePhoto();
+
+
+        List<Interest> interests = currentProfile.getInterests();
+
+        if (!interests.isEmpty()) {
+            StringBuilder interestsBuilder = new StringBuilder();
+            for (Interest interest : interests) {
+                interestsBuilder.append(interest).append("\n");
+            }
+            TextView interestsTv = (TextView) findViewById(R.id.interestTv);
+            //noinspection ConstantConditions
+            interestsTv.setText(interestsBuilder.toString());
+        } else {
+            //noinspection ConstantConditions
+            findViewById(R.id.interestsLayout).setVisibility(View.GONE);
+        }
 
         if (!TextUtils.isEmpty(profilePhoto)) {
             loadBackdrop(profilePhoto);

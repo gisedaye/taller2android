@@ -17,6 +17,7 @@ public class Session {
     public static Session instance = null;
     private static SharedPreferencesEditor sharedPreferencesEditor;
 
+    // Used as memory cache
     private String token;
     private Profile profile;
 
@@ -48,6 +49,8 @@ public class Session {
     }
 
     public void logout() {
+        token = null;
+        profile = null;
         sharedPreferencesEditor.clear();
     }
 

@@ -91,14 +91,14 @@ public class MainActivity extends BaseActivity {
         Profile profile = Session.getInstance(this).getProfile();
 
         try {
-            String imageData = profile.getProilePhoto();
+            String imageData = profile.getProfilePhoto();
             byte[] decodedBytes = Base64.decode(imageData, 0);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
             ImageView profileIv = (ImageView) findViewById(R.id.profile_image);
             //noinspection ConstantConditions
             profileIv.setImageBitmap(bitmap);
         } catch (Exception e) {
-            Log.e("Bad base 64", profile == null ? "" : profile.getProilePhoto());
+            Log.e("Bad base 64", profile == null ? "" : profile.getProfilePhoto());
         }
 
         adapter = new SimpleCardStackAdapter(this);
@@ -176,7 +176,7 @@ public class MainActivity extends BaseActivity {
                         String description = String.format("%s (%s)", name, age);
 
                         Bitmap bitmap = null;
-                        String imageData = profile.getProilePhoto();
+                        String imageData = profile.getProfilePhoto();
 
                         try {
                             byte[] decodedBytes = Base64.decode(imageData, 0);
