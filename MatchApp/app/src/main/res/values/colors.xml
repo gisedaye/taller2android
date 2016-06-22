@@ -7,5 +7,6 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#125688</color>
     <color name="white">#FFFFFF</color>
-    v<color name="black">#000000</color>
+    <color name="black">#000000</color>
+    <color name="mine_chat">#a0d0f3</color>
 </resources>

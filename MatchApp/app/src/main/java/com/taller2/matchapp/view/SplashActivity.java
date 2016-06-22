@@ -1,9 +1,10 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import com.taller2.matchapp.R;
 import com.taller2.matchapp.util.LocationManager;
 
 /**

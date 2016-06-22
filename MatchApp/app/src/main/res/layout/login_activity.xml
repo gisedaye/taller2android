@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.taller2.matchapp.LoginActivity">
+              tools:context="com.taller2.matchapp.view.LoginActivity">
 
     <include
             android:id="@+id/my_toolbar"

@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.taller2.matchapp.R;
 
 /**
  * Created by federicofarina on 6/21/16.

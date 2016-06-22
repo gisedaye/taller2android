@@ -63,7 +63,7 @@ public class Profile implements Serializable, Parcelable {
     }
 
     @Override
-    public Object toJson() {
+    public JSONObject toJson() {
         JSONObject profile = new JSONObject();
         try {
             profile.putOpt(NAME, name);
@@ -80,7 +80,7 @@ public class Profile implements Serializable, Parcelable {
                 }
                 profile.putOpt(INTERESTS, interestsJSONArray);
             }
-            
+
         } catch (JSONException e) {
             //Will be OK
         }

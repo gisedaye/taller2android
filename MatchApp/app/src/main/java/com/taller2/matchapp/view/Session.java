@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.content.Context;
 import com.taller2.matchapp.model.Profile;

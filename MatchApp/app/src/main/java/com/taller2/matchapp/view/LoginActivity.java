@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Profile;

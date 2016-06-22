@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.taller2.matchapp.R;
 import com.taller2.matchapp.model.Interest;
 import com.taller2.matchapp.model.Profile;
 

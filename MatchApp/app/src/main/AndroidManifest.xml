@@ -13,7 +13,7 @@
             android:theme="@style/MyMaterialTheme">
 
         <activity
-                android:name=".SplashActivity">
+                android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -22,24 +22,24 @@
 
         <activity
                 android:label="@string/profile"
-                android:name=".ProfileDetailActivity"/>
+                android:name=".view.ProfileDetailActivity"/>
 
         <activity
-                android:name=".LoginActivity"
+                android:name=".view.LoginActivity"
                 android:label="@string/title_activity_login"
                 android:windowSoftInputMode="adjustPan"/>
 
         <activity
-                android:name=".RegisterActivity"
+                android:name=".view.RegisterActivity"
                 android:windowSoftInputMode="adjustPan"
                 android:label="@string/title_activity_register"/>
 
         <activity
-                android:name=".MainActivity"
+                android:name=".view.MainActivity"
                 android:windowSoftInputMode="adjustPan"
                 android:label="@string/title_activity_match"/>
 
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".view.SettingsActivity"
                   android:label="@string/settings"/>
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>

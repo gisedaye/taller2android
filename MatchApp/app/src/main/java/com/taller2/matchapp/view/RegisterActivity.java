@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.soundcloud.android.crop.Crop;
+import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Interest;

@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

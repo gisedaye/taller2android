@@ -1,4 +1,4 @@
-package com.taller2.matchapp;
+package com.taller2.matchapp.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.andtinder.model.CardModel;
 import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
+import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Profile;
