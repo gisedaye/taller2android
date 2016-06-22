@@ -29,7 +29,7 @@ Arquitectura
 
 Appserver
 --------------------------------------------
-A continuacion se dara una breve descripcion de los distintos endpoits del appserver y como se manejan para obtener la informacion.
+A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
 
 Signup
 """""""""
@@ -217,19 +217,19 @@ Testear manualmente
 Listado de  usuarios
 """""""""
 
-``GET https://sharedserver.herokuapp.com/users``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users``
 
 
 Vista de un usuario
 """""""""
 
-``GET https://sharedserver.herokuapp.com/users/5``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5``
 
 
 Alta de usuario
 """""""""
 
-``POST https://sharedserver.herokuapp.com/users``
+``POST https://tallerdeprogramacionii-1c2016.herokuapp.com/users``
 
 ``{
 "name":"Name",
@@ -242,7 +242,7 @@ Alta de usuario
 Edit de usuario
 """""""""
 
-``PUT https://sharedserver.herokuapp.com/users/1``
+``PUT https://tallerdeprogramacionii-1c2016.herokuapp.com/users/1``
 
 ``{
 "id": 1,
@@ -257,17 +257,17 @@ Edit de usuario
 Baja de usuario
 """""""""
 
-``DELETE https://sharedserver.herokuapp.com/users/20``
+``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20``
 
 Listado de  intereses
 """""""""
 
-``GET https://sharedserver.herokuapp.com/interests``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/interests``
 
 Alta de interes
 """""""""
 
-``POST https://sharedserver.herokuapp.com/interests``
+``POST https://tallerdeprogramacionii-1c2016.herokuapp.com/interests``
 
 ``{
 "category":"Music",
@@ -316,5 +316,5 @@ Shared Server
 	- Para detener la aplicacion correr en la consola:
 		- sudo docker-compose stop
 
-- Para ver la app ingresar a https://sharedserver.herokuapp.com/
+- Para ver la app ingresar a https://tallerdeprogramacionii-1c2016.herokuapp.com/
 
