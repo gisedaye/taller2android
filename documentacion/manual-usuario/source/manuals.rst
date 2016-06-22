@@ -30,37 +30,58 @@ Cliente
 - Instalar apk en el telefono celular
 https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 
-- Ejecutar el Application server en su pc
+- Ejecutar el Application server en su pc seteando como ip de su Pc 192.168.1.33
 
 - Abrir aplicacion en el celular
 
 - Se encontrara con la pantalla de login
 
 .. image:: Screenshots/login.png
+	:width: 400
 
 - Si ya posee un usuario registrado, ingrese los campos requeridos de usuario y clave y luego haga tap en el boton de entrar. Si los datos son los correctos se lo redireccionara a la pantalla de busqueda de matchs
 - Si los datos son incorrectos aparecera un mensaje de error y debera volver a intentar loguearse.
 
-- Si no posee un usuario debera crear uno haciendo tap en el texto “Registrate en Match” de la pantalla de login. Se lo redireccionara a la pantalla de registro.
-.. image:: Screenshots/registro.png
+.. image:: Screenshots/login_failed.png
+	:width: 400
 
-- Llene los datos requeridos para crear el usuario y haga tap en registrarse para crear el nuevo usuario. Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion.
+- Si no posee un usuario debera crear uno haciendo tap en el texto “Get started” de la pantalla de login. Se lo redireccionara a la pantalla de registro.
+
+.. image:: Screenshots/registro.png
+	:width: 400
+
+- Llene los datos requeridos para crear el usuario, para elegir los intereses haga click en pick interests.
+
+.. image:: Screenshots/interests.png
+	:width: 400
+
+- Haga tap en Register para crear el nuevo usuario. 
+
+- Si los datos son correctos se lo redireccionara a la pantalla de login para que pueda ingresar a la aplicacion.
 - Si los datos son erroneos aparecera un mensaje de error y debera reintentar el registro.
+
+.. image:: Screenshots/registro_failed.png
+	:width: 400
 
 - Al loguearse se lo redireccionara a la pantalla de busqueda de matches
 .. image:: Screenshots/match.png
+	:width: 400
 
 - Podra navegar entre los candidatos haciendo swipe en la pantalla, podra moverse a la derecha o a la izquierda.
 - Podra darle un like o un dislike al candidato haciendo click en los botones flotantes.
 
 - Si hay match de ambos lados se abrira la pantalla de chat y podran mandarse mensajes entre ambos usuarios.
 .. image:: Screenshots/chat.png
+	:width: 400
 
 - Podra ver sus matches disponibles desde la pantalla de matches disponibles, ingresando desde el menu lateral.
-.. image:: Screenshots/matches-disponibles.png
+.. image:: Screenshots/sidebar.png
+	:width: 400
 
 - Podra cambiar sus intereses desde su perfil, ingresando desde el menu lateral.
-.. image:: Screenshots/interests.png
+.. image:: Screenshots/interestsChange.png
+	:width: 400
+
 
 ============================================
 Shared Server
