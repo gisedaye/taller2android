@@ -1,12 +1,18 @@
 package com.taller2.matchapp.model;
 
 import com.taller2.matchapp.util.Serializable;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by federicofarina on 6/21/16.
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
+
+    public static final String TIME = "time";
+    public static final String SENDER = "sender";
+    public static final String MESSAGE = "message";
+
     public String time;
     public String sender;
     public String message;
@@ -14,12 +20,22 @@ public class Message implements Serializable{
 
     @Override
     public JSONObject toJson() {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.putOpt(TIME, time);
+            jsonObject.putOpt(SENDER, sender);
+            jsonObject.putOpt(MESSAGE, message);
+        } catch (JSONException e) {
+            //Will never be happen
+        }
+        return jsonObject;
     }
 
     @Override
     public void fromJson(JSONObject jsonObject) {
-
+        time = jsonObject.optString(TIME);
+        sender = jsonObject.optString(SENDER);
+        message = jsonObject.optString(MESSAGE);
     }
 
     public String getTime() {

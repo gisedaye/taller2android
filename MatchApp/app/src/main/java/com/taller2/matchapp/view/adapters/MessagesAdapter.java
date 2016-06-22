@@ -22,7 +22,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     private final int OTHER_MESSAGE = 2;
 
     private final String username;
-    List<Message> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 
     public MessagesAdapter(Context context) {
         username = Session.getInstance(context).getProfile().getAlias();
@@ -30,8 +30,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public MessageVH onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View message = LayoutInflater.from(parent.getContext()).inflate(R.layout.other_message_row, parent, false);
+        int layout = viewType == MINE_MESSAGE ? R.layout.mine_message_row : R.layout.other_message_row;
+        View message = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new MessageVH(message);
     }
 
@@ -47,7 +47,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public void onBindViewHolder(MessageVH holder, int position) {
-
+        Message message = messages.get(position);
+        holder.messageTv.setText(message.getMessage());
+        holder.timeStampTv.setText(message.getTime());
     }
 
     @Override
@@ -55,14 +57,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         return messages.size();
     }
 
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
     public class MessageVH extends RecyclerView.ViewHolder {
 
         public TextView messageTv;
+        public TextView timeStampTv;
 
         public MessageVH(View itemView) {
             super(itemView);
-            messageTv= (TextView) itemView.findViewById(R.id.text);
+            messageTv = (TextView) itemView.findViewById(R.id.message);
+            timeStampTv = (TextView) itemView.findViewById(R.id.messageTime);
         }
     }
-
 }
