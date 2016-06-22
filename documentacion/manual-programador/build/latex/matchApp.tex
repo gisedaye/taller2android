@@ -127,8 +127,8 @@
 Contenidos:
 
 
-\chapter{Manual de programador}
-\label{manuals:manual-de-programador}\label{manuals::doc}\label{manuals:documentacion-de-matchapp}
+\chapter{Manual de programador - Documentacion Tecnica}
+\label{manuals::doc}\label{manuals:manual-de-programador-documentacion-tecnica}\label{manuals:documentacion-de-matchapp}
 \textbf{Grupo 10}
 
 \textbf{Ayudante asignado: Christian Calonico}
@@ -164,6 +164,95 @@ Vazquez, Nicolás
 \\
 \hline\end{tabulary}
 
+
+
+\section{Tecnologias utilizadas}
+\label{manuals:tecnologias-utilizadas}
+
+\subsection{Cliente}
+\label{manuals:cliente}\begin{itemize}
+\item {} 
+Android SDK compatible hasta v23
+
+\item {} 
+Volley
+
+\item {} 
+Material Design para templates
+
+\end{itemize}
+
+
+\subsection{Application Server}
+\label{manuals:application-server}\begin{itemize}
+\item {} 
+Cmake
+
+\item {} 
+Ci-Travis
+
+\item {} 
+Mongoose-cpp
+
+\item {} 
+RocksDB
+
+\item {} 
+Docker
+
+\item {} 
+Code coverage con gcov
+
+\item {} 
+Unit tests (ctest)
+
+\item {} 
+Tests de endpoints con postman
+
+\item {} 
+Tests functionales con python, pip y la libreria requests
+
+\end{itemize}
+
+
+\subsection{Shared Server}
+\label{manuals:shared-server}\begin{itemize}
+\item {} 
+Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.
+
+\end{itemize}
+
+\includegraphics{Screenshots/heroku.png}
+\begin{itemize}
+\item {} 
+Utilización de Express + Node.js en sus versiones 4.13 y 0.12.7 respectivamente.
+
+\item {} 
+Utilización de una base de datos PostgreSQL para almacenamiento de la información de Match App.
+
+\end{itemize}
+
+\includegraphics{Screenshots/postgresql.png}
+\begin{itemize}
+\item {} 
+Aplicación Web utilizando CSS, HTML, Boostrap + Materialize, JQuery y Ajax.
+
+\item {} 
+Test  de endpoints con Postman
+
+\item {} 
+Docker
+
+\end{itemize}
+
+
+\subsection{Proyecto}
+\label{manuals:proyecto}
+-- Documentacion en Sphinx
+- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+- Shared Server: \href{https://github.com/PabloFederico/SharedServer}{https://github.com/PabloFederico/SharedServer}
+- App Server: \href{https://github.com/nicolas-vazquez/tp75521c}{https://github.com/nicolas-vazquez/tp75521c}
+- Cliente y Documentación: \href{https://github.com/gisedaye/taller2android}{https://github.com/gisedaye/taller2android}
 
 
 \section{Arquitectura}
@@ -382,7 +471,10 @@ Crea al interes en el sharedserver en esa categoria
 \subsection{Client}
 \label{manuals:client}\begin{itemize}
 \item {} 
-Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike
+Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests
+
+\item {} 
+Maneja session con el authorization token provisto por el endpoint del login
 
 \item {} \begin{description}
 \item[{Vistas:}] \leavevmode\begin{itemize}
@@ -393,13 +485,10 @@ LoginActivity
 RegisterActivity
 
 \item {} 
-MatchActivity
+MainActivity
 
 \item {} 
-MenuFragments (items del menu)
-
-\item {} 
-MatchFragments (candidatos para match)
+SplashActivity
 
 \end{itemize}
 
@@ -413,15 +502,6 @@ MatchFragments (candidatos para match)
 
 \subsection{Appserver}
 \label{manuals:id1}
-
-\subsubsection{Virtualizacion}
-\label{manuals:virtualizacion}
-Para correr en contenedor de docker ejecutar en la consola
-
-\textgreater{} sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
-
-\textgreater{} ./appServer
-
 
 \subsubsection{Correr Unit Tests}
 \label{manuals:correr-unit-tests}
@@ -556,10 +636,10 @@ Agregar el header con el token que recibio del endpoint de login
 
 
 \subsection{Shared Server}
-\label{manuals:shared-server}
+\label{manuals:id4}
 
 \subsubsection{Login}
-\label{manuals:id4}
+\label{manuals:id5}
 \code{POST http://127.0.0.1:8083/api/accounts/login}
 
 En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
@@ -576,7 +656,7 @@ Agregar headers
 
 
 \subsubsection{Listado de  usuarios}
-\label{manuals:id5}
+\label{manuals:id6}
 \code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users}
 
 
@@ -606,7 +686,7 @@ Agregar headers
 
 
 \subsubsection{Alta de usuario}
-\label{manuals:id6}
+\label{manuals:id7}
 \code{POST https://tallerdeprogramacionii-1c2016.herokuapp.com/users}
 
 \code{\{
@@ -633,17 +713,17 @@ Agregar headers
 
 
 \subsubsection{Baja de usuario}
-\label{manuals:id7}
+\label{manuals:id8}
 \code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20}
 
 
 \subsubsection{Listado de  intereses}
-\label{manuals:id8}
+\label{manuals:id9}
 \code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
 
 \subsubsection{Alta de interes}
-\label{manuals:id9}
+\label{manuals:id10}
 \code{POST https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
 \code{\{
@@ -655,144 +735,6 @@ Agregar headers
 \subsubsection{Baja de interes}
 \label{manuals:baja-de-interes}
 \code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2}
-
-
-\section{Instalacion}
-\label{manuals:instalacion}
-
-\subsection{Application Server}
-\label{manuals:application-server}
-Pasos para correr la aplicación
-\begin{itemize}
-\item {} \begin{description}
-\item[{Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea}] \leavevmode\begin{itemize}
-\item {} 
-git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
-\item[{Ejecutar los siguientes pasos tambien en la consola:}] \leavevmode\begin{itemize}
-\item {} 
-cd tp75521c/AppServer
-
-\item {} 
-sudo ./install.sh
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
-\item[{Buildear aplicación para crear ejecutable}] \leavevmode\begin{itemize}
-\item {} 
-mkdir build
-
-\item {} 
-cd build
-
-\item {} 
-cmake ..
-
-\item {} 
-sudo make
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
-\item[{Correr la aplicacion:}] \leavevmode\begin{itemize}
-\item {} 
-./appServer
-
-\end{itemize}
-
-\end{description}
-
-\end{itemize}
-
-Para correr con docker
-\begin{itemize}
-\item {} \begin{description}
-\item[{Buildear contenedor de Docker}] \leavevmode\begin{itemize}
-\item {} 
-sudo docker build -t appserver/ubuntu:14.04 .
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
-\item[{Correr contenedor de Docker}] \leavevmode\begin{itemize}
-\item {} 
-sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
-
-\item {} 
-./appServer
-
-\end{itemize}
-
-\end{description}
-
-\end{itemize}
-
-
-\subsection{Cliente}
-\label{manuals:cliente}\begin{itemize}
-\item {} 
-Setear ip de computadora a 192.168.1.33
-
-\item {} 
-Correr el Appserver
-
-\item {} 
-Bajar apk de \href{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k}{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k} desde el celular donde se ejecutara la aplicacion
-
-\item {} 
-Abrir MatchApp desde el icono de la aplicación
-
-\end{itemize}
-
-
-\subsection{Shared Server}
-\label{manuals:id10}\begin{itemize}
-\item {} \begin{description}
-\item[{Para correr con docker:}] \leavevmode\begin{itemize}
-\item {} 
-En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.
-
-\item {} \begin{description}
-\item[{Luego ejecutar los siguientes comandos:}] \leavevmode\begin{itemize}
-\item {} 
-sudo service mongodb stop
-
-\item {} 
-sudo docker-compose up
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
-\item[{Para detener la aplicacion correr en la consola:}] \leavevmode\begin{itemize}
-\item {} 
-sudo docker-compose stop
-
-\end{itemize}
-
-\end{description}
-
-\end{itemize}
-
-\end{description}
-
-\item {} 
-Para ver la app ingresar a \href{https://tallerdeprogramacionii-1c2016.herokuapp.com/}{https://tallerdeprogramacionii-1c2016.herokuapp.com/}
-
-\end{itemize}
 
 
 \chapter{Indices y tablas}

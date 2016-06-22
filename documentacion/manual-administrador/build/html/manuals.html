@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Manual de Administrador &mdash; matchApp 2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="matchApp 2 documentation" href="index.html" />
+    <link rel="prev" title="Documentacion de MatchApp" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Documentacion de MatchApp"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">matchApp 2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="manual-de-administrador">
+<h1>Manual de Administrador<a class="headerlink" href="#manual-de-administrador" title="Permalink to this headline">¶</a></h1>
+<p><strong>Grupo 10</strong></p>
+<p><strong>Ayudante asignado: Christian Calonico</strong></p>
+<p><strong>Integrantes:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Apellido y Nombre</th>
+<th class="head">Padrón</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Daye, Gisela Denise</td>
+<td>87602</td>
+</tr>
+<tr class="row-odd"><td>Federico, Pablo</td>
+<td>90280</td>
+</tr>
+<tr class="row-even"><td>Farina, Federico</td>
+<td>90177</td>
+</tr>
+<tr class="row-odd"><td>Vazquez, Nicolás</td>
+<td>89172</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="instalacion-y-puesta-en-marcha">
+<h2>Instalacion y puesta en marcha<a class="headerlink" href="#instalacion-y-puesta-en-marcha" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="shared-server">
+<h3>Shared Server<a class="headerlink" href="#shared-server" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><dl class="first docutils">
+<dt>Para correr con docker:</dt>
+<dd><ul class="first last">
+<li><p class="first">En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Luego ejecutar los siguientes comandos:</dt>
+<dd><ul class="first last simple">
+<li>sudo service mongodb stop</li>
+<li>sudo docker-compose up</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Para detener la aplicacion correr en la consola:</dt>
+<dd><ul class="first last simple">
+<li>sudo docker-compose stop</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Para ver la app ingresar a <a class="reference external" href="https://tallerdeprogramacionii-1c2016.herokuapp.com/">https://tallerdeprogramacionii-1c2016.herokuapp.com/</a></p>
+</li>
+</ul>
+</div>
+<div class="section" id="application-server">
+<h3>Application Server<a class="headerlink" href="#application-server" title="Permalink to this headline">¶</a></h3>
+<p>Pasos para correr la aplicación</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea</dt>
+<dd><ul class="first last simple">
+<li>git clone ghttps://github.com/nicolas-vazquez/tp75521c.git</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Ejecutar los siguientes pasos tambien en la consola:</dt>
+<dd><ul class="first last simple">
+<li>cd tp75521c/AppServer</li>
+<li>sudo ./install.sh</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Buildear aplicación para crear ejecutable</dt>
+<dd><ul class="first last simple">
+<li>mkdir build</li>
+<li>cd build</li>
+<li>cmake ..</li>
+<li>sudo make</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Correr la aplicacion:</dt>
+<dd><ul class="first last simple">
+<li>./appServer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los endpoints</p>
+</li>
+</ul>
+<p>Para correr con docker</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Buildear contenedor de Docker</dt>
+<dd><ul class="first last simple">
+<li>sudo docker build -t appserver/ubuntu:14.04 .</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Correr contenedor de Docker</dt>
+<dd><ul class="first last simple">
+<li>sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash</li>
+<li>./appServer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los end</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="cliente">
+<h3>Cliente<a class="headerlink" href="#cliente" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Setear ip de computadora a 192.168.1.33</li>
+<li>Correr el Appserver y el Shared Server</li>
+<li>Bajar apk de <a class="reference external" href="https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k">https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k</a> desde el celular donde se ejecutara la aplicacion</li>
+<li>Abrir MatchApp desde el icono de la aplicación</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Manual de Administrador</a><ul>
+<li><a class="reference internal" href="#instalacion-y-puesta-en-marcha">Instalacion y puesta en marcha</a><ul>
+<li><a class="reference internal" href="#shared-server">Shared Server</a></li>
+<li><a class="reference internal" href="#application-server">Application Server</a></li>
+<li><a class="reference internal" href="#cliente">Cliente</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Documentacion de MatchApp</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/manuals.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Documentacion de MatchApp"
+             >previous</a> |</li>
+        <li><a href="index.html">matchApp 2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Grupo10.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

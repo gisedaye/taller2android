@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Manual de programador &mdash; matchApp 2 documentation</title>
+    <title>Manual de programador - Documentacion Tecnica &mdash; matchApp 2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -45,8 +45,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="manual-de-programador">
-<h1>Manual de programador<a class="headerlink" href="#manual-de-programador" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="manual-de-programador-documentacion-tecnica">
+<h1>Manual de programador - Documentacion Tecnica<a class="headerlink" href="#manual-de-programador-documentacion-tecnica" title="Permalink to this headline">¶</a></h1>
 <p><strong>Grupo 10</strong></p>
 <p><strong>Ayudante asignado: Christian Calonico</strong></p>
 <p><strong>Integrantes:</strong></p>
@@ -75,6 +75,56 @@
 </tr>
 </tbody>
 </table>
+<div class="section" id="tecnologias-utilizadas">
+<h2>Tecnologias utilizadas<a class="headerlink" href="#tecnologias-utilizadas" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cliente">
+<h3>Cliente<a class="headerlink" href="#cliente" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Android SDK compatible hasta v23</li>
+<li>Volley</li>
+<li>Material Design para templates</li>
+</ul>
+</div>
+<div class="section" id="application-server">
+<h3>Application Server<a class="headerlink" href="#application-server" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Cmake</li>
+<li>Ci-Travis</li>
+<li>Mongoose-cpp</li>
+<li>RocksDB</li>
+<li>Docker</li>
+<li>Code coverage con gcov</li>
+<li>Unit tests (ctest)</li>
+<li>Tests de endpoints con postman</li>
+<li>Tests functionales con python, pip y la libreria requests</li>
+</ul>
+</div>
+<div class="section" id="shared-server">
+<h3>Shared Server<a class="headerlink" href="#shared-server" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.</li>
+</ul>
+<img alt="Screenshots/heroku.png" src="Screenshots/heroku.png" />
+<ul class="simple">
+<li>Utilización de Express + Node.js en sus versiones 4.13 y 0.12.7 respectivamente.</li>
+<li>Utilización de una base de datos PostgreSQL para almacenamiento de la información de Match App.</li>
+</ul>
+<img alt="Screenshots/postgresql.png" src="Screenshots/postgresql.png" />
+<ul class="simple">
+<li>Aplicación Web utilizando CSS, HTML, Boostrap + Materialize, JQuery y Ajax.</li>
+<li>Test  de endpoints con Postman</li>
+<li>Docker</li>
+</ul>
+</div>
+<div class="section" id="proyecto">
+<h3>Proyecto<a class="headerlink" href="#proyecto" title="Permalink to this headline">¶</a></h3>
+<p>&#8211; Documentacion en Sphinx
+- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+- Shared Server: <a class="reference external" href="https://github.com/PabloFederico/SharedServer">https://github.com/PabloFederico/SharedServer</a>
+- App Server: <a class="reference external" href="https://github.com/nicolas-vazquez/tp75521c">https://github.com/nicolas-vazquez/tp75521c</a>
+- Cliente y Documentación: <a class="reference external" href="https://github.com/gisedaye/taller2android">https://github.com/gisedaye/taller2android</a></p>
+</div>
+</div>
 <div class="section" id="arquitectura">
 <h2>Arquitectura<a class="headerlink" href="#arquitectura" title="Permalink to this headline">¶</a></h2>
 <img alt="_images/architecture.png" src="_images/architecture.png" />
@@ -198,16 +248,17 @@
 <div class="section" id="client">
 <h3>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first">Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike</p>
+<li><p class="first">Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests</p>
+</li>
+<li><p class="first">Maneja session con el authorization token provisto por el endpoint del login</p>
 </li>
 <li><dl class="first docutils">
 <dt>Vistas:</dt>
 <dd><ul class="first last simple">
 <li>LoginActivity</li>
 <li>RegisterActivity</li>
-<li>MatchActivity</li>
-<li>MenuFragments (items del menu)</li>
-<li>MatchFragments (candidatos para match)</li>
+<li>MainActivity</li>
+<li>SplashActivity</li>
 </ul>
 </dd>
 </dl>
@@ -219,12 +270,6 @@
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>Appserver<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="virtualizacion">
-<h4>Virtualizacion<a class="headerlink" href="#virtualizacion" title="Permalink to this headline">¶</a></h4>
-<p>Para correr en contenedor de docker ejecutar en la consola</p>
-<p>&gt; sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash</p>
-<p>&gt; ./appServer</p>
-</div>
 <div class="section" id="correr-unit-tests">
 <h4>Correr Unit Tests<a class="headerlink" href="#correr-unit-tests" title="Permalink to this headline">¶</a></h4>
 <p>En la consola desde la carpeta build ejecutar el comando</p>
@@ -315,10 +360,10 @@
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 </div>
-<div class="section" id="shared-server">
-<h3>Shared Server<a class="headerlink" href="#shared-server" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id4">
-<h4>Login<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<h3>Shared Server<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h4>Login<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/login</span></tt></p>
 <p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
@@ -329,8 +374,8 @@
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt>
 <tt class="docutils literal"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></tt></p>
 </div>
-<div class="section" id="id5">
-<h4>Listado de  usuarios<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4>Listado de  usuarios<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users</span></tt></p>
 </div>
 <div class="section" id="vista-de-un-usuario">
@@ -351,8 +396,8 @@
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt>
 <tt class="docutils literal"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></tt></p>
 </div>
-<div class="section" id="id6">
-<h4>Alta de usuario<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id7">
+<h4>Alta de usuario<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;name&quot;:&quot;Name&quot;,</span>
@@ -374,16 +419,16 @@
 <span class="pre">&quot;Longitude&quot;:&quot;22322&quot;</span>
 <span class="pre">}</span></tt></p>
 </div>
-<div class="section" id="id7">
-<h4>Baja de usuario<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id8">
+<h4>Baja de usuario<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20</span></tt></p>
 </div>
-<div class="section" id="id8">
-<h4>Listado de  intereses<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id9">
+<h4>Listado de  intereses<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests</span></tt></p>
 </div>
-<div class="section" id="id9">
-<h4>Alta de interes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4>Alta de interes<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;category&quot;:&quot;Music&quot;,</span>
@@ -396,115 +441,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="instalacion">
-<h2>Instalacion<a class="headerlink" href="#instalacion" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="application-server">
-<h3>Application Server<a class="headerlink" href="#application-server" title="Permalink to this headline">¶</a></h3>
-<p>Pasos para correr la aplicación</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea</dt>
-<dd><ul class="first last simple">
-<li>git clone ghttps://github.com/nicolas-vazquez/tp75521c.git</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Ejecutar los siguientes pasos tambien en la consola:</dt>
-<dd><ul class="first last simple">
-<li>cd tp75521c/AppServer</li>
-<li>sudo ./install.sh</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Buildear aplicación para crear ejecutable</dt>
-<dd><ul class="first last simple">
-<li>mkdir build</li>
-<li>cd build</li>
-<li>cmake ..</li>
-<li>sudo make</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Correr la aplicacion:</dt>
-<dd><ul class="first last simple">
-<li>./appServer</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>Para correr con docker</p>
-<blockquote>
-<div><ul>
-<li><dl class="first docutils">
-<dt>Buildear contenedor de Docker</dt>
-<dd><ul class="first last simple">
-<li>sudo docker build -t appserver/ubuntu:14.04 .</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Correr contenedor de Docker</dt>
-<dd><ul class="first last simple">
-<li>sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash</li>
-<li>./appServer</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-</div>
-<div class="section" id="cliente">
-<h3>Cliente<a class="headerlink" href="#cliente" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Setear ip de computadora a 192.168.1.33</li>
-<li>Correr el Appserver</li>
-<li>Bajar apk de <a class="reference external" href="https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k">https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k</a> desde el celular donde se ejecutara la aplicacion</li>
-<li>Abrir MatchApp desde el icono de la aplicación</li>
-</ul>
-</div>
-<div class="section" id="id10">
-<h3>Shared Server<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><dl class="first docutils">
-<dt>Para correr con docker:</dt>
-<dd><ul class="first last">
-<li><p class="first">En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.</p>
-</li>
-<li><dl class="first docutils">
-<dt>Luego ejecutar los siguientes comandos:</dt>
-<dd><ul class="first last simple">
-<li>sudo service mongodb stop</li>
-<li>sudo docker-compose up</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Para detener la aplicacion correr en la consola:</dt>
-<dd><ul class="first last simple">
-<li>sudo docker-compose stop</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p class="first">Para ver la app ingresar a <a class="reference external" href="https://tallerdeprogramacionii-1c2016.herokuapp.com/">https://tallerdeprogramacionii-1c2016.herokuapp.com/</a></p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 
 
@@ -515,7 +451,14 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Manual de programador</a><ul>
+<li><a class="reference internal" href="#">Manual de programador - Documentacion Tecnica</a><ul>
+<li><a class="reference internal" href="#tecnologias-utilizadas">Tecnologias utilizadas</a><ul>
+<li><a class="reference internal" href="#cliente">Cliente</a></li>
+<li><a class="reference internal" href="#application-server">Application Server</a></li>
+<li><a class="reference internal" href="#shared-server">Shared Server</a></li>
+<li><a class="reference internal" href="#proyecto">Proyecto</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#arquitectura">Arquitectura</a><ul>
 <li><a class="reference internal" href="#appserver">Appserver</a><ul>
 <li><a class="reference internal" href="#signup">Signup</a></li>
@@ -541,7 +484,6 @@
 </li>
 <li><a class="reference internal" href="#testing">Testing</a><ul>
 <li><a class="reference internal" href="#id1">Appserver</a><ul>
-<li><a class="reference internal" href="#virtualizacion">Virtualizacion</a></li>
 <li><a class="reference internal" href="#correr-unit-tests">Correr Unit Tests</a></li>
 <li><a class="reference internal" href="#correr-coverage">Correr Coverage</a></li>
 <li><a class="reference internal" href="#correr-tests-funcionales">Correr Tests funcionales</a></li>
@@ -556,26 +498,20 @@
 <li><a class="reference internal" href="#disike">Disike</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#shared-server">Shared Server</a><ul>
-<li><a class="reference internal" href="#id4">Login</a></li>
-<li><a class="reference internal" href="#id5">Listado de  usuarios</a></li>
+<li><a class="reference internal" href="#id4">Shared Server</a><ul>
+<li><a class="reference internal" href="#id5">Login</a></li>
+<li><a class="reference internal" href="#id6">Listado de  usuarios</a></li>
 <li><a class="reference internal" href="#vista-de-un-usuario">Vista de un usuario</a></li>
 <li><a class="reference internal" href="#vista-de-perfil-de-usuario">Vista de perfil de usuario</a></li>
 <li><a class="reference internal" href="#vista-de-candidatos-de-usuario">Vista de candidatos de usuario</a></li>
-<li><a class="reference internal" href="#id6">Alta de usuario</a></li>
+<li><a class="reference internal" href="#id7">Alta de usuario</a></li>
 <li><a class="reference internal" href="#edit-de-usuario">Edit de usuario</a></li>
-<li><a class="reference internal" href="#id7">Baja de usuario</a></li>
-<li><a class="reference internal" href="#id8">Listado de  intereses</a></li>
-<li><a class="reference internal" href="#id9">Alta de interes</a></li>
+<li><a class="reference internal" href="#id8">Baja de usuario</a></li>
+<li><a class="reference internal" href="#id9">Listado de  intereses</a></li>
+<li><a class="reference internal" href="#id10">Alta de interes</a></li>
 <li><a class="reference internal" href="#baja-de-interes">Baja de interes</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#instalacion">Instalacion</a><ul>
-<li><a class="reference internal" href="#application-server">Application Server</a></li>
-<li><a class="reference internal" href="#cliente">Cliente</a></li>
-<li><a class="reference internal" href="#id10">Shared Server</a></li>
 </ul>
 </li>
 </ul>

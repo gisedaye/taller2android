@@ -1,7 +1,7 @@
 *********
 MatchApp
 
-Manual de programador
+Manual de programador - Documentacion Tecnica
 *********
 **Grupo 10**
 
@@ -20,6 +20,54 @@ Manual de programador
 +-------------------------------------+--------------------------------------+
 |       Vazquez, Nicolás              |              89172                   |
 +-------------------------------------+--------------------------------------+
+
+============================================
+Tecnologias utilizadas
+============================================
+
+Cliente
+----------------------------------------
+
+- Android SDK compatible hasta v23
+- Volley
+- Material Design para templates
+
+
+Application Server
+----------------------------------------
+- Cmake
+- Ci-Travis
+- Mongoose-cpp
+- RocksDB
+- Docker
+- Code coverage con gcov
+- Unit tests (ctest)
+- Tests de endpoints con postman 
+- Tests functionales con python, pip y la libreria requests
+
+
+Shared Server
+----------------------------------------
+- Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.
+.. image:: Screenshots/heroku.png
+
+- Utilización de Express + Node.js en sus versiones 4.13 y 0.12.7 respectivamente.
+
+- Utilización de una base de datos PostgreSQL para almacenamiento de la información de Match App.
+.. image:: Screenshots/postgresql.png
+
+- Aplicación Web utilizando CSS, HTML, Boostrap + Materialize, JQuery y Ajax.
+- Test  de endpoints con Postman
+- Docker
+
+
+Proyecto
+----------------------------------------
+-- Documentacion en Sphinx
+- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+- Shared Server: https://github.com/PabloFederico/SharedServer
+- App Server: https://github.com/nicolas-vazquez/tp75521c
+- Cliente y Documentación: https://github.com/gisedaye/taller2android
 
 ============================================
 Arquitectura
@@ -126,13 +174,13 @@ Alta de interes
 
 Client
 --------------------------------------------
-- Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike
+- Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests
+- Maneja session con el authorization token provisto por el endpoint del login
 - Vistas:
 	- LoginActivity	
 	- RegisterActivity
-	- MatchActivity
-	- MenuFragments (items del menu)
-	- MatchFragments (candidatos para match)
+	- MainActivity
+	- SplashActivity
 
 ============================================
 Testing
@@ -140,15 +188,6 @@ Testing
 
 Appserver
 --------------------------------------------
-
-Virtualizacion
-""""""""""""""""""
-
-Para correr en contenedor de docker ejecutar en la consola
-
-> sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
-
-> ./appServer
 
 Correr Unit Tests
 """"""""""""""""""
@@ -389,54 +428,4 @@ Baja de interes
 """""""""
 
 ``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2``
-
-============================================
-Instalacion
-============================================
-
-Application Server
---------------------------------------------
-
-Pasos para correr la aplicación
-
-- Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea
-	- git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
-- Ejecutar los siguientes pasos tambien en la consola:
-	- cd tp75521c/AppServer
-	- sudo ./install.sh
-- Buildear aplicación para crear ejecutable
-	- mkdir build
-	- cd build
-	- cmake ..
-	- sudo make
-- Correr la aplicacion:
-	- ./appServer
-
-Para correr con docker
-
- - Buildear contenedor de Docker
- 	- sudo docker build -t appserver/ubuntu:14.04 .
- - Correr contenedor de Docker
- 	- sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
- 	- ./appServer
-
-Cliente
---------------------------------------------
-
-- Setear ip de computadora a 192.168.1.33
-- Correr el Appserver 
-- Bajar apk de https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k desde el celular donde se ejecutara la aplicacion
-- Abrir MatchApp desde el icono de la aplicación
-
-Shared Server
---------------------------------------------
-- Para correr con docker:
-	- En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.
-	- Luego ejecutar los siguientes comandos:
-		- sudo service mongodb stop
-		- sudo docker-compose up
-	- Para detener la aplicacion correr en la consola:
-		- sudo docker-compose stop
-
-- Para ver la app ingresar a https://tallerdeprogramacionii-1c2016.herokuapp.com/
 
