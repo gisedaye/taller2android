@@ -141,15 +141,59 @@ Testing
 Appserver
 --------------------------------------------
 
+Virtualizacion
+""""""""""""""""""
+
+Para correr en contenedor de docker ejecutar en la consola
+
+> sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
+
+> ./appServer
+
 Correr Unit Tests
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""
+
 En la consola desde la carpeta build ejecutar el comando
 
  > ctest
 
-Testear Endpoints Manualmente
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Correr Coverage
+""""""""""""""""""
 
+En la raiz del proyecto correr
+
+ > sudo ./coverage.sh
+
+Se abrira una ventana del navegador con los resultados de tests cubiertos
+
+.. image:: Screenshots/coverage.png
+
+Correr Tests funcionales
+""""""""""""""""""
+
+Instalar python
+
+> sudo apt-get install python2.7
+
+Instalar pip
+
+> wget https://bootstrap.pypa.io/get-pip.py
+> sudo python get-pip.py
+
+Instalar el modulo requests
+
+> sudo pip install requests
+
+Para correr los tests funcionales ir al directorio functionalTests y correr los tests
+
+> cd functionalTests/
+> python python restTester.py
+
+Saldran los resultados del tests en la consola
+
+
+Testear Endpoints Manualmente
+""""""""""""""""""
 Correr el appserver (Ver manual de instalacion)
 
 SignUp
@@ -184,7 +228,38 @@ Matches
 
 ``GET http://127.0.0.1:8083/api/matches/``
 
-Agregar el header
+Agregar el header con el token que recibio del endpoint de login
+
+``Authorization: <token>``
+
+Candidates
+"""""""""
+
+``GET http://127.0.0.1:8083/api/matches/candidates/``
+
+Agregar el header con el token que recibio del endpoint de login
+
+``Authorization: <token>``
+
+Ver mensajes
+"""""""""
+
+``GET http://127.0.0.1:8083/api/matches/1/messages/``
+
+Agregar el header con el token que recibio del endpoint de login
+
+``Authorization: <token>``
+
+Enviar mensaje
+"""""""""
+
+``PUT http://127.0.0.1:8083/api/matches/1/message/``
+
+``{
+"message": "Hola!"
+}``
+
+Agregar el header con el token que recibio del endpoint de login
 
 ``Authorization: <token>``
 
@@ -193,7 +268,7 @@ Like
 """""""""
 ``PUT http://127.0.0.1:8083/api/accounts/1/like/``
 
-Agregar el header
+Agregar el header con el token que recibio del endpoint de login
 
 ``Authorization: <token>``
 
@@ -203,7 +278,7 @@ Disike
 
 ``PUT http://127.0.0.1:8083/api/accounts/3/dislike/``
 
-Agregar el header
+Agregar el header con el token que recibio del endpoint de login
 
 ``Authorization: <token>``
 
@@ -213,6 +288,22 @@ Shared Server
 
 Testear manualmente
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Login
+"""""""""
+
+``POST http://127.0.0.1:8083/api/accounts/login``
+
+En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+
+``{
+"username": "user",
+"password": "P4ssw0rd"
+}``
+
+Agregar headers
+
+``Authorization: <token>``
+``Content-Type: application/json``
 
 Listado de  usuarios
 """""""""
@@ -224,6 +315,26 @@ Vista de un usuario
 """""""""
 
 ``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5``
+
+Vista de perfil de usuario
+"""""""""
+
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5/profile``
+
+Agregar headers
+
+``Authorization: <token>``
+``Content-Type: application/json``
+
+Vista de candidatos de usuario
+"""""""""
+
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/nico/candidates``
+
+Agregar headers
+
+``Authorization: <token>``
+``Content-Type: application/json``
 
 
 Alta de usuario
@@ -274,6 +385,10 @@ Alta de interes
 "value":"One Direction"
 }``
 
+Baja de interes
+"""""""""
+
+``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2``
 
 ============================================
 Instalacion
@@ -285,7 +400,7 @@ Application Server
 Pasos para correr la aplicación
 
 - Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea
-	- git clone git@bitbucket.org:fjfarina/tp75521c.git 
+	- git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
 - Ejecutar los siguientes pasos tambien en la consola:
 	- cd tp75521c/AppServer
 	- sudo ./install.sh
@@ -297,11 +412,18 @@ Pasos para correr la aplicación
 - Correr la aplicacion:
 	- ./appServer
 
+Para correr con docker
+
+ - Buildear contenedor de Docker
+ 	- sudo docker build -t appserver/ubuntu:14.04 .
+ - Correr contenedor de Docker
+ 	- sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
+ 	- ./appServer
+
 Cliente
 --------------------------------------------
 
-- Setear ip de computadora desde la consola ingrese:
-	- Ifconfig 192.168.0.106
+- Setear ip de computadora a 192.168.1.33
 - Correr el Appserver 
 - Bajar apk de https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k desde el celular donde se ejecutara la aplicacion
 - Abrir MatchApp desde el icono de la aplicación
