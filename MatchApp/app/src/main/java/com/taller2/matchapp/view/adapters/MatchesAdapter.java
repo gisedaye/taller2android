@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.model.Match;
 import com.taller2.matchapp.model.Profile;
+import com.taller2.matchapp.util.OnRowClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,14 @@ import java.util.List;
 /**
  * Created by federicofarina on 6/21/16.
  */
-public class MatchsAdapter extends RecyclerView.Adapter<MatchsAdapter.MatchVH> {
+public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVH> {
 
-    private final Profile profile;
     private List<Match> matches = new ArrayList<>();
+    private final OnRowClickListener onClickListener;
 
-    public MatchsAdapter(Profile aProfile) {
-        profile = aProfile;
+
+    public MatchesAdapter(OnRowClickListener onRowClickListener) {
+        onClickListener = onRowClickListener;
     }
 
     @Override
@@ -37,6 +39,10 @@ public class MatchsAdapter extends RecyclerView.Adapter<MatchsAdapter.MatchVH> {
 
     @Override
     public void onBindViewHolder(MatchVH holder, int position) {
+
+        Match match = matches.get(position);
+
+        final Profile profile = match.getProfile();
 
         String imageData = profile.getProfilePhoto();
 
@@ -51,6 +57,10 @@ public class MatchsAdapter extends RecyclerView.Adapter<MatchsAdapter.MatchVH> {
         holder.usernameTv.setText(profile.getAlias());
     }
 
+    public Match getMatch(int position) {
+        return matches.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return matches.size();
@@ -58,17 +68,26 @@ public class MatchsAdapter extends RecyclerView.Adapter<MatchsAdapter.MatchVH> {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+        notifyDataSetChanged();
     }
 
-    public class MatchVH extends RecyclerView.ViewHolder {
+    public class MatchVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView profileIv;
         TextView usernameTv;
 
         public MatchVH(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             usernameTv = (TextView) itemView.findViewById(R.id.username);
             profileIv = (ImageView) itemView.findViewById(R.id.profile_image);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onClickListener != null) {
+                onClickListener.onRowClick(getAdapterPosition());
+            }
         }
     }
 }

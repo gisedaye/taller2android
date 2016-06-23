@@ -60,6 +60,7 @@
 
     <LinearLayout
             android:padding="16dp"
+            android:orientation="vertical"
             android:layout_above="@id/drawerFooter"
             android:layout_below="@id/drawerHeader"
             android:layout_width="match_parent"
@@ -74,6 +75,11 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/matchesRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -58,5 +58,6 @@
     <string name="info">Profile</string>
     <string name="email_">Email:</string>
     <string name="my_matches">My matches</string>
+    <string name="chat">Chat</string>
 
 </resources>

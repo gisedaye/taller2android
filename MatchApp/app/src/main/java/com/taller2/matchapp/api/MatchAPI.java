@@ -8,6 +8,8 @@ public class MatchAPI {
     private static final String LOGIN_ENDPOINT = "/api/accounts/login";
     private static final String REGISTER_ENDPOINT = "/api/accounts/signup";
     private static final String INTERESTS_ENDPOINT = "/api/accounts/interests";
+
+    private static final String MATCHES_ENDPOINT = "/api/matches/";
     private static final String CANDIDATES_ENDPOINT = "/api/matches/candidates?latitude=%s&longitude=%s&radius=%s";
 
     private static final String LIKE_ENDPOINT = "/api/accounts/%s/like";
@@ -35,6 +37,10 @@ public class MatchAPI {
 
     public static String getCandidatesEndpoint(String latitude, String longitude, String radius) {
         return getAppServerURL() + String.format(CANDIDATES_ENDPOINT, latitude, longitude, radius);
+    }
+
+    public static String getMatchesEndpoint() {
+        return getAppServerURL() + MATCHES_ENDPOINT;
     }
 
     public static String getLikeEndpoint(String username) {

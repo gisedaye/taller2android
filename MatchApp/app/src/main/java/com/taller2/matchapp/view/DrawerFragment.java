@@ -4,15 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
+import com.taller2.matchapp.api.MatchAPI;
+import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.model.Match;
+import com.taller2.matchapp.util.OnRowClickListener;
+import com.taller2.matchapp.view.adapters.MatchesAdapter;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by federicofarina on 6/21/16.
  */
 public class DrawerFragment extends Fragment {
+
+    private MatchesAdapter matchesAdapter;
 
     public DrawerFragment() {
 
@@ -52,5 +72,70 @@ public class DrawerFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.matchesRv);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        matchesAdapter = new MatchesAdapter(new OnRowClickListener() {
+            @Override
+            public void onRowClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        rv.setAdapter(matchesAdapter);
+
+        fetchMatches();
     }
+
+    void fetchMatches() {
+
+        final MathAppJsonRequest getMatchesRequest = new MathAppJsonRequest(getContext(), MatchAPI.getMatchesEndpoint()) {
+
+            @Override
+            public void onSuccess(JSONObject data) {
+                List<Match> matches = new ArrayList<>();
+                JSONArray matchesJSONArray = data.optJSONArray("matches");
+                if (matchesJSONArray != null) {
+                    for (int index = 0; index < matchesJSONArray.length(); index++) {
+                        JSONObject matchJSONObject = matchesJSONArray.optJSONObject(index);
+                        if (matchJSONObject != null) {
+                            Match match = new Match();
+                            match.fromJson(matchJSONObject);
+                            matches.add(match);
+                        }
+                    }
+                    matchesAdapter.setMatches(matches);
+                }
+            }
+
+            @Override
+            public int expectedCode() {
+                return HttpsURLConnection.HTTP_OK;
+            }
+
+            @Override
+            public void onError(int statusCode) {
+            }
+
+            @Override
+            public void onNoConnection() {
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", Session.getInstance(getContext()).getToken());
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(getMatchesRequest);
+    }
+
 }

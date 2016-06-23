@@ -42,6 +42,10 @@
         <activity android:name=".view.SettingsActivity"
                   android:label="@string/settings"/>
 
+        <activity android:name=".view.ChatActivity"
+                  android:label="@string/chat"/>
+
+
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
     </application>
 
