@@ -121,10 +121,14 @@ public class ProfileDetailActivity extends BaseActivity {
 
     private void loadBackdrop(String imageData) {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        byte[] decodedBytes = Base64.decode(imageData, 0);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-        //noinspection ConstantConditions
-        imageView.setImageBitmap(bitmap);
+        try {
+            byte[] decodedBytes = Base64.decode(imageData, 0);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            //noinspection ConstantConditions
+            imageView.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            imageView.setImageResource(R.mipmap.ic_user);
+        }
     }
 
     @Override
