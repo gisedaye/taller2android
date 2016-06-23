@@ -1,7 +1,7 @@
 *********
 MatchApp
 
-Entrega
+Manual de Administrador
 *********
 **Grupo 10**
 
@@ -22,66 +22,56 @@ Entrega
 +-------------------------------------+--------------------------------------+
 
 ============================================
-Changelog
-============================================
-- Shared Server
-    - Setup de la aplicación Heroku
-    - Conexión con Postgres
-    - Webapp en node.js con listado y Alta, baja, vista de usuarios, edit de usuarios
-    - Listado de intereses
-    - Alta de categorias e intereses.
-- Application Server
-    - CMake
-    - Conexion appServer con SharedServer
-    - Conexión con mongoose-cpp a RocksDB
-    - Endpoints signup/login/like/dislike
-    - Logica de Matches
-    - Unit tests
-    - Logs
-    - Ci-travis
-    - Integration tests
-    - Medir code coverage de unit tests
-    - Docker
-    - Retornar access token encriptado en login
-- Cliente
-    - Pantalla de Login
-    - Pantalla de Registro
-    - Pantalla de candidatos
-	- Funcionalidad de like/dislike
-    - Integración con Appserver mediante Volley
-    - Manejo de sessiones con el auth token
-- Documentacion en Sphinx
-
-============================================
-Division de tareas
+Instalacion y puesta en marcha
 ============================================
 
-- Cliente: Gisela
-- AppServer: Federico y Nicolas
-- SharedServer: Pablo
+Shared Server
+--------------------------------------------
+- Para correr con docker:
+    - En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.
+    - Luego ejecutar los siguientes comandos:
+        - sudo service mongodb stop
+        - sudo docker-compose up
+    - Para detener la aplicacion correr en la consola:
+        - sudo docker-compose stop
 
-Trello Board para ver tareas y responsables:
-https://trello.com/b/MKvp61Xg/taller2-matchapp 
-
-============================================
-Links útiles
-============================================
-
-Repositorios
-^^^^^^^^^^^^^
-- SharedServer: https://github.com/PabloFederico/SharedServer
-- ApplicationSever: https://github.com/nicolas-vazquez/tp75521c
-- Cliente: https://github.com/gisedaye/taller2android/ 
-
-Aplicación web
-^^^^^^^^^^^^^
-https://sharedserver.herokuapp.com/
-
-Funcionalidades:
- - List GET /users
- - Add POST /users
- - View GET /users/{userId}
- - Delete DELETE /users/{userId}
+- Para ver la app ingresar a https://tallerdeprogramacionii-1c2016.herokuapp.com/
 
 
+Application Server
+--------------------------------------------
+
+Pasos para correr la aplicación
+
+- Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea
+    - git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
+- Ejecutar los siguientes pasos tambien en la consola:
+    - cd tp75521c/AppServer
+    - sudo ./install.sh
+- Buildear aplicación para crear ejecutable
+    - mkdir build
+    - cd build
+    - cmake ..
+    - sudo make
+- Correr la aplicacion:
+    - ./appServer
+- Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los endpoints
+
+Para correr con docker
+
+ - Buildear contenedor de Docker
+    - sudo docker build -t appserver/ubuntu:14.04 .
+ - Correr contenedor de Docker
+    - sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
+    - ./appServer
+ - Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los end
+
+
+Cliente
+--------------------------------------------
+
+- Setear ip de computadora a 192.168.1.33
+- Correr el Appserver y el Shared Server
+- Bajar apk de https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k desde el celular donde se ejecutara la aplicacion
+- Abrir MatchApp desde el icono de la aplicación
 
