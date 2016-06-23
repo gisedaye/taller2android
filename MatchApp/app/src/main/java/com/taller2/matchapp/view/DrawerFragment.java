@@ -93,7 +93,7 @@ public class DrawerFragment extends Fragment {
         fetchMatches();
     }
 
-    void fetchMatches() {
+    public void fetchMatches() {
 
         final MathAppJsonRequest getMatchesRequest = new MathAppJsonRequest(getContext(), MatchAPI.getMatchesEndpoint()) {
 

@@ -2,6 +2,7 @@ package com.taller2.matchapp.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
 import com.taller2.matchapp.model.Interest;
+import com.taller2.matchapp.util.LocationManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +52,8 @@ public class RegisterActivity extends BaseActivity {
     private static final char SEX_FEMALE = 'M';
 
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
 
 
     // UI references.
@@ -234,6 +238,12 @@ public class RegisterActivity extends BaseActivity {
 
             requestBody.put(KEY_INTERESTS, jsonArray);
             requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
+
+            Location lastLocation = LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
+            if (lastLocation != null) {
+                requestBody.put(KEY_LATITUDE, lastLocation.getLatitude() + "");
+                requestBody.put(KEY_LONGITUDE, lastLocation.getLongitude());
+            }
         } catch (JSONException e) {
             //Never will happen
         }

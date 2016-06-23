@@ -36,6 +36,7 @@ import java.util.Map;
 
 public class MainActivity extends BaseActivity {
 
+    public static final String LIKE = "/like";
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private CardContainer mCardContainer;
@@ -278,6 +279,17 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onSuccess(JSONObject data) {
+                if (endpoint.contains(LIKE)) {
+                    boolean isAMatch = data.optBoolean("match", false);
+                    if (isAMatch) {
+                        Toast.makeText(MainActivity.this, R.string.that_was_a_match, Toast.LENGTH_SHORT).show();
+                        DrawerFragment drawerFragment = (DrawerFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+                        if (drawerFragment != null) {
+                            drawerFragment.fetchMatches();
+                        }
+                    }
+                }
+
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
