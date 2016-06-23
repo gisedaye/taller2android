@@ -118,7 +118,8 @@ public class ChatActivity extends BaseActivity {
 
     void fetchMessages() {
 
-        final MathAppJsonRequest getMessagesRequest = new MathAppJsonRequest(this, MatchAPI.getMessagesEndpoint(chatID)) {
+        final String messagesEndpoint = MatchAPI.getMessagesEndpoint(chatID);
+        final MathAppJsonRequest getMessagesRequest = new MathAppJsonRequest(this, messagesEndpoint) {
             @Override
             public void onSuccess(JSONObject data) {
                 List<Message> messages = new ArrayList<>();
@@ -179,6 +180,8 @@ public class ChatActivity extends BaseActivity {
         };
 
         getMessagesRequest.setTag(UPDATE);
+        requestQueue.getCache().invalidate(messagesEndpoint, true);
+        requestQueue.getCache().remove(messagesEndpoint);
         requestQueue.add(getMessagesRequest);
     }
 

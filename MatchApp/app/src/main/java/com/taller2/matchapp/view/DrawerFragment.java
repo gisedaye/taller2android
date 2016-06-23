@@ -95,7 +95,8 @@ public class DrawerFragment extends Fragment {
 
     public void fetchMatches() {
 
-        final MathAppJsonRequest getMatchesRequest = new MathAppJsonRequest(getContext(), MatchAPI.getMatchesEndpoint()) {
+        final String matchesEndpoint = MatchAPI.getMatchesEndpoint();
+        final MathAppJsonRequest getMatchesRequest = new MathAppJsonRequest(getContext(), matchesEndpoint) {
 
             @Override
             public void onSuccess(JSONObject data) {
@@ -136,6 +137,8 @@ public class DrawerFragment extends Fragment {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.getCache().invalidate(matchesEndpoint, true);
+        requestQueue.getCache().remove(matchesEndpoint);
         requestQueue.add(getMatchesRequest);
     }
 
