@@ -71,3 +71,23 @@ Proyecto
 - Cliente y Documentación: https://github.com/gisedaye/taller2android
 - Dockerhub para imagenes de docker
 
+
+Hipótesis y Supuestos
+----------------------------------------
+
+- El usuario tendrá conocimientos en la utilización de algun sistema Operativo, uso de Internet y contará con un dispositivo mobile con conexión para el correcto funcionamiento del aplicativo.
+- La documentación del sistema (manuales de usuario, proyecto, administración y programador) será escrita en Español.
+- La interfaz de usuario, tanto en el dispositivo mobile y la Web, será en Español.
+- EL usuario final tendrá conocimientos en idioma Español.
+
+
+Lecciones Aprendidas
+----------------------------------------
+
+- Importancia de llevar un backlog de Tareas, a fín de organizar el proyecto y el trabajo en grupo. 
+- Estimación de tareas. Control de Tickets.
+- Integración en un solo aplicativo de varias tecnologías.
+- Importancia de utilizar Docker para el despliegue de la aplicación para proveer una capa de abstracción.
+- Utilizar el tiempo para pensar una buena solución, arquitectura, desglose de tareas, etc. al comienzo del proyecto es de vital importancia para lograr el éxito del mismo y limitar los cambios en el mismo. 
+
+
