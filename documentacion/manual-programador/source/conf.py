@@ -203,7 +203,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'matchApp.tex', u'matchApp Documentation',
-   u'Grupo5', 'manual'),
+   u'Grupo10', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -268,9 +268,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'matchApp'
-epub_author = u'Grupo5'
-epub_publisher = u'Grupo5'
-epub_copyright = u'2015, Grupo5'
+epub_author = u'Grupo10'
+epub_publisher = u'Grupo10'
+epub_copyright = u'2016, Grupo10'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'matchApp'
