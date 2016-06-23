@@ -70,8 +70,8 @@ Para correr con docker
 Cliente
 --------------------------------------------
 
-- Setear ip de computadora a 192.168.1.33
+- Setear ip de host
 - Correr el Appserver y el Shared Server
-- Bajar apk de https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k desde el celular donde se ejecutara la aplicacion
+- Bajar apk de https://drive.google.com/open?id=0B96FtE1h2ukFQ1hWS0xGY251QWs desde el celular donde se ejecutara la aplicacion
 - Abrir MatchApp desde el icono de la aplicación
 

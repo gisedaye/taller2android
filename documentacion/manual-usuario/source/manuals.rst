@@ -28,9 +28,9 @@ Cliente
 ============================================
 
 - Instalar apk en el teléfono celular
-https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
+https://drive.google.com/open?id=0B96FtE1h2ukFQ1hWS0xGY251QWs
 
-- Ejecutar el Application Server en su PC seteando como IP 192.168.1.33
+- Ejecutar el Application Server en su PC seteando ip del host
 
 - Abrir aplicación en el celular
 
@@ -74,12 +74,12 @@ https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k
 .. image:: Screenshots/chat.png
 	:width: 400
 
-- Podrá ver su lista de matches desde la pantalla de matches disponibles, ingresando desde el menú lateral.
+- Podrá ver su lista de ingresando desde el menú lateral, los vera en forma de lista una vez que tenga el match.
+
 .. image:: Screenshots/sidebar.png
 	:width: 400
 
-- Podrá cambiar sus intereses desde su perfil, ingresando desde el menú lateral.
-.. image:: Screenshots/interestsChange.png
+.. image:: Screenshots/matches.png
 	:width: 400
 
 
