@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -77,32 +78,6 @@ public class MainActivity extends BaseActivity {
         drawer.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        final View logoutView = findViewById(R.id.logout);
-
-        //noinspection ConstantConditions
-        logoutView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Session.getInstance(MainActivity.this).logout();
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
-        final View settingsView = findViewById(R.id.settings);
-        //noinspection ConstantConditions
-        settingsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Profile profile = Session.getInstance(this).getProfile();
 
         try {
@@ -161,6 +136,12 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        DrawerFragment drawerFragment = new DrawerFragment();
+        fragmentTransaction.replace(R.id.container, drawerFragment);
+        fragmentTransaction.commit();
 
         //Fetch candidates when init
         fetchCandidates();

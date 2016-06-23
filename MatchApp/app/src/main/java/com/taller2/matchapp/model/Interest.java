@@ -29,14 +29,14 @@ public class Interest implements Serializable {
         return value;
     }
 
-    public Object toJson() {
+    public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.putOpt(ID, id);
             jsonObject.putOpt(VALUE, value);
             jsonObject.putOpt(CATEGORY, category);
         } catch (JSONException e) {
-            //Never will happend
+            //Never will happen
         }
         return jsonObject;
     }
