@@ -287,10 +287,10 @@ public class MainActivity extends BaseActivity {
                         if (drawerFragment != null) {
                             drawerFragment.fetchMatches();
                         }
+                    }else{
+                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }
-
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
