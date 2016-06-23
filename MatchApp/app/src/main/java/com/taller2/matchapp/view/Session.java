@@ -13,6 +13,7 @@ public class Session {
 
     private static final String TOKEN = "TOKEN";
     private static final String PROFILE = "PROFILE";
+    private static final String SEARCH_DISTANCE = "SEARCH_DISTANCE";
 
     public static Session instance = null;
     private static SharedPreferencesEditor sharedPreferencesEditor;
@@ -20,6 +21,7 @@ public class Session {
     // Used as memory cache
     private String token;
     private Profile profile;
+    private int searchDistance;
 
     public static Session getInstance(Context context) {
         // double checked locking implementation to prevent synchronization blocking
@@ -36,6 +38,7 @@ public class Session {
     private Session(Context context) {
         sharedPreferencesEditor = new SharedPreferencesEditor(context, "session");
         token = sharedPreferencesEditor.valueForKey(TOKEN);
+        searchDistance = sharedPreferencesEditor.valueForKey(SEARCH_DISTANCE, 5);
         try {
             JSONObject profileJSON = sharedPreferencesEditor.jsonObjectForKey(PROFILE);
             if (profileJSON != null) {
@@ -59,6 +62,11 @@ public class Session {
         sharedPreferencesEditor.setValueForKey(TOKEN, token);
     }
 
+    public void setSearchDistance(int searchDistance) {
+        this.searchDistance = searchDistance;
+        sharedPreferencesEditor.setValueForKey(SEARCH_DISTANCE, searchDistance);
+    }
+
     public void setProfile(Profile profile) {
         try {
             this.profile = profile;
@@ -74,6 +82,10 @@ public class Session {
 
     public String getToken() {
         return token;
+    }
+
+    public int getSearchDistance() {
+        return searchDistance;
     }
 
     public boolean isLoggedIn() {

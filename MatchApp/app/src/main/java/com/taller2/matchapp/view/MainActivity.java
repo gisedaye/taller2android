@@ -158,8 +158,7 @@ public class MainActivity extends BaseActivity {
 
         if (lastLocation != null) {
 
-            //fixme
-            String radius = "5";
+            String radius = Session.getInstance(this).getSearchDistance() + "";
             String latitude = lastLocation.getLatitude() + "";
             String longitude = lastLocation.getLongitude() + "";
 
@@ -270,6 +269,7 @@ public class MainActivity extends BaseActivity {
             requestQueue.getCache().remove(candidatesEndpoint);
             requestQueue.add(getCandidatesRequest);
         } else {
+            fetching = false;
             progressBar.setVisibility(View.GONE);
             candidatesTv.setText(R.string.cant_fetch_location);
         }
@@ -290,7 +290,7 @@ public class MainActivity extends BaseActivity {
                         if (drawerFragment != null) {
                             drawerFragment.fetchMatches();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }
