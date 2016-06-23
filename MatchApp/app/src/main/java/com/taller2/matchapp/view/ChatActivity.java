@@ -16,8 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
@@ -182,6 +184,12 @@ public class ChatActivity extends BaseActivity {
         getMessagesRequest.setTag(UPDATE);
         requestQueue.getCache().invalidate(messagesEndpoint, true);
         requestQueue.getCache().remove(messagesEndpoint);
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        getMessagesRequest.setRetryPolicy(policy);
+
+
         requestQueue.add(getMessagesRequest);
     }
 
@@ -226,6 +234,11 @@ public class ChatActivity extends BaseActivity {
                 return params;
             }
         };
+
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        sendMessageRequest.setRetryPolicy(policy);
 
         requestQueue.add(sendMessageRequest);
     }

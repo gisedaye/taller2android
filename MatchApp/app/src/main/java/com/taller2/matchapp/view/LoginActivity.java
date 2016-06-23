@@ -16,8 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
@@ -174,6 +176,11 @@ public class LoginActivity extends BaseActivity {
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+
+            int socketTimeout = 30000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            mathAppJsonRequest.setRetryPolicy(policy);
+
             requestQueue.add(mathAppJsonRequest);
         }
     }
