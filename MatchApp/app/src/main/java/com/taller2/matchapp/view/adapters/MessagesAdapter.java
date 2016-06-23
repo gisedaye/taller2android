@@ -45,9 +45,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
-    public void addItem(Message message){
+    public void addItem(Message message) {
         messages.add(message);
-        notifyItemInserted(getItemCount()-1);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     @Override
@@ -64,6 +64,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+        notifyDataSetChanged();
     }
 
     public class MessageVH extends RecyclerView.ViewHolder {

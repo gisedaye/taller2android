@@ -163,7 +163,8 @@ public class MainActivity extends BaseActivity {
             String latitude = lastLocation.getLatitude() + "";
             String longitude = lastLocation.getLongitude() + "";
 
-            final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, MatchAPI.getCandidatesEndpoint(latitude, longitude, radius)) {
+            final String candidatesEndpoint = MatchAPI.getCandidatesEndpoint(latitude, longitude, radius);
+            final MathAppJsonRequest getCandidatesRequest = new MathAppJsonRequest(this, candidatesEndpoint) {
 
                 @Override
                 public void onSuccess(JSONObject data) {
@@ -265,6 +266,8 @@ public class MainActivity extends BaseActivity {
                 }
             };
             RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+            requestQueue.getCache().invalidate(candidatesEndpoint, true);
+            requestQueue.getCache().remove(candidatesEndpoint);
             requestQueue.add(getCandidatesRequest);
         } else {
             progressBar.setVisibility(View.GONE);

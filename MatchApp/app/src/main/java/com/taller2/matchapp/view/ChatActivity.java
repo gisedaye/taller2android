@@ -46,6 +46,7 @@ public class ChatActivity extends BaseActivity {
     private String chatID;
     private RequestQueue requestQueue;
     private MessagesAdapter messagesAdapter;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +64,8 @@ public class ChatActivity extends BaseActivity {
 
         RecyclerView chatRv = (RecyclerView) findViewById(R.id.chatRv);
         //noinspection ConstantConditions
-        chatRv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        chatRv.setLayoutManager(layoutManager);
 
         messagesAdapter = new MessagesAdapter(getApplicationContext());
         chatRv.setAdapter(messagesAdapter);
@@ -116,7 +118,7 @@ public class ChatActivity extends BaseActivity {
 
     void fetchMessages() {
 
-        final MathAppJsonRequest getMatchesRequest = new MathAppJsonRequest(this, MatchAPI.getMessagesEndpoint(chatID)) {
+        final MathAppJsonRequest getMessagesRequest = new MathAppJsonRequest(this, MatchAPI.getMessagesEndpoint(chatID)) {
             @Override
             public void onSuccess(JSONObject data) {
                 List<Message> messages = new ArrayList<>();
@@ -131,6 +133,10 @@ public class ChatActivity extends BaseActivity {
                         }
                     }
                     messagesAdapter.setMessages(messages);
+
+                    //Go to last message
+                    layoutManager.scrollToPosition(messagesAdapter.getItemCount() - 1);
+
                 }
 
                 final MathAppJsonRequest updateRequest = this;
@@ -142,7 +148,7 @@ public class ChatActivity extends BaseActivity {
 
                             requestQueue.add(updateRequest);
                         }
-                    }, 10000);
+                    }, 5000);
                 }
 
             }
@@ -168,8 +174,8 @@ public class ChatActivity extends BaseActivity {
             }
         };
 
-        getMatchesRequest.setTag(UPDATE);
-        requestQueue.add(getMatchesRequest);
+        getMessagesRequest.setTag(UPDATE);
+        requestQueue.add(getMessagesRequest);
     }
 
     void postNewMessage(final String messageText) {
@@ -188,7 +194,7 @@ public class ChatActivity extends BaseActivity {
                 String username = Session.getInstance(getContext()).getProfile().getAlias();
                 Message message = new Message();
                 message.sender = username;
-                message.time = "fff";
+                message.time = "";
                 message.message = messageText;
                 messagesAdapter.addItem(message);
             }
