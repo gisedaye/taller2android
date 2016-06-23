@@ -8,4 +8,34 @@
             android:id="@+id/my_toolbar"
             layout="@layout/toolbar"/>
 
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/chatRv"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="58dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <EditText
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/sendAMessageTv"
+                android:layout_height="50dp"
+                android:imeOptions="actionDone"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:singleLine="true"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:background="@color/white"
+                android:hint="@string/write_a_message"
+                android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+
 </LinearLayout>

@@ -59,5 +59,6 @@
     <string name="email_">Email:</string>
     <string name="my_matches">My matches</string>
     <string name="chat">Chat</string>
-
+    <string name="write_a_message">Write a message</string>
+    <string name="try_to_send_a_message_without_text">You have to write some text before send a message</string>
 </resources>

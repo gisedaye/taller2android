@@ -1,5 +1,6 @@
 package com.taller2.matchapp.model;
 
+import com.taller2.matchapp.util.DateUtils;
 import com.taller2.matchapp.util.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +34,12 @@ public class Message implements Serializable {
 
     @Override
     public void fromJson(JSONObject jsonObject) {
-        time = jsonObject.optString(TIME);
-        sender = jsonObject.optString(SENDER);
         message = jsonObject.optString(MESSAGE);
+        sender = jsonObject.optString(SENDER);
+        String timeText = jsonObject.optString(TIME);
+        timeText = timeText.replace("\\n", "");
+        final String convertedDate = DateUtils.convertDate(timeText);
+        time = convertedDate != null ? convertedDate : "";
     }
 
     public String getTime() {

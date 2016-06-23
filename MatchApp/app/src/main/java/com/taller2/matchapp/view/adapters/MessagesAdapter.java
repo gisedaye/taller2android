@@ -45,6 +45,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
+    public void addItem(Message message){
+        messages.add(message);
+        notifyItemInserted(getItemCount()-1);
+    }
+
     @Override
     public void onBindViewHolder(MessageVH holder, int position) {
         Message message = messages.get(position);
