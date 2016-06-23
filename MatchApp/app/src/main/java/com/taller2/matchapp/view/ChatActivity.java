@@ -132,11 +132,15 @@ public class ChatActivity extends BaseActivity {
                             messages.add(message);
                         }
                     }
+
+                    final int messagesCountBeforeUpdate = messagesAdapter.getItemCount();
+
                     messagesAdapter.setMessages(messages);
 
                     //Go to last message
-                    layoutManager.scrollToPosition(messagesAdapter.getItemCount() - 1);
-
+                    if (messagesCountBeforeUpdate < messages.size()) {
+                        layoutManager.scrollToPosition(messagesAdapter.getItemCount() - 1);
+                    }
                 }
 
                 final MathAppJsonRequest updateRequest = this;
