@@ -36,12 +36,14 @@ Cliente
 Application Server
 ----------------------------------------
 - Cmake
-- Ci-Travis
+- CI-Travis
 - Mongoose-cpp
-- RocksDB
+- jsoncpp
+- casablanca
+- RocksDB (librocksdb.so.4.4.1)
 - Docker
 - Code coverage con gcov
-- Unit tests (ctest)
+- Unit tests (cppunit)
 - Tests de endpoints con postman 
 - Tests functionales con python, pip y la libreria requests
 
@@ -77,6 +79,20 @@ Arquitectura
 
 Appserver
 --------------------------------------------
+
+Esquemas
+""""""""""""""""""
+Modelos y Controladores basicos del sistema.
+
+.. image:: Screenshots/classesapp.png
+
+Tablas de rocksDB con el contenido de sus registros.
+
+.. image:: Screenshots/rocksdb.png
+
+
+Endpoints
+""""""""""""""""""
 A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
 
 Signup
