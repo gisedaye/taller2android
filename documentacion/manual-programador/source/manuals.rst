@@ -36,12 +36,14 @@ Cliente
 Application Server
 ----------------------------------------
 - Cmake
-- Ci-Travis
+- CI-Travis
 - Mongoose-cpp
-- RocksDB
+- jsoncpp
+- casablanca
+- RocksDB (librocksdb.so.4.4.1)
 - Docker
 - Code coverage con gcov
-- Unit tests (ctest)
+- Unit tests (cppunit)
 - Tests de endpoints con postman 
 - Tests functionales con python, pip y la libreria requests
 
