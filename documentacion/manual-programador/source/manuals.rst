@@ -129,6 +129,24 @@ GetMatches
 
 Sharedserver
 --------------------------------------------
+
+Esquemas
+""""""""""""""""""
+
+- A continuación se mostrara un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la api
+.. image:: Screenshots/esquemaShared.png
+
+- En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node_module
+
+.. image:: Screenshots/componentesShared.png 
+
+- Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente
+.. image:: Screenshots/tablasShared.png
+
+- EL siguiente es un Diagrama Entidad-Relación utilizado:
+
+.. image:: Screenshots/derShared.png
+
 Listado de usuarios
 """"""""""""""""""
 - Request GET /users/
