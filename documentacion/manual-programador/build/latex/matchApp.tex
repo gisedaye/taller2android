@@ -127,7 +127,7 @@
 Contenidos:
 
 
-\chapter{Manual de programador - Documentacion Tecnica}
+\chapter{Manual de programador - Documentación Técnica}
 \label{manuals::doc}\label{manuals:manual-de-programador-documentacion-tecnica}\label{manuals:documentacion-de-matchapp}
 \textbf{Grupo 10}
 
@@ -166,7 +166,7 @@ Vazquez, Nicolás
 
 
 
-\section{Tecnologias utilizadas}
+\section{Tecnologías utilizadas}
 \label{manuals:tecnologias-utilizadas}
 
 \subsection{Cliente}
@@ -195,13 +195,13 @@ CI-Travis
 Mongoose-cpp
 
 \item {} 
-jsoncpp
+Jsoncpp
 
 \item {} 
-casablanca
+Casablanca
 
 \item {} 
-RocksDB (librocksdb.so.4.4.1)
+RocksDB (v4.4.1)
 
 \item {} 
 Docker
@@ -213,10 +213,10 @@ Code coverage con gcov
 Unit tests (cppunit)
 
 \item {} 
-Tests de endpoints con postman
+Tests de endpoints con Postman
 
 \item {} 
-Tests functionales con python, pip y la libreria requests
+Tests funcionales con Python (pip y requests)
 
 \end{itemize}
 
@@ -224,7 +224,7 @@ Tests functionales con python, pip y la libreria requests
 \subsection{Shared Server}
 \label{manuals:shared-server}\begin{itemize}
 \item {} 
-Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.
+Utilización de Heroku, para hostear la base de datos y la aplicación web.
 
 \end{itemize}
 
@@ -254,8 +254,8 @@ Docker
 
 \subsection{Proyecto}
 \label{manuals:proyecto}
--- Documentacion en Sphinx
-- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+-- Documentación en Sphinx
+- Utilización de 3 repositorios en GitHub. (Cliente, App Server y Shared Server)
 - Shared Server: \href{https://github.com/PabloFederico/SharedServer}{https://github.com/PabloFederico/SharedServer}
 - App Server: \href{https://github.com/nicolas-vazquez/tp75521c}{https://github.com/nicolas-vazquez/tp75521c}
 - Cliente y Documentación: \href{https://github.com/gisedaye/taller2android}{https://github.com/gisedaye/taller2android}
@@ -275,11 +275,11 @@ Paquetes del appServer
 
 \includegraphics{paquetesApp.png}
 
-Modelos y Controladores basicos del sistema.
+Modelos y Controladores básicos del sistema.
 
 \includegraphics{classesapp.png}
 
-Tablas de rocksDB con el contenido de sus registros.
+Esquemas de la base de datos de rocksDB.
 
 \includegraphics{rocksdb.png}
 
@@ -290,25 +290,25 @@ Diagrama de secuencia
 
 \subsubsection{Endpoints}
 \label{manuals:endpoints}
-A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
+A continuación se brindará una breve descripción de los distintos endpoints del App Server y como se manejan para obtener la información.
 
 
 \subsubsection{Signup}
 \label{manuals:signup}\begin{itemize}
 \item {} 
-Desde el cliente request a AppServer con los datos del profile y intereses completos.
+Desde el cliente se realiza un request a App Server con los datos del profile e intereses completos.
 
 \item {} 
-Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).
+Se almacena username y password en el App Server.
 
 \item {} 
-Guardo la información del profile en SharedServer.
+Se realiza un request a Shared Server para crear un usuario con los datos restantes (profile e intereses).
 
 \item {} 
-El AppServer guarda username y password.
+Se almacena la información del profile en Shared Server.
 
 \item {} 
-Vuelvo con un Successful SignUp all cliente.
+Se retorna la respuesta con un mensaje de error en caso de fallo o con un mensaje exitoso en caso contrario.
 
 \end{itemize}
 
@@ -316,25 +316,25 @@ Vuelvo con un Successful SignUp all cliente.
 \subsubsection{Login}
 \label{manuals:login}\begin{itemize}
 \item {} 
-Desde el cliente request a AppServer con username/password
+Desde el cliente se realiza un request a App Server con username/password.
 
 \item {} 
-Busco el usuario en el AppServer:
+Se corrobora si existe el usuario en la base de datos de App Server.
 
 \item {} 
-En el caso que exista devuelvo accessToken
+En el caso que exista se realiza un request a Shared Server para obtener el profile del usuario que luego de retorna junto con el Access Token.
 
 \item {} 
-Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.
+Si no existe se realiza un request a Shared Server, ya que el usuario puede haber sido creado desde el backoffice.
 
 \item {} 
-Busco el usuario en el SharedServer y devuelvo username/password
+Se busca el usuario en el Shared Server y si existe se devuelve el profile. En caso que no exista se devuelve un error al App Server.
 
 \item {} 
-Guardo username/password y accesstoken/username en el AppServer
+Si hubo error se devuelve un mensaje de error a la aplicación Cliente. En caso contrario se guarda username/password en el AppServer.
 
 \item {} 
-Vuelvo al cliente con el access token
+Se retorna la respuesta con el Access Token y el profile del usuario.
 
 \end{itemize}
 
@@ -342,56 +342,53 @@ Vuelvo al cliente con el access token
 \subsubsection{Like/Dislike}
 \label{manuals:like-dislike}\begin{itemize}
 \item {} 
-Desde el cliente request a AppServer con el id
+Desde el cliente se realiza un request a App Server con el id del usuario elegido como parámetro.
 
 \item {} 
-Guardamos el id en el array de keptAccounts
+Se almacena el id en el array de keptAccounts.
 
 \item {} 
-Si hay un match lo guardamos
+En caso de producirse un match se almacena el mismo.
 
 \end{itemize}
 
 
-\subsubsection{GetCandidates}
-\label{manuals:getcandidates}\begin{itemize}
+\subsubsection{Get Candidates}
+\label{manuals:get-candidates}\begin{itemize}
 \item {} 
-Desde el cliente request a AppServer  GET /candidates con location.
+Desde el cliente se realiza un request a App Server con los datos de la localización geográfica del usuario.
 
 \item {} 
-Busco el usuario en el AppServer, obtengo el username
+Se corrobora si existe el usuario en la base de datos de App Server.
 
 \item {} 
-Request a SharedServer con username
+Se realiza un request a SharedServer con el alias del usuario para obtener los candidatos que compartan algún interés con el usuario y se encuentren dentro del radio de localización correspondiente.
 
 \item {} 
-SharedServer determina los candidatos de acuerdo a los intereses del usuario
+Shared Server determina los candidatos de acuerdo a los intereses del usuario.
 
 \item {} 
-Devuelvo los candidatos al AppServer y filtro por likes/dislikes
+Se retornan la respuesta con los perfiles de los candidatos al App Server y se filtra por likes/dislikes.
 
 \item {} 
-Devuelvo los candidatos filtrados al cliente
+Se devuelve un candidato que cumpla con los requisitos de compartir un interés con el usuario, encontrarse dentro del radio de localización correspondiente y poseer una cantidad de matches menor al 1\% del total de matches por usuario promedio.
 
 \end{itemize}
 
 
-\subsubsection{GetMatches}
-\label{manuals:getmatches}\begin{itemize}
+\subsubsection{Get Matches}
+\label{manuals:get-matches}\begin{itemize}
 \item {} 
-Desde el cliente request al AppServer GET /matches
+Desde el cliente se realiza un request al App Server.
 
 \item {} 
-Obtenemos la lista de matches
+Se obtiene la lista de matches asociados al usuario.
 
 \item {} 
-Request a SharedServer con la lista
+Se realiza un request a Shared Server con el listado de matches para obtener los profiles asociados a los mismos.
 
 \item {} 
-Obtenemos los perfiles asociados
-
-\item {} 
-Devuelvo los matches al cliente
+Se retorna la respuesta a la aplicación Cliente con los datos de los usuarios que poseen un match con el usuario.
 
 \end{itemize}
 
@@ -402,14 +399,14 @@ Devuelvo los matches al cliente
 \subsubsection{Esquemas}
 \label{manuals:id1}\begin{itemize}
 \item {} 
-A continuación se mostrara un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la api
+A continuación se mostrará un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la API
 
 \end{itemize}
 
 \includegraphics{esquemaShared.png}
 \begin{itemize}
 \item {} 
-En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node\_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node\_module
+En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes módulos de Shared Server. Por un lado, todas las dependencias necesarias para el funcionamiento se encuentran dentro de node\_modules. En la parte central se encuentra el servidor, que tiene interacción con las dependencias de la aplicación, con las vistas y con la API. En el caso de la API, interactúa con las vistas y con el servidor para enviar la respuesta a las solicitudes del mismo.
 
 \end{itemize}
 
@@ -423,7 +420,7 @@ Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la infor
 \includegraphics{tablasShared.png}
 \begin{itemize}
 \item {} 
-El siguiente es un Diagrama Entidad-Relación utilizado:
+El siguiente es un Diagrama Entidad-Relación de la base de datos:
 
 \end{itemize}
 
@@ -433,13 +430,10 @@ El siguiente es un Diagrama Entidad-Relación utilizado:
 \subsubsection{Listado de usuarios}
 \label{manuals:listado-de-usuarios}\begin{itemize}
 \item {} 
-Request GET /users/
+Request GET /users
 
 \item {} 
-Busca a todos los usuarios del sharedserver
-
-\item {} 
-Devuelve array de usuarios con: id, name, alias, email, sex, age, photo\_profile, array de interests, location, metadata
+Devuelve un listado de usuarios con: id, name, alias, email, sex, age, photo\_profile, interests, location, metadata
 
 \end{itemize}
 
@@ -447,10 +441,10 @@ Devuelve array de usuarios con: id, name, alias, email, sex, age, photo\_profile
 \subsubsection{Alta de usuario}
 \label{manuals:alta-de-usuario}\begin{itemize}
 \item {} 
-Request POST /users/ con parametros: name, alias, email, sex, age, interests, location
+Request POST /users con parámetros: name, alias, email, sex, age, interests, location, photo\_profile
 
 \item {} 
-Crea al usuario  en el sharedserver
+Crea el usuario en el Shared Server
 
 \end{itemize}
 
@@ -458,35 +452,35 @@ Crea al usuario  en el sharedserver
 \subsubsection{Consulta perfil de usuario}
 \label{manuals:consulta-perfil-de-usuario}\begin{itemize}
 \item {} 
-Request GET /users/+id
+Request GET /users/:id
 
 \item {} 
-Busca en el shared server usuario con ese id
+Busca en el Shared Server un usuario con el id correspondiente a la solicitud
 
 \item {} 
-Devuelve un objeto user con: id, name, alias, email, sex, age, photo\_profile, array de interests, location, metadata
+Devuelve un error en caso que no exista o en caso contrario un usuario con las siguientes propiedades: id, name, alias, email, sex, age, photo\_profile, array de interests, location, metadata
 
 \end{itemize}
 
 
-\subsubsection{Edicion de usuario}
+\subsubsection{Edición de usuario}
 \label{manuals:edicion-de-usuario}\begin{itemize}
 \item {} 
-Request PUT /users/+id con parametros: id, name, alias, email, sex, age, photo\_profile, interests, location
+Request PUT /users/:id con parámetros: id, name, alias, email, sex, age, photo\_profile, interests, location
 
 \item {} 
-Modifica al usuario  en el sharedserver
+Modifica el perfil del usuario en el Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.
 
 \end{itemize}
 
 
-\subsubsection{Actualización foto perfil}
-\label{manuals:actualizacion-foto-perfil}\begin{itemize}
+\subsubsection{Consulta foto de perfil}
+\label{manuals:consulta-foto-de-perfil}\begin{itemize}
 \item {} 
-Request PUT /users/+id/photo con parametro: photo en base64
+Request GET /users/:id/photo con parámetro: id del usuario
 
 \item {} 
-Agrega una foto de perfil al usuario con id +id.
+Obtiene la foto de perfil del usuario con el id correspondiente a la solicitud o un error en caso que no exista el usuario.
 
 \end{itemize}
 
@@ -494,10 +488,10 @@ Agrega una foto de perfil al usuario con id +id.
 \subsubsection{Baja de usuario}
 \label{manuals:baja-de-usuario}\begin{itemize}
 \item {} 
-Request DELETE /users/+id
+Request DELETE /users/:id
 
 \item {} 
-Elimina al usuario del sharedserver
+Elimina al usuario del Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.
 
 \end{itemize}
 
@@ -505,24 +499,21 @@ Elimina al usuario del sharedserver
 \subsubsection{Listado de intereses}
 \label{manuals:listado-de-intereses}\begin{itemize}
 \item {} 
-Request GET /interests/
+Request GET /interests
 
 \item {} 
-Busca a todos los intereses del sharedserver
-
-\item {} 
-Devuelve array de intereses con: category, value
+Obtiene un listado con los intereses globales del Shared Server con las propiedades category y value o un error en caso que haya ocurrido un fallo.
 
 \end{itemize}
 
 
-\subsubsection{Alta de interes}
+\subsubsection{Alta de interés}
 \label{manuals:alta-de-interes}\begin{itemize}
 \item {} 
-Request POST /interests/ con parametros: category, value
+Request POST /interests con parametros: category, value
 
 \item {} 
-Crea al interes en el sharedserver en esa categoria
+Crea un nuevo interés en el Shared Server para la categoría y valor correspondientes.
 
 \end{itemize}
 
@@ -530,10 +521,10 @@ Crea al interes en el sharedserver en esa categoria
 \subsection{Client}
 \label{manuals:client}\begin{itemize}
 \item {} 
-Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests
+Consume los servicios del App Server para Login, Registro, Búsqueda de Candidatos, Matches, Like, Dislike y Chat
 
 \item {} 
-Maneja session con el authorization token provisto por el endpoint del login
+Maneja una sesión con el Authorization Token provisto previamente por el Login
 
 \item {} \begin{description}
 \item[{Vistas:}] \leavevmode\begin{itemize}
@@ -562,8 +553,8 @@ SplashActivity
 \subsection{Appserver}
 \label{manuals:id2}
 
-\subsubsection{Correr Unit Tests}
-\label{manuals:correr-unit-tests}
+\subsubsection{Unit Tests}
+\label{manuals:unit-tests}
 En la consola desde la carpeta build ejecutar el comando
 \begin{quote}
 
@@ -571,21 +562,21 @@ En la consola desde la carpeta build ejecutar el comando
 \end{quote}
 
 
-\subsubsection{Correr Coverage}
-\label{manuals:correr-coverage}
-En la raiz del proyecto correr
+\subsubsection{Coverage}
+\label{manuals:coverage}
+En el directorio raíz del proyecto ejecutar el siguiente comando:
 \begin{quote}
 
 \textgreater{} sudo ./coverage.sh
 \end{quote}
 
-Se abrira una ventana del navegador con los resultados de tests cubiertos
+Se abrirá una ventana del navegador con los resultados del test coverage
 
 \includegraphics{coverage.png}
 
 
-\subsubsection{Correr Tests funcionales}
-\label{manuals:correr-tests-funcionales}
+\subsubsection{Tests funcionales}
+\label{manuals:tests-funcionales}
 Instalar python
 
 \textgreater{} sudo apt-get install python2.7
@@ -595,28 +586,29 @@ Instalar pip
 \textgreater{} wget \href{https://bootstrap.pypa.io/get-pip.py}{https://bootstrap.pypa.io/get-pip.py}
 \textgreater{} sudo python get-pip.py
 
-Instalar el modulo requests
+Instalar el módulo requests
 
 \textgreater{} sudo pip install requests
 
-Para correr los tests funcionales ir al directorio functionalTests y correr los tests
+Para correr los tests funcionales dirigirse al directorio functionalTests y ejecutar los siguientes comandos:
 
 \textgreater{} cd functionalTests/
 \textgreater{} python python restTester.py
 
-Saldran los resultados del tests en la consola
+Se mostrarán los resultados de los tests en la consola
 
 
 \subsubsection{Testear Endpoints Manualmente}
 \label{manuals:testear-endpoints-manualmente}
-Correr el appserver (Ver manual de instalacion)
+Ejecutar el App Server (Ver Manual de instalación)
+Ejecutar el cliente Postman
 
 
 \subsubsection{SignUp}
 \label{manuals:id3}
 \code{POST http://127.0.0.1:8083/api/accounts/signup}
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:
 
 \code{\{
 "username": "user",
@@ -628,7 +620,7 @@ En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
 \label{manuals:id4}
 \code{POST http://127.0.0.1:8083/api/accounts/login}
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:
 
 \code{\{
 "username": "user",
@@ -640,56 +632,56 @@ En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
 \label{manuals:matches}
 \code{GET http://127.0.0.1:8083/api/matches/}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
 
 \subsubsection{Candidates}
 \label{manuals:candidates}
-\code{GET http://127.0.0.1:8083/api/matches/candidates/}
+\code{GET http://127.0.0.1:8083/api/matches/candidates}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
 
 \subsubsection{Ver mensajes}
 \label{manuals:ver-mensajes}
-\code{GET http://127.0.0.1:8083/api/matches/1/messages/}
+\code{GET http://127.0.0.1:8083/api/matches/:id/messages}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
 
 \subsubsection{Enviar mensaje}
 \label{manuals:enviar-mensaje}
-\code{PUT http://127.0.0.1:8083/api/matches/1/message/}
+\code{PUT http://127.0.0.1:8083/api/matches/:id/message}
 
 \code{\{
 "message": "Hola!"
 \}}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
 
 \subsubsection{Like}
 \label{manuals:like}
-\code{PUT http://127.0.0.1:8083/api/accounts/1/like/}
+\code{PUT http://127.0.0.1:8083/api/accounts/:id/like}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
 
 \subsubsection{Disike}
 \label{manuals:disike}
-\code{PUT http://127.0.0.1:8083/api/accounts/3/dislike/}
+\code{PUT http://127.0.0.1:8083/api/accounts/:id/dislike}
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 \code{Authorization: \textless{}token\textgreater{}}
 
@@ -701,7 +693,7 @@ Agregar el header con el token que recibio del endpoint de login
 \label{manuals:id6}
 \code{POST http://127.0.0.1:8083/api/accounts/login}
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto
 
 \code{\{
 "username": "user",
@@ -721,12 +713,12 @@ Agregar headers
 
 \subsubsection{Vista de un usuario}
 \label{manuals:vista-de-un-usuario}
-\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5}
+\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id}
 
 
-\subsubsection{Vista de perfil de usuario}
-\label{manuals:vista-de-perfil-de-usuario}
-\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5/profile}
+\subsubsection{Consulta de perfil de usuario}
+\label{manuals:consulta-de-perfil-de-usuario}
+\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id/profile}
 
 Agregar headers
 
@@ -734,9 +726,9 @@ Agregar headers
 \code{Content-Type: application/json}
 
 
-\subsubsection{Vista de candidatos de usuario}
-\label{manuals:vista-de-candidatos-de-usuario}
-\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/nico/candidates}
+\subsubsection{Consulta de candidatos para un usuario}
+\label{manuals:consulta-de-candidatos-para-un-usuario}
+\code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:user/candidates}
 
 Agregar headers
 
@@ -751,37 +743,43 @@ Agregar headers
 \code{\{
 "name":"Name",
 "Alias":"aliiaass",
+"age":23,
+"gender":"M",
 "email":"mail@mail.com",
-"latitude":"21222",
-"Longitude":"22322"
+"latitude":"-34.58",
+"longitude":"-58.60",
+"photo\_profile": "base\_64"
 \}}
 
 
-\subsubsection{Edit de usuario}
-\label{manuals:edit-de-usuario}
-\code{PUT https://tallerdeprogramacionii-1c2016.herokuapp.com/users/1}
+\subsubsection{Modificación de usuario}
+\label{manuals:modificacion-de-usuario}
+\code{PUT https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id}
 
 \code{\{
 "id": 1,
 "name":"Name",
 "Alias":"aliiaass",
+"age":23,
+"gender":"M",
 "email":"mail@mail.com",
-"latitude":"21222",
-"Longitude":"22322"
+"latitude":"-34.58",
+"longitude":"-58.60",
+"photo\_profile": "base\_64"
 \}}
 
 
 \subsubsection{Baja de usuario}
 \label{manuals:id9}
-\code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20}
+\code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id}
 
 
-\subsubsection{Listado de  intereses}
+\subsubsection{Listado de intereses}
 \label{manuals:id10}
 \code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
 
-\subsubsection{Alta de interes}
+\subsubsection{Alta de interés}
 \label{manuals:id11}
 \code{POST https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
@@ -791,9 +789,9 @@ Agregar headers
 \}}
 
 
-\subsubsection{Baja de interes}
+\subsubsection{Baja de interés}
 \label{manuals:baja-de-interes}
-\code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2}
+\code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/:id}
 
 
 \chapter{Indices y tablas}

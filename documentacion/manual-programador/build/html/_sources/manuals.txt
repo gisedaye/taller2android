@@ -1,7 +1,7 @@
 *********
 MatchApp
 
-Manual de programador - Documentacion Tecnica
+Manual de programador - Documentación Técnica
 *********
 **Grupo 10**
 
@@ -22,7 +22,7 @@ Manual de programador - Documentacion Tecnica
 +-------------------------------------+--------------------------------------+
 
 ============================================
-Tecnologias utilizadas
+Tecnologías utilizadas
 ============================================
 
 Cliente
@@ -38,19 +38,19 @@ Application Server
 - Cmake
 - CI-Travis
 - Mongoose-cpp
-- jsoncpp
-- casablanca
-- RocksDB (librocksdb.so.4.4.1)
+- Jsoncpp
+- Casablanca
+- RocksDB (v4.4.1)
 - Docker
 - Code coverage con gcov
 - Unit tests (cppunit)
-- Tests de endpoints con postman 
-- Tests functionales con python, pip y la libreria requests
+- Tests de endpoints con Postman 
+- Tests funcionales con Python (pip y requests)
 
 
 Shared Server
 ----------------------------------------
-- Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.
+- Utilización de Heroku, para hostear la base de datos y la aplicación web.
 .. image:: Screenshots/heroku.png
 
 - Utilización de Express + Node.js en sus versiones 4.13 y 0.12.7 respectivamente.
@@ -65,8 +65,8 @@ Shared Server
 
 Proyecto
 ----------------------------------------
--- Documentacion en Sphinx
-- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+-- Documentación en Sphinx
+- Utilización de 3 repositorios en GitHub. (Cliente, App Server y Shared Server)
 - Shared Server: https://github.com/PabloFederico/SharedServer
 - App Server: https://github.com/nicolas-vazquez/tp75521c
 - Cliente y Documentación: https://github.com/gisedaye/taller2android
@@ -86,11 +86,11 @@ Paquetes del appServer
 
 .. image:: Screenshots/paquetesApp.png
 
-Modelos y Controladores basicos del sistema.
+Modelos y Controladores básicos del sistema.
 
 .. image:: Screenshots/classesapp.png
 
-Tablas de rocksDB con el contenido de sus registros.
+Esquemas de la base de datos de rocksDB.
 
 .. image:: Screenshots/rocksdb.png
 
@@ -101,54 +101,53 @@ Diagrama de secuencia
 
 Endpoints
 """"""""""""""""""
-A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
+A continuación se brindará una breve descripción de los distintos endpoints del App Server y como se manejan para obtener la información.
 
 Signup
 """""""""
 
-- Desde el cliente request a AppServer con los datos del profile y intereses completos.
-- Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).
-- Guardo la información del profile en SharedServer.
-- El AppServer guarda username y password.
-- Vuelvo con un Successful SignUp all cliente.
+- Desde el cliente se realiza un request a App Server con los datos del profile e intereses completos.
+- Se almacena username y password en el App Server.
+- Se realiza un request a Shared Server para crear un usuario con los datos restantes (profile e intereses).
+- Se almacena la información del profile en Shared Server.
+- Se retorna la respuesta con un mensaje de error en caso de fallo o con un mensaje exitoso en caso contrario.
 
 Login
 """""""""
 
-- Desde el cliente request a AppServer con username/password
-- Busco el usuario en el AppServer:
-- En el caso que exista devuelvo accessToken
-- Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.
-- Busco el usuario en el SharedServer y devuelvo username/password
-- Guardo username/password y accesstoken/username en el AppServer
-- Vuelvo al cliente con el access token
+- Desde el cliente se realiza un request a App Server con username/password.
+- Se corrobora si existe el usuario en la base de datos de App Server.
+- En el caso que exista se realiza un request a Shared Server para obtener el profile del usuario que luego de retorna junto con el Access Token.
+- Si no existe se realiza un request a Shared Server, ya que el usuario puede haber sido creado desde el backoffice.
+- Se busca el usuario en el Shared Server y si existe se devuelve el profile. En caso que no exista se devuelve un error al App Server.
+- Si hubo error se devuelve un mensaje de error a la aplicación Cliente. En caso contrario se guarda username/password en el AppServer.
+- Se retorna la respuesta con el Access Token y el profile del usuario.
 
 Like/Dislike
 """""""""
 
-- Desde el cliente request a AppServer con el id
-- Guardamos el id en el array de keptAccounts
-- Si hay un match lo guardamos
+- Desde el cliente se realiza un request a App Server con el id del usuario elegido como parámetro.
+- Se almacena el id en el array de keptAccounts.
+- En caso de producirse un match se almacena el mismo.
 
-GetCandidates
+Get Candidates
 """""""""
 
-- Desde el cliente request a AppServer  GET /candidates con location.
-- Busco el usuario en el AppServer, obtengo el username
-- Request a SharedServer con username
-- SharedServer determina los candidatos de acuerdo a los intereses del usuario 
-- Devuelvo los candidatos al AppServer y filtro por likes/dislikes
-- Devuelvo los candidatos filtrados al cliente
+- Desde el cliente se realiza un request a App Server con los datos de la localización geográfica del usuario.
+- Se corrobora si existe el usuario en la base de datos de App Server.
+- Se realiza un request a SharedServer con el alias del usuario para obtener los candidatos que compartan algún interés con el usuario y se encuentren dentro del radio de localización correspondiente.
+- Shared Server determina los candidatos de acuerdo a los intereses del usuario.
+- Se retornan la respuesta con los perfiles de los candidatos al App Server y se filtra por likes/dislikes.
+- Se devuelve un candidato que cumpla con los requisitos de compartir un interés con el usuario, encontrarse dentro del radio de localización correspondiente y poseer una cantidad de matches menor al 1% del total de matches por usuario promedio.
 
 
-GetMatches
+Get Matches
 """""""""
 
-- Desde el cliente request al AppServer GET /matches
-- Obtenemos la lista de matches
-- Request a SharedServer con la lista
-- Obtenemos los perfiles asociados
-- Devuelvo los matches al cliente
+- Desde el cliente se realiza un request al App Server.
+- Se obtiene la lista de matches asociados al usuario.
+- Se realiza un request a Shared Server con el listado de matches para obtener los profiles asociados a los mismos.
+- Se retorna la respuesta a la aplicación Cliente con los datos de los usuarios que poseen un match con el usuario.
 
 
 Sharedserver
@@ -157,67 +156,65 @@ Sharedserver
 Esquemas
 """"""""""""""""""
 
-- A continuación se mostrara un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la api
+- A continuación se mostrará un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la API
 .. image:: Screenshots/esquemaShared.png
 
-- En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node_module
+- En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes módulos de Shared Server. Por un lado, todas las dependencias necesarias para el funcionamiento se encuentran dentro de node_modules. En la parte central se encuentra el servidor, que tiene interacción con las dependencias de la aplicación, con las vistas y con la API. En el caso de la API, interactúa con las vistas y con el servidor para enviar la respuesta a las solicitudes del mismo.
 
 .. image:: Screenshots/componentes3Shared.png 
 
 - Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente
 .. image:: Screenshots/tablasShared.png
 
-- El siguiente es un Diagrama Entidad-Relación utilizado:
+- El siguiente es un Diagrama Entidad-Relación de la base de datos:
 
 .. image:: Screenshots/derShared.png
 
 Listado de usuarios
 """"""""""""""""""
-- Request GET /users/
-- Busca a todos los usuarios del sharedserver
-- Devuelve array de usuarios con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata
+- Request GET /users
+- Devuelve un listado de usuarios con: id, name, alias, email, sex, age, photo_profile, interests, location, metadata
 
 Alta de usuario
 """"""""""""""""""
-- Request POST /users/ con parametros: name, alias, email, sex, age, interests, location 
-- Crea al usuario  en el sharedserver
+- Request POST /users con parámetros: name, alias, email, sex, age, interests, location, photo_profile
+- Crea el usuario en el Shared Server
 
 Consulta perfil de usuario
 """"""""""""""""""
-- Request GET /users/+id
-- Busca en el shared server usuario con ese id
-- Devuelve un objeto user con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata
+- Request GET /users/:id
+- Busca en el Shared Server un usuario con el id correspondiente a la solicitud
+- Devuelve un error en caso que no exista o en caso contrario un usuario con las siguientes propiedades: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata
 
-Edicion de usuario
+Edición de usuario
 """"""""""""""""""
-- Request PUT /users/+id con parametros: id, name, alias, email, sex, age, photo_profile, interests, location 
-- Modifica al usuario  en el sharedserver
+- Request PUT /users/:id con parámetros: id, name, alias, email, sex, age, photo_profile, interests, location 
+- Modifica el perfil del usuario en el Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.
 
-Actualización foto perfil
+Consulta foto de perfil
 """"""""""""""""""
-- Request PUT /users/+id/photo con parametro: photo en base64
-- Agrega una foto de perfil al usuario con id +id.
+- Request GET /users/:id/photo con parámetro: id del usuario
+- Obtiene la foto de perfil del usuario con el id correspondiente a la solicitud o un error en caso que no exista el usuario.
 
 Baja de usuario
 """"""""""""""""""
-- Request DELETE /users/+id
-- Elimina al usuario del sharedserver
+- Request DELETE /users/:id
+- Elimina al usuario del Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.
 
 Listado de intereses
 """"""""""""""""""
-- Request GET /interests/
-- Busca a todos los intereses del sharedserver
-- Devuelve array de intereses con: category, value
+- Request GET /interests
+- Obtiene un listado con los intereses globales del Shared Server con las propiedades category y value o un error en caso que haya ocurrido un fallo.
 
-Alta de interes
+Alta de interés
 """"""""""""""""""
-- Request POST /interests/ con parametros: category, value
-- Crea al interes en el sharedserver en esa categoria
+- Request POST /interests con parametros: category, value
+- Crea un nuevo interés en el Shared Server para la categoría y valor correspondientes.
 
 Client
 --------------------------------------------
-- Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests
-- Maneja session con el authorization token provisto por el endpoint del login
+- Consume los servicios del App Server para Login, Registro, Búsqueda de Candidatos, Matches, Like, Dislike y Chat
+- Maneja una sesión con el Authorization Token provisto previamente por el Login
 - Vistas:
 	- LoginActivity	
 	- RegisterActivity
@@ -231,25 +228,25 @@ Testing
 Appserver
 --------------------------------------------
 
-Correr Unit Tests
+Unit Tests
 """"""""""""""""""
 
 En la consola desde la carpeta build ejecutar el comando
 
  > ctest
 
-Correr Coverage
+Coverage
 """"""""""""""""""
 
-En la raiz del proyecto correr
+En el directorio raíz del proyecto ejecutar el siguiente comando:
 
  > sudo ./coverage.sh
 
-Se abrira una ventana del navegador con los resultados de tests cubiertos
+Se abrirá una ventana del navegador con los resultados del test coverage
 
 .. image:: Screenshots/coverage.png
 
-Correr Tests funcionales
+Tests funcionales
 """"""""""""""""""
 
 Instalar python
@@ -261,28 +258,29 @@ Instalar pip
 > wget https://bootstrap.pypa.io/get-pip.py
 > sudo python get-pip.py
 
-Instalar el modulo requests
+Instalar el módulo requests
 
 > sudo pip install requests
 
-Para correr los tests funcionales ir al directorio functionalTests y correr los tests
+Para correr los tests funcionales dirigirse al directorio functionalTests y ejecutar los siguientes comandos:
 
 > cd functionalTests/
 > python python restTester.py
 
-Saldran los resultados del tests en la consola
+Se mostrarán los resultados de los tests en la consola
 
 
 Testear Endpoints Manualmente
 """"""""""""""""""
-Correr el appserver (Ver manual de instalacion)
+Ejecutar el App Server (Ver Manual de instalación)
+Ejecutar el cliente Postman
 
 SignUp
 """""""""
 
 ``POST http://127.0.0.1:8083/api/accounts/signup``
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:
 
 ``{
 "username": "user",
@@ -296,7 +294,7 @@ Login
 
 ``POST http://127.0.0.1:8083/api/accounts/login``
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:
 
 ``{
 "username": "user",
@@ -309,47 +307,47 @@ Matches
 
 ``GET http://127.0.0.1:8083/api/matches/``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
 Candidates
 """""""""
 
-``GET http://127.0.0.1:8083/api/matches/candidates/``
+``GET http://127.0.0.1:8083/api/matches/candidates``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
 Ver mensajes
 """""""""
 
-``GET http://127.0.0.1:8083/api/matches/1/messages/``
+``GET http://127.0.0.1:8083/api/matches/:id/messages``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
 Enviar mensaje
 """""""""
 
-``PUT http://127.0.0.1:8083/api/matches/1/message/``
+``PUT http://127.0.0.1:8083/api/matches/:id/message``
 
 ``{
 "message": "Hola!"
 }``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
 
 Like
 """""""""
-``PUT http://127.0.0.1:8083/api/accounts/1/like/``
+``PUT http://127.0.0.1:8083/api/accounts/:id/like``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
@@ -357,9 +355,9 @@ Agregar el header con el token que recibio del endpoint de login
 Disike
 """""""""
 
-``PUT http://127.0.0.1:8083/api/accounts/3/dislike/``
+``PUT http://127.0.0.1:8083/api/accounts/:id/dislike``
 
-Agregar el header con el token que recibio del endpoint de login
+Setear el header Authorization con el token que se recibió en la solicitud de Login
 
 ``Authorization: <token>``
 
@@ -374,7 +372,7 @@ Login
 
 ``POST http://127.0.0.1:8083/api/accounts/login``
 
-En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
+En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto
 
 ``{
 "username": "user",
@@ -395,22 +393,22 @@ Listado de  usuarios
 Vista de un usuario
 """""""""
 
-``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id``
 
-Vista de perfil de usuario
+Consulta de perfil de usuario
 """""""""
 
-``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5/profile``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id/profile``
 
 Agregar headers
 
 ``Authorization: <token>``
 ``Content-Type: application/json``
 
-Vista de candidatos de usuario
+Consulta de candidatos para un usuario
 """""""""
 
-``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/nico/candidates``
+``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:user/candidates``
 
 Agregar headers
 
@@ -426,37 +424,43 @@ Alta de usuario
 ``{
 "name":"Name",
 "Alias":"aliiaass",
+"age":23,
+"gender":"M",
 "email":"mail@mail.com", 
-"latitude":"21222", 
-"Longitude":"22322"
+"latitude":"-34.58", 
+"longitude":"-58.60",
+"photo_profile": "base_64"
 }``
 
-Edit de usuario
+Modificación de usuario
 """""""""
 
-``PUT https://tallerdeprogramacionii-1c2016.herokuapp.com/users/1``
+``PUT https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id``
 
 ``{
 "id": 1,
 "name":"Name",
 "Alias":"aliiaass",
+"age":23,
+"gender":"M",
 "email":"mail@mail.com", 
-"latitude":"21222", 
-"Longitude":"22322"
+"latitude":"-34.58", 
+"longitude":"-58.60",
+"photo_profile": "base_64"
 }``
 
 
 Baja de usuario
 """""""""
 
-``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20``
+``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id``
 
-Listado de  intereses
+Listado de intereses
 """""""""
 
 ``GET https://tallerdeprogramacionii-1c2016.herokuapp.com/interests``
 
-Alta de interes
+Alta de interés
 """""""""
 
 ``POST https://tallerdeprogramacionii-1c2016.herokuapp.com/interests``
@@ -466,8 +470,8 @@ Alta de interes
 "value":"One Direction"
 }``
 
-Baja de interes
+Baja de interés
 """""""""
 
-``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2``
+``DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/:id``
 

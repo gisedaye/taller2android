@@ -76,26 +76,25 @@
 </tbody>
 </table>
 <div class="section" id="instalacion-y-puesta-en-marcha">
-<h2>Instalacion y puesta en marcha<a class="headerlink" href="#instalacion-y-puesta-en-marcha" title="Permalink to this headline">¶</a></h2>
+<h2>Instalación y puesta en marcha<a class="headerlink" href="#instalacion-y-puesta-en-marcha" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="shared-server">
 <h3>Shared Server<a class="headerlink" href="#shared-server" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><dl class="first docutils">
-<dt>Para correr con docker:</dt>
+<dt>Para ejecutar el servidor mediante Docker:</dt>
 <dd><ul class="first last">
 <li><p class="first">En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.</p>
 </li>
 <li><dl class="first docutils">
-<dt>Luego ejecutar los siguientes comandos:</dt>
+<dt>Luego ejecutar el siguiente comando:</dt>
 <dd><ul class="first last simple">
-<li>sudo service mongodb stop</li>
 <li>sudo docker-compose up</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Para detener la aplicacion correr en la consola:</dt>
+<dt>Para detener la aplicación ejecutar en la consola:</dt>
 <dd><ul class="first last simple">
 <li>sudo docker-compose stop</li>
 </ul>
@@ -106,16 +105,16 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">Para ver la app ingresar a <a class="reference external" href="https://tallerdeprogramacionii-1c2016.herokuapp.com/">https://tallerdeprogramacionii-1c2016.herokuapp.com/</a></p>
+<li><p class="first">Para utilizar la app ingresar a <a class="reference external" href="https://tallerdeprogramacionii-1c2016.herokuapp.com/">https://tallerdeprogramacionii-1c2016.herokuapp.com/</a></p>
 </li>
 </ul>
 </div>
 <div class="section" id="application-server">
 <h3>Application Server<a class="headerlink" href="#application-server" title="Permalink to this headline">¶</a></h3>
-<p>Pasos para correr la aplicación</p>
+<p>Pasos para ejecutar la aplicación</p>
 <ul>
 <li><dl class="first docutils">
-<dt>Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea</dt>
+<dt>En una consola ejecutar el siguiente comando para obtener una copia local del repositorio remoto:</dt>
 <dd><ul class="first last simple">
 <li>git clone ghttps://github.com/nicolas-vazquez/tp75521c.git</li>
 </ul>
@@ -123,7 +122,7 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Ejecutar los siguientes pasos tambien en la consola:</dt>
+<dt>Ejecutar los siguientes comandos en la consola para instalar las dependencias necesarias:</dt>
 <dd><ul class="first last simple">
 <li>cd tp75521c/AppServer</li>
 <li>sudo ./install.sh</li>
@@ -132,7 +131,7 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Buildear aplicación para crear ejecutable</dt>
+<dt>Buildear aplicación para crear ejecutable:</dt>
 <dd><ul class="first last simple">
 <li>mkdir build</li>
 <li>cd build</li>
@@ -143,21 +142,21 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Correr la aplicacion:</dt>
+<dt>Ejecutar la aplicación:</dt>
 <dd><ul class="first last simple">
 <li>./appServer</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first">Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los endpoints</p>
+<li><p class="first">El Shared Server debe estar en ejecución para el correcto funcionamiento del servidor.</p>
 </li>
 </ul>
-<p>Para correr con docker</p>
+<p>Para ejecutar el servidor mediante Docker:</p>
 <blockquote>
 <div><ul>
 <li><dl class="first docutils">
-<dt>Buildear contenedor de Docker</dt>
+<dt>Buildear contenedor de Docker:</dt>
 <dd><ul class="first last simple">
 <li>sudo docker build -t appserver/ubuntu:14.04 .</li>
 </ul>
@@ -165,7 +164,7 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Correr contenedor de Docker</dt>
+<dt>Correr contenedor de Docker:</dt>
 <dd><ul class="first last simple">
 <li>sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash</li>
 <li>./appServer</li>
@@ -173,17 +172,18 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los end</p>
-</li>
 </ul>
 </div></blockquote>
+<ul class="simple">
+<li>El Shared Server debe estar en ejecución para el correcto funcionamiento del servidor.</li>
+</ul>
 </div>
 <div class="section" id="cliente">
 <h3>Cliente<a class="headerlink" href="#cliente" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Setear ip de computadora a 192.168.1.33</li>
-<li>Correr el Appserver y el Shared Server</li>
-<li>Bajar apk de <a class="reference external" href="https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k">https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k</a> desde el celular donde se ejecutara la aplicacion</li>
+<li>Setear la IP de la PC a 192.168.1.33</li>
+<li>Ejecutar el Appserver y el Shared Server</li>
+<li>Bajar apk de <a class="reference external" href="https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k">https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k</a> desde el celular donde se ejecutará la aplicación</li>
 <li>Abrir MatchApp desde el icono de la aplicación</li>
 </ul>
 </div>
@@ -199,7 +199,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Manual de Administrador</a><ul>
-<li><a class="reference internal" href="#instalacion-y-puesta-en-marcha">Instalacion y puesta en marcha</a><ul>
+<li><a class="reference internal" href="#instalacion-y-puesta-en-marcha">Instalación y puesta en marcha</a><ul>
 <li><a class="reference internal" href="#shared-server">Shared Server</a></li>
 <li><a class="reference internal" href="#application-server">Application Server</a></li>
 <li><a class="reference internal" href="#cliente">Cliente</a></li>

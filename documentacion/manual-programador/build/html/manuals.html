@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Manual de programador - Documentacion Tecnica &mdash; matchApp 2 documentation</title>
+    <title>Manual de programador - Documentación Técnica &mdash; matchApp 2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -46,7 +46,7 @@
           <div class="body">
             
   <div class="section" id="manual-de-programador-documentacion-tecnica">
-<h1>Manual de programador - Documentacion Tecnica<a class="headerlink" href="#manual-de-programador-documentacion-tecnica" title="Permalink to this headline">¶</a></h1>
+<h1>Manual de programador - Documentación Técnica<a class="headerlink" href="#manual-de-programador-documentacion-tecnica" title="Permalink to this headline">¶</a></h1>
 <p><strong>Grupo 10</strong></p>
 <p><strong>Ayudante asignado: Christian Calonico</strong></p>
 <p><strong>Integrantes:</strong></p>
@@ -76,7 +76,7 @@
 </tbody>
 </table>
 <div class="section" id="tecnologias-utilizadas">
-<h2>Tecnologias utilizadas<a class="headerlink" href="#tecnologias-utilizadas" title="Permalink to this headline">¶</a></h2>
+<h2>Tecnologías utilizadas<a class="headerlink" href="#tecnologias-utilizadas" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="cliente">
 <h3>Cliente<a class="headerlink" href="#cliente" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -91,20 +91,20 @@
 <li>Cmake</li>
 <li>CI-Travis</li>
 <li>Mongoose-cpp</li>
-<li>jsoncpp</li>
-<li>casablanca</li>
-<li>RocksDB (librocksdb.so.4.4.1)</li>
+<li>Jsoncpp</li>
+<li>Casablanca</li>
+<li>RocksDB (v4.4.1)</li>
 <li>Docker</li>
 <li>Code coverage con gcov</li>
 <li>Unit tests (cppunit)</li>
-<li>Tests de endpoints con postman</li>
-<li>Tests functionales con python, pip y la libreria requests</li>
+<li>Tests de endpoints con Postman</li>
+<li>Tests funcionales con Python (pip y requests)</li>
 </ul>
 </div>
 <div class="section" id="shared-server">
 <h3>Shared Server<a class="headerlink" href="#shared-server" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.</li>
+<li>Utilización de Heroku, para hostear la base de datos y la aplicación web.</li>
 </ul>
 <img alt="_images/heroku.png" src="_images/heroku.png" />
 <ul class="simple">
@@ -120,8 +120,8 @@
 </div>
 <div class="section" id="proyecto">
 <h3>Proyecto<a class="headerlink" href="#proyecto" title="Permalink to this headline">¶</a></h3>
-<p>&#8211; Documentacion en Sphinx
-- Repositorios git. Utilización de 3 repositorios en GitHub, uno para el cliente, otro para el App Server y otro para el Shared Server.
+<p>&#8211; Documentación en Sphinx
+- Utilización de 3 repositorios en GitHub. (Cliente, App Server y Shared Server)
 - Shared Server: <a class="reference external" href="https://github.com/PabloFederico/SharedServer">https://github.com/PabloFederico/SharedServer</a>
 - App Server: <a class="reference external" href="https://github.com/nicolas-vazquez/tp75521c">https://github.com/nicolas-vazquez/tp75521c</a>
 - Cliente y Documentación: <a class="reference external" href="https://github.com/gisedaye/taller2android">https://github.com/gisedaye/taller2android</a></p>
@@ -136,66 +136,65 @@
 <h4>Esquemas<a class="headerlink" href="#esquemas" title="Permalink to this headline">¶</a></h4>
 <p>Paquetes del appServer</p>
 <img alt="_images/paquetesApp.png" src="_images/paquetesApp.png" />
-<p>Modelos y Controladores basicos del sistema.</p>
+<p>Modelos y Controladores básicos del sistema.</p>
 <img alt="_images/classesapp.png" src="_images/classesapp.png" />
-<p>Tablas de rocksDB con el contenido de sus registros.</p>
+<p>Esquemas de la base de datos de rocksDB.</p>
 <img alt="_images/rocksdb.png" src="_images/rocksdb.png" />
 <p>Diagrama de secuencia</p>
 <p>..image:: Screenshots/secuenciaAppMain.png</p>
 </div>
 <div class="section" id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this headline">¶</a></h4>
-<p>A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.</p>
+<p>A continuación se brindará una breve descripción de los distintos endpoints del App Server y como se manejan para obtener la información.</p>
 </div>
 <div class="section" id="signup">
 <h4>Signup<a class="headerlink" href="#signup" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Desde el cliente request a AppServer con los datos del profile y intereses completos.</li>
-<li>Request a SharedServer para crear un usuario con los datos restantes (profile y intereses).</li>
-<li>Guardo la información del profile en SharedServer.</li>
-<li>El AppServer guarda username y password.</li>
-<li>Vuelvo con un Successful SignUp all cliente.</li>
+<li>Desde el cliente se realiza un request a App Server con los datos del profile e intereses completos.</li>
+<li>Se almacena username y password en el App Server.</li>
+<li>Se realiza un request a Shared Server para crear un usuario con los datos restantes (profile e intereses).</li>
+<li>Se almacena la información del profile en Shared Server.</li>
+<li>Se retorna la respuesta con un mensaje de error en caso de fallo o con un mensaje exitoso en caso contrario.</li>
 </ul>
 </div>
 <div class="section" id="login">
 <h4>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Desde el cliente request a AppServer con username/password</li>
-<li>Busco el usuario en el AppServer:</li>
-<li>En el caso que exista devuelvo accessToken</li>
-<li>Si no existe hago un request a SharedServer, puede ser que el usuario haya sido creado desde el backoffice.</li>
-<li>Busco el usuario en el SharedServer y devuelvo username/password</li>
-<li>Guardo username/password y accesstoken/username en el AppServer</li>
-<li>Vuelvo al cliente con el access token</li>
+<li>Desde el cliente se realiza un request a App Server con username/password.</li>
+<li>Se corrobora si existe el usuario en la base de datos de App Server.</li>
+<li>En el caso que exista se realiza un request a Shared Server para obtener el profile del usuario que luego de retorna junto con el Access Token.</li>
+<li>Si no existe se realiza un request a Shared Server, ya que el usuario puede haber sido creado desde el backoffice.</li>
+<li>Se busca el usuario en el Shared Server y si existe se devuelve el profile. En caso que no exista se devuelve un error al App Server.</li>
+<li>Si hubo error se devuelve un mensaje de error a la aplicación Cliente. En caso contrario se guarda username/password en el AppServer.</li>
+<li>Se retorna la respuesta con el Access Token y el profile del usuario.</li>
 </ul>
 </div>
 <div class="section" id="like-dislike">
 <h4>Like/Dislike<a class="headerlink" href="#like-dislike" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Desde el cliente request a AppServer con el id</li>
-<li>Guardamos el id en el array de keptAccounts</li>
-<li>Si hay un match lo guardamos</li>
+<li>Desde el cliente se realiza un request a App Server con el id del usuario elegido como parámetro.</li>
+<li>Se almacena el id en el array de keptAccounts.</li>
+<li>En caso de producirse un match se almacena el mismo.</li>
 </ul>
 </div>
-<div class="section" id="getcandidates">
-<h4>GetCandidates<a class="headerlink" href="#getcandidates" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="get-candidates">
+<h4>Get Candidates<a class="headerlink" href="#get-candidates" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Desde el cliente request a AppServer  GET /candidates con location.</li>
-<li>Busco el usuario en el AppServer, obtengo el username</li>
-<li>Request a SharedServer con username</li>
-<li>SharedServer determina los candidatos de acuerdo a los intereses del usuario</li>
-<li>Devuelvo los candidatos al AppServer y filtro por likes/dislikes</li>
-<li>Devuelvo los candidatos filtrados al cliente</li>
+<li>Desde el cliente se realiza un request a App Server con los datos de la localización geográfica del usuario.</li>
+<li>Se corrobora si existe el usuario en la base de datos de App Server.</li>
+<li>Se realiza un request a SharedServer con el alias del usuario para obtener los candidatos que compartan algún interés con el usuario y se encuentren dentro del radio de localización correspondiente.</li>
+<li>Shared Server determina los candidatos de acuerdo a los intereses del usuario.</li>
+<li>Se retornan la respuesta con los perfiles de los candidatos al App Server y se filtra por likes/dislikes.</li>
+<li>Se devuelve un candidato que cumpla con los requisitos de compartir un interés con el usuario, encontrarse dentro del radio de localización correspondiente y poseer una cantidad de matches menor al 1% del total de matches por usuario promedio.</li>
 </ul>
 </div>
-<div class="section" id="getmatches">
-<h4>GetMatches<a class="headerlink" href="#getmatches" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="get-matches">
+<h4>Get Matches<a class="headerlink" href="#get-matches" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Desde el cliente request al AppServer GET /matches</li>
-<li>Obtenemos la lista de matches</li>
-<li>Request a SharedServer con la lista</li>
-<li>Obtenemos los perfiles asociados</li>
-<li>Devuelvo los matches al cliente</li>
+<li>Desde el cliente se realiza un request al App Server.</li>
+<li>Se obtiene la lista de matches asociados al usuario.</li>
+<li>Se realiza un request a Shared Server con el listado de matches para obtener los profiles asociados a los mismos.</li>
+<li>Se retorna la respuesta a la aplicación Cliente con los datos de los usuarios que poseen un match con el usuario.</li>
 </ul>
 </div>
 </div>
@@ -204,11 +203,11 @@
 <div class="section" id="id1">
 <h4>Esquemas<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>A continuación se mostrara un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la api</li>
+<li>A continuación se mostrará un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la API</li>
 </ul>
 <img alt="_images/esquemaShared.png" src="_images/esquemaShared.png" />
 <ul class="simple">
-<li>En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node_module</li>
+<li>En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes módulos de Shared Server. Por un lado, todas las dependencias necesarias para el funcionamiento se encuentran dentro de node_modules. En la parte central se encuentra el servidor, que tiene interacción con las dependencias de la aplicación, con las vistas y con la API. En el caso de la API, interactúa con las vistas y con el servidor para enviar la respuesta a las solicitudes del mismo.</li>
 </ul>
 <img alt="_images/componentes3Shared.png" src="_images/componentes3Shared.png" />
 <ul class="simple">
@@ -216,76 +215,74 @@
 </ul>
 <img alt="_images/tablasShared.png" src="_images/tablasShared.png" />
 <ul class="simple">
-<li>El siguiente es un Diagrama Entidad-Relación utilizado:</li>
+<li>El siguiente es un Diagrama Entidad-Relación de la base de datos:</li>
 </ul>
 <img alt="_images/derShared.png" src="_images/derShared.png" />
 </div>
 <div class="section" id="listado-de-usuarios">
 <h4>Listado de usuarios<a class="headerlink" href="#listado-de-usuarios" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request GET /users/</li>
-<li>Busca a todos los usuarios del sharedserver</li>
-<li>Devuelve array de usuarios con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata</li>
+<li>Request GET /users</li>
+<li>Devuelve un listado de usuarios con: id, name, alias, email, sex, age, photo_profile, interests, location, metadata</li>
 </ul>
 </div>
 <div class="section" id="alta-de-usuario">
 <h4>Alta de usuario<a class="headerlink" href="#alta-de-usuario" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request POST /users/ con parametros: name, alias, email, sex, age, interests, location</li>
-<li>Crea al usuario  en el sharedserver</li>
+<li>Request POST /users con parámetros: name, alias, email, sex, age, interests, location, photo_profile</li>
+<li>Crea el usuario en el Shared Server</li>
 </ul>
 </div>
 <div class="section" id="consulta-perfil-de-usuario">
 <h4>Consulta perfil de usuario<a class="headerlink" href="#consulta-perfil-de-usuario" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request GET /users/+id</li>
-<li>Busca en el shared server usuario con ese id</li>
-<li>Devuelve un objeto user con: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata</li>
+<li>Request GET /users/:id</li>
+<li>Busca en el Shared Server un usuario con el id correspondiente a la solicitud</li>
+<li>Devuelve un error en caso que no exista o en caso contrario un usuario con las siguientes propiedades: id, name, alias, email, sex, age, photo_profile, array de interests, location, metadata</li>
 </ul>
 </div>
 <div class="section" id="edicion-de-usuario">
-<h4>Edicion de usuario<a class="headerlink" href="#edicion-de-usuario" title="Permalink to this headline">¶</a></h4>
+<h4>Edición de usuario<a class="headerlink" href="#edicion-de-usuario" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request PUT /users/+id con parametros: id, name, alias, email, sex, age, photo_profile, interests, location</li>
-<li>Modifica al usuario  en el sharedserver</li>
+<li>Request PUT /users/:id con parámetros: id, name, alias, email, sex, age, photo_profile, interests, location</li>
+<li>Modifica el perfil del usuario en el Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.</li>
 </ul>
 </div>
-<div class="section" id="actualizacion-foto-perfil">
-<h4>Actualización foto perfil<a class="headerlink" href="#actualizacion-foto-perfil" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="consulta-foto-de-perfil">
+<h4>Consulta foto de perfil<a class="headerlink" href="#consulta-foto-de-perfil" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request PUT /users/+id/photo con parametro: photo en base64</li>
-<li>Agrega una foto de perfil al usuario con id +id.</li>
+<li>Request GET /users/:id/photo con parámetro: id del usuario</li>
+<li>Obtiene la foto de perfil del usuario con el id correspondiente a la solicitud o un error en caso que no exista el usuario.</li>
 </ul>
 </div>
 <div class="section" id="baja-de-usuario">
 <h4>Baja de usuario<a class="headerlink" href="#baja-de-usuario" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request DELETE /users/+id</li>
-<li>Elimina al usuario del sharedserver</li>
+<li>Request DELETE /users/:id</li>
+<li>Elimina al usuario del Shared Server y retorna un error en caso que haya ocurrido un fallo o un mensaje exitoso en caso contrario.</li>
 </ul>
 </div>
 <div class="section" id="listado-de-intereses">
 <h4>Listado de intereses<a class="headerlink" href="#listado-de-intereses" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request GET /interests/</li>
-<li>Busca a todos los intereses del sharedserver</li>
-<li>Devuelve array de intereses con: category, value</li>
+<li>Request GET /interests</li>
+<li>Obtiene un listado con los intereses globales del Shared Server con las propiedades category y value o un error en caso que haya ocurrido un fallo.</li>
 </ul>
 </div>
 <div class="section" id="alta-de-interes">
-<h4>Alta de interes<a class="headerlink" href="#alta-de-interes" title="Permalink to this headline">¶</a></h4>
+<h4>Alta de interés<a class="headerlink" href="#alta-de-interes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Request POST /interests/ con parametros: category, value</li>
-<li>Crea al interes en el sharedserver en esa categoria</li>
+<li>Request POST /interests con parametros: category, value</li>
+<li>Crea un nuevo interés en el Shared Server para la categoría y valor correspondientes.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="client">
 <h3>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first">Consume los endpoints del appserver para Login, Registro, Candidatos, Matches, Like, Dislike, Message, Messages, Users, Interests</p>
+<li><p class="first">Consume los servicios del App Server para Login, Registro, Búsqueda de Candidatos, Matches, Like, Dislike y Chat</p>
 </li>
-<li><p class="first">Maneja session con el authorization token provisto por el endpoint del login</p>
+<li><p class="first">Maneja una sesión con el Authorization Token provisto previamente por el Login</p>
 </li>
 <li><dl class="first docutils">
 <dt>Vistas:</dt>
@@ -305,42 +302,43 @@
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
 <h3>Appserver<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="correr-unit-tests">
-<h4>Correr Unit Tests<a class="headerlink" href="#correr-unit-tests" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="unit-tests">
+<h4>Unit Tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h4>
 <p>En la consola desde la carpeta build ejecutar el comando</p>
 <blockquote>
 <div>&gt; ctest</div></blockquote>
 </div>
-<div class="section" id="correr-coverage">
-<h4>Correr Coverage<a class="headerlink" href="#correr-coverage" title="Permalink to this headline">¶</a></h4>
-<p>En la raiz del proyecto correr</p>
+<div class="section" id="coverage">
+<h4>Coverage<a class="headerlink" href="#coverage" title="Permalink to this headline">¶</a></h4>
+<p>En el directorio raíz del proyecto ejecutar el siguiente comando:</p>
 <blockquote>
 <div>&gt; sudo ./coverage.sh</div></blockquote>
-<p>Se abrira una ventana del navegador con los resultados de tests cubiertos</p>
+<p>Se abrirá una ventana del navegador con los resultados del test coverage</p>
 <img alt="_images/coverage.png" src="_images/coverage.png" />
 </div>
-<div class="section" id="correr-tests-funcionales">
-<h4>Correr Tests funcionales<a class="headerlink" href="#correr-tests-funcionales" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="tests-funcionales">
+<h4>Tests funcionales<a class="headerlink" href="#tests-funcionales" title="Permalink to this headline">¶</a></h4>
 <p>Instalar python</p>
 <p>&gt; sudo apt-get install python2.7</p>
 <p>Instalar pip</p>
 <p>&gt; wget <a class="reference external" href="https://bootstrap.pypa.io/get-pip.py">https://bootstrap.pypa.io/get-pip.py</a>
 &gt; sudo python get-pip.py</p>
-<p>Instalar el modulo requests</p>
+<p>Instalar el módulo requests</p>
 <p>&gt; sudo pip install requests</p>
-<p>Para correr los tests funcionales ir al directorio functionalTests y correr los tests</p>
+<p>Para correr los tests funcionales dirigirse al directorio functionalTests y ejecutar los siguientes comandos:</p>
 <p>&gt; cd functionalTests/
 &gt; python python restTester.py</p>
-<p>Saldran los resultados del tests en la consola</p>
+<p>Se mostrarán los resultados de los tests en la consola</p>
 </div>
 <div class="section" id="testear-endpoints-manualmente">
 <h4>Testear Endpoints Manualmente<a class="headerlink" href="#testear-endpoints-manualmente" title="Permalink to this headline">¶</a></h4>
-<p>Correr el appserver (Ver manual de instalacion)</p>
+<p>Ejecutar el App Server (Ver Manual de instalación)
+Ejecutar el cliente Postman</p>
 </div>
 <div class="section" id="id3">
 <h4>SignUp<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/signup</span></tt></p>
-<p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
+<p>En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;username&quot;:</span> <span class="pre">&quot;user&quot;,</span>
 <span class="pre">&quot;password&quot;:</span> <span class="pre">&quot;P4ssw0rd&quot;</span>
@@ -349,7 +347,7 @@
 <div class="section" id="id4">
 <h4>Login<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/login</span></tt></p>
-<p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
+<p>En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto:</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;username&quot;:</span> <span class="pre">&quot;user&quot;,</span>
 <span class="pre">&quot;password&quot;:</span> <span class="pre">&quot;P4ssw0rd&quot;</span>
@@ -358,40 +356,40 @@
 <div class="section" id="matches">
 <h4>Matches<a class="headerlink" href="#matches" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">http://127.0.0.1:8083/api/matches/</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 <div class="section" id="candidates">
 <h4>Candidates<a class="headerlink" href="#candidates" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">http://127.0.0.1:8083/api/matches/candidates/</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">http://127.0.0.1:8083/api/matches/candidates</span></tt></p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 <div class="section" id="ver-mensajes">
 <h4>Ver mensajes<a class="headerlink" href="#ver-mensajes" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">http://127.0.0.1:8083/api/matches/1/messages/</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">http://127.0.0.1:8083/api/matches/:id/messages</span></tt></p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 <div class="section" id="enviar-mensaje">
 <h4>Enviar mensaje<a class="headerlink" href="#enviar-mensaje" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/matches/1/message/</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/matches/:id/message</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;message&quot;:</span> <span class="pre">&quot;Hola!&quot;</span>
 <span class="pre">}</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 <div class="section" id="like">
 <h4>Like<a class="headerlink" href="#like" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/accounts/1/like/</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/accounts/:id/like</span></tt></p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 <div class="section" id="disike">
 <h4>Disike<a class="headerlink" href="#disike" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/accounts/3/dislike/</span></tt></p>
-<p>Agregar el header con el token que recibio del endpoint de login</p>
+<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">http://127.0.0.1:8083/api/accounts/:id/dislike</span></tt></p>
+<p>Setear el header Authorization con el token que se recibió en la solicitud de Login</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt></p>
 </div>
 </div>
@@ -400,7 +398,7 @@
 <div class="section" id="id6">
 <h4>Login<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">http://127.0.0.1:8083/api/accounts/login</span></tt></p>
-<p>En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
+<p>En la pestaña body, seleccionar el radiobutton raw y agregar el siguiente texto</p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;username&quot;:</span> <span class="pre">&quot;user&quot;,</span>
 <span class="pre">&quot;password&quot;:</span> <span class="pre">&quot;P4ssw0rd&quot;</span>
@@ -415,18 +413,18 @@
 </div>
 <div class="section" id="vista-de-un-usuario">
 <h4>Vista de un usuario<a class="headerlink" href="#vista-de-un-usuario" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id</span></tt></p>
 </div>
-<div class="section" id="vista-de-perfil-de-usuario">
-<h4>Vista de perfil de usuario<a class="headerlink" href="#vista-de-perfil-de-usuario" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/5/profile</span></tt></p>
+<div class="section" id="consulta-de-perfil-de-usuario">
+<h4>Consulta de perfil de usuario<a class="headerlink" href="#consulta-de-perfil-de-usuario" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id/profile</span></tt></p>
 <p>Agregar headers</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt>
 <tt class="docutils literal"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></tt></p>
 </div>
-<div class="section" id="vista-de-candidatos-de-usuario">
-<h4>Vista de candidatos de usuario<a class="headerlink" href="#vista-de-candidatos-de-usuario" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/nico/candidates</span></tt></p>
+<div class="section" id="consulta-de-candidatos-para-un-usuario">
+<h4>Consulta de candidatos para un usuario<a class="headerlink" href="#consulta-de-candidatos-para-un-usuario" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:user/candidates</span></tt></p>
 <p>Agregar headers</p>
 <p><tt class="docutils literal"><span class="pre">Authorization:</span> <span class="pre">&lt;token&gt;</span></tt>
 <tt class="docutils literal"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></tt></p>
@@ -437,33 +435,39 @@
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;name&quot;:&quot;Name&quot;,</span>
 <span class="pre">&quot;Alias&quot;:&quot;aliiaass&quot;,</span>
+<span class="pre">&quot;age&quot;:23,</span>
+<span class="pre">&quot;gender&quot;:&quot;M&quot;,</span>
 <span class="pre">&quot;email&quot;:&quot;mail&#64;mail.com&quot;,</span>
-<span class="pre">&quot;latitude&quot;:&quot;21222&quot;,</span>
-<span class="pre">&quot;Longitude&quot;:&quot;22322&quot;</span>
+<span class="pre">&quot;latitude&quot;:&quot;-34.58&quot;,</span>
+<span class="pre">&quot;longitude&quot;:&quot;-58.60&quot;,</span>
+<span class="pre">&quot;photo_profile&quot;:</span> <span class="pre">&quot;base_64&quot;</span>
 <span class="pre">}</span></tt></p>
 </div>
-<div class="section" id="edit-de-usuario">
-<h4>Edit de usuario<a class="headerlink" href="#edit-de-usuario" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/1</span></tt></p>
+<div class="section" id="modificacion-de-usuario">
+<h4>Modificación de usuario<a class="headerlink" href="#modificacion-de-usuario" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;id&quot;:</span> <span class="pre">1,</span>
 <span class="pre">&quot;name&quot;:&quot;Name&quot;,</span>
 <span class="pre">&quot;Alias&quot;:&quot;aliiaass&quot;,</span>
+<span class="pre">&quot;age&quot;:23,</span>
+<span class="pre">&quot;gender&quot;:&quot;M&quot;,</span>
 <span class="pre">&quot;email&quot;:&quot;mail&#64;mail.com&quot;,</span>
-<span class="pre">&quot;latitude&quot;:&quot;21222&quot;,</span>
-<span class="pre">&quot;Longitude&quot;:&quot;22322&quot;</span>
+<span class="pre">&quot;latitude&quot;:&quot;-34.58&quot;,</span>
+<span class="pre">&quot;longitude&quot;:&quot;-58.60&quot;,</span>
+<span class="pre">&quot;photo_profile&quot;:</span> <span class="pre">&quot;base_64&quot;</span>
 <span class="pre">}</span></tt></p>
 </div>
 <div class="section" id="id9">
 <h4>Baja de usuario<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/users/:id</span></tt></p>
 </div>
 <div class="section" id="id10">
-<h4>Listado de  intereses<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<h4>Listado de intereses<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests</span></tt></p>
 </div>
 <div class="section" id="id11">
-<h4>Alta de interes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<h4>Alta de interés<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">{</span>
 <span class="pre">&quot;category&quot;:&quot;Music&quot;,</span>
@@ -471,8 +475,8 @@
 <span class="pre">}</span></tt></p>
 </div>
 <div class="section" id="baja-de-interes">
-<h4>Baja de interes<a class="headerlink" href="#baja-de-interes" title="Permalink to this headline">¶</a></h4>
-<p><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/2</span></tt></p>
+<h4>Baja de interés<a class="headerlink" href="#baja-de-interes" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://tallerdeprogramacionii-1c2016.herokuapp.com/interests/:id</span></tt></p>
 </div>
 </div>
 </div>
@@ -486,8 +490,8 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Manual de programador - Documentacion Tecnica</a><ul>
-<li><a class="reference internal" href="#tecnologias-utilizadas">Tecnologias utilizadas</a><ul>
+<li><a class="reference internal" href="#">Manual de programador - Documentación Técnica</a><ul>
+<li><a class="reference internal" href="#tecnologias-utilizadas">Tecnologías utilizadas</a><ul>
 <li><a class="reference internal" href="#cliente">Cliente</a></li>
 <li><a class="reference internal" href="#application-server">Application Server</a></li>
 <li><a class="reference internal" href="#shared-server">Shared Server</a></li>
@@ -501,8 +505,8 @@
 <li><a class="reference internal" href="#signup">Signup</a></li>
 <li><a class="reference internal" href="#login">Login</a></li>
 <li><a class="reference internal" href="#like-dislike">Like/Dislike</a></li>
-<li><a class="reference internal" href="#getcandidates">GetCandidates</a></li>
-<li><a class="reference internal" href="#getmatches">GetMatches</a></li>
+<li><a class="reference internal" href="#get-candidates">Get Candidates</a></li>
+<li><a class="reference internal" href="#get-matches">Get Matches</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sharedserver">Sharedserver</a><ul>
@@ -510,11 +514,11 @@
 <li><a class="reference internal" href="#listado-de-usuarios">Listado de usuarios</a></li>
 <li><a class="reference internal" href="#alta-de-usuario">Alta de usuario</a></li>
 <li><a class="reference internal" href="#consulta-perfil-de-usuario">Consulta perfil de usuario</a></li>
-<li><a class="reference internal" href="#edicion-de-usuario">Edicion de usuario</a></li>
-<li><a class="reference internal" href="#actualizacion-foto-perfil">Actualización foto perfil</a></li>
+<li><a class="reference internal" href="#edicion-de-usuario">Edición de usuario</a></li>
+<li><a class="reference internal" href="#consulta-foto-de-perfil">Consulta foto de perfil</a></li>
 <li><a class="reference internal" href="#baja-de-usuario">Baja de usuario</a></li>
 <li><a class="reference internal" href="#listado-de-intereses">Listado de intereses</a></li>
-<li><a class="reference internal" href="#alta-de-interes">Alta de interes</a></li>
+<li><a class="reference internal" href="#alta-de-interes">Alta de interés</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#client">Client</a></li>
@@ -522,9 +526,9 @@
 </li>
 <li><a class="reference internal" href="#testing">Testing</a><ul>
 <li><a class="reference internal" href="#id2">Appserver</a><ul>
-<li><a class="reference internal" href="#correr-unit-tests">Correr Unit Tests</a></li>
-<li><a class="reference internal" href="#correr-coverage">Correr Coverage</a></li>
-<li><a class="reference internal" href="#correr-tests-funcionales">Correr Tests funcionales</a></li>
+<li><a class="reference internal" href="#unit-tests">Unit Tests</a></li>
+<li><a class="reference internal" href="#coverage">Coverage</a></li>
+<li><a class="reference internal" href="#tests-funcionales">Tests funcionales</a></li>
 <li><a class="reference internal" href="#testear-endpoints-manualmente">Testear Endpoints Manualmente</a></li>
 <li><a class="reference internal" href="#id3">SignUp</a></li>
 <li><a class="reference internal" href="#id4">Login</a></li>
@@ -540,14 +544,14 @@
 <li><a class="reference internal" href="#id6">Login</a></li>
 <li><a class="reference internal" href="#id7">Listado de  usuarios</a></li>
 <li><a class="reference internal" href="#vista-de-un-usuario">Vista de un usuario</a></li>
-<li><a class="reference internal" href="#vista-de-perfil-de-usuario">Vista de perfil de usuario</a></li>
-<li><a class="reference internal" href="#vista-de-candidatos-de-usuario">Vista de candidatos de usuario</a></li>
+<li><a class="reference internal" href="#consulta-de-perfil-de-usuario">Consulta de perfil de usuario</a></li>
+<li><a class="reference internal" href="#consulta-de-candidatos-para-un-usuario">Consulta de candidatos para un usuario</a></li>
 <li><a class="reference internal" href="#id8">Alta de usuario</a></li>
-<li><a class="reference internal" href="#edit-de-usuario">Edit de usuario</a></li>
+<li><a class="reference internal" href="#modificacion-de-usuario">Modificación de usuario</a></li>
 <li><a class="reference internal" href="#id9">Baja de usuario</a></li>
-<li><a class="reference internal" href="#id10">Listado de  intereses</a></li>
-<li><a class="reference internal" href="#id11">Alta de interes</a></li>
-<li><a class="reference internal" href="#baja-de-interes">Baja de interes</a></li>
+<li><a class="reference internal" href="#id10">Listado de intereses</a></li>
+<li><a class="reference internal" href="#id11">Alta de interés</a></li>
+<li><a class="reference internal" href="#baja-de-interes">Baja de interés</a></li>
 </ul>
 </li>
 </ul>

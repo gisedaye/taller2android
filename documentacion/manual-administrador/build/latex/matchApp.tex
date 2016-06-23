@@ -166,21 +166,18 @@ Vazquez, Nicolás
 
 
 
-\section{Instalacion y puesta en marcha}
+\section{Instalación y puesta en marcha}
 \label{manuals:instalacion-y-puesta-en-marcha}
 
 \subsection{Shared Server}
 \label{manuals:shared-server}\begin{itemize}
 \item {} \begin{description}
-\item[{Para correr con docker:}] \leavevmode\begin{itemize}
+\item[{Para ejecutar el servidor mediante Docker:}] \leavevmode\begin{itemize}
 \item {} 
 En la consola ejecutar el comando ./install-docker.sh para instalar dependencias.
 
 \item {} \begin{description}
-\item[{Luego ejecutar los siguientes comandos:}] \leavevmode\begin{itemize}
-\item {} 
-sudo service mongodb stop
-
+\item[{Luego ejecutar el siguiente comando:}] \leavevmode\begin{itemize}
 \item {} 
 sudo docker-compose up
 
@@ -189,7 +186,7 @@ sudo docker-compose up
 \end{description}
 
 \item {} \begin{description}
-\item[{Para detener la aplicacion correr en la consola:}] \leavevmode\begin{itemize}
+\item[{Para detener la aplicación ejecutar en la consola:}] \leavevmode\begin{itemize}
 \item {} 
 sudo docker-compose stop
 
@@ -202,17 +199,17 @@ sudo docker-compose stop
 \end{description}
 
 \item {} 
-Para ver la app ingresar a \href{https://tallerdeprogramacionii-1c2016.herokuapp.com/}{https://tallerdeprogramacionii-1c2016.herokuapp.com/}
+Para utilizar la app ingresar a \href{https://tallerdeprogramacionii-1c2016.herokuapp.com/}{https://tallerdeprogramacionii-1c2016.herokuapp.com/}
 
 \end{itemize}
 
 
 \subsection{Application Server}
 \label{manuals:application-server}
-Pasos para correr la aplicación
+Pasos para ejecutar la aplicación
 \begin{itemize}
 \item {} \begin{description}
-\item[{Bajar archivos e instalar paquetes requeridos: En una consola copiar y pegar la siguiente linea}] \leavevmode\begin{itemize}
+\item[{En una consola ejecutar el siguiente comando para obtener una copia local del repositorio remoto:}] \leavevmode\begin{itemize}
 \item {} 
 git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
 
@@ -221,7 +218,7 @@ git clone ghttps://github.com/nicolas-vazquez/tp75521c.git
 \end{description}
 
 \item {} \begin{description}
-\item[{Ejecutar los siguientes pasos tambien en la consola:}] \leavevmode\begin{itemize}
+\item[{Ejecutar los siguientes comandos en la consola para instalar las dependencias necesarias:}] \leavevmode\begin{itemize}
 \item {} 
 cd tp75521c/AppServer
 
@@ -233,7 +230,7 @@ sudo ./install.sh
 \end{description}
 
 \item {} \begin{description}
-\item[{Buildear aplicación para crear ejecutable}] \leavevmode\begin{itemize}
+\item[{Buildear aplicación para crear ejecutable:}] \leavevmode\begin{itemize}
 \item {} 
 mkdir build
 
@@ -251,7 +248,7 @@ sudo make
 \end{description}
 
 \item {} \begin{description}
-\item[{Correr la aplicacion:}] \leavevmode\begin{itemize}
+\item[{Ejecutar la aplicación:}] \leavevmode\begin{itemize}
 \item {} 
 ./appServer
 
@@ -260,14 +257,14 @@ sudo make
 \end{description}
 
 \item {} 
-Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los endpoints
+El Shared Server debe estar en ejecución para el correcto funcionamiento del servidor.
 
 \end{itemize}
 
-Para correr con docker
+Para ejecutar el servidor mediante Docker:
 \begin{itemize}
 \item {} \begin{description}
-\item[{Buildear contenedor de Docker}] \leavevmode\begin{itemize}
+\item[{Buildear contenedor de Docker:}] \leavevmode\begin{itemize}
 \item {} 
 sudo docker build -t appserver/ubuntu:14.04 .
 
@@ -276,7 +273,7 @@ sudo docker build -t appserver/ubuntu:14.04 .
 \end{description}
 
 \item {} \begin{description}
-\item[{Correr contenedor de Docker}] \leavevmode\begin{itemize}
+\item[{Correr contenedor de Docker:}] \leavevmode\begin{itemize}
 \item {} 
 sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
 
@@ -287,8 +284,10 @@ sudo docker run -t -i -p 127.0.0.1:8083:8083 appserver/ubuntu:14.04v3 /bin/bash
 
 \end{description}
 
+\end{itemize}
+\begin{itemize}
 \item {} 
-Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de todos los end
+El Shared Server debe estar en ejecución para el correcto funcionamiento del servidor.
 
 \end{itemize}
 
@@ -296,13 +295,13 @@ Debe tambien tener corriendo el Shared Server para el correcto funcionamiento de
 \subsection{Cliente}
 \label{manuals:cliente}\begin{itemize}
 \item {} 
-Setear ip de computadora a 192.168.1.33
+Setear la IP de la PC a 192.168.1.33
 
 \item {} 
-Correr el Appserver y el Shared Server
+Ejecutar el Appserver y el Shared Server
 
 \item {} 
-Bajar apk de \href{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k}{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k} desde el celular donde se ejecutara la aplicacion
+Bajar apk de \href{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k}{https://drive.google.com/open?id=0B96FtE1h2ukFNHdob042a3ZQU1k} desde el celular donde se ejecutará la aplicación
 
 \item {} 
 Abrir MatchApp desde el icono de la aplicación
