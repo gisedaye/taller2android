@@ -30,6 +30,7 @@ Gestion
 .. image:: Screenshots/trello.png
 
 https://trello.com/b/MKvp61Xg/taller2-matchapp
+
 - Respositorios taggeados en cada checkpoint
 	- Shared Server: https://github.com/PabloFederico/SharedServer
 	- App Server: https://github.com/nicolas-vazquez/tp75521c
@@ -38,11 +39,13 @@ https://trello.com/b/MKvp61Xg/taller2-matchapp
 Division
 ----------------------------------------
 Primeros 2 checkpoints
+
 - AppServer: Nicolas y Federico
 - Shared Server: Pablo y Nicolas
 - Cliente: Gisela
 
 Ultimo Checkpoint
+
 - Shared Server: Nicolas y Federico y Pablo
 - Layout responsive: Gisela
 - Cliente: Federico

@@ -77,6 +77,20 @@ Arquitectura
 
 Appserver
 --------------------------------------------
+
+Esquemas
+""""""""""""""""""
+Modelos y Controladores basicos del sistema.
+
+.. image:: Screenshots/classesapp.png
+
+Tablas de rocksDB con el contenido de sus registros.
+
+.. image:: Screenshots/rocksdb.png
+
+
+Endpoints
+""""""""""""""""""
 A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
 
 Signup

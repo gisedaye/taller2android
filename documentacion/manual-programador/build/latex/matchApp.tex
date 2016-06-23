@@ -14,7 +14,7 @@
 
 
 \title{matchApp Documentation}
-\date{June 22, 2016}
+\date{June 23, 2016}
 \release{2}
 \author{Grupo5}
 \newcommand{\sphinxlogo}{}
@@ -222,7 +222,7 @@ Utilización de Heroku, para hostear nuestra base de datos y la aplicación web.
 
 \end{itemize}
 
-\includegraphics{Screenshots/heroku.png}
+\includegraphics{heroku.png}
 \begin{itemize}
 \item {} 
 Utilización de Express + Node.js en sus versiones 4.13 y 0.12.7 respectivamente.
@@ -232,7 +232,7 @@ Utilización de una base de datos PostgreSQL para almacenamiento de la informaci
 
 \end{itemize}
 
-\includegraphics{Screenshots/postgresql.png}
+\includegraphics{postgresql.png}
 \begin{itemize}
 \item {} 
 Aplicación Web utilizando CSS, HTML, Boostrap + Materialize, JQuery y Ajax.
@@ -262,6 +262,20 @@ Docker
 
 \subsection{Appserver}
 \label{manuals:appserver}
+
+\subsubsection{Esquemas}
+\label{manuals:esquemas}
+Modelos y Controladores basicos del sistema.
+
+\includegraphics{classesapp.png}
+
+Tablas de rocksDB con el contenido de sus registros.
+
+\includegraphics{rocksdb.png}
+
+
+\subsubsection{Endpoints}
+\label{manuals:endpoints}
 A continuacion se dara una breve descripcion de los distintos endpoints del appserver y como se manejan para obtener la informacion.
 
 
@@ -370,6 +384,37 @@ Devuelvo los matches al cliente
 
 \subsection{Sharedserver}
 \label{manuals:sharedserver}
+
+\subsubsection{Esquemas}
+\label{manuals:id1}\begin{itemize}
+\item {} 
+A continuación se mostrara un esquema de funcionamiento del Shared Sever, para poder explicar el flujo en la utilización de la api
+
+\end{itemize}
+
+\includegraphics{esquemaShared.png}
+\begin{itemize}
+\item {} 
+En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node\_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node\_module
+
+\end{itemize}
+
+\includegraphics{componentesShared.png}
+\begin{itemize}
+\item {} 
+Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente
+
+\end{itemize}
+
+\includegraphics{tablasShared.png}
+\begin{itemize}
+\item {} 
+EL siguiente es un Diagrama Entidad-Relación utilizado:
+
+\end{itemize}
+
+\includegraphics{derShared.png}
+
 
 \subsubsection{Listado de usuarios}
 \label{manuals:listado-de-usuarios}\begin{itemize}
@@ -501,7 +546,7 @@ SplashActivity
 \label{manuals:testing}
 
 \subsection{Appserver}
-\label{manuals:id1}
+\label{manuals:id2}
 
 \subsubsection{Correr Unit Tests}
 \label{manuals:correr-unit-tests}
@@ -554,7 +599,7 @@ Correr el appserver (Ver manual de instalacion)
 
 
 \subsubsection{SignUp}
-\label{manuals:id2}
+\label{manuals:id3}
 \code{POST http://127.0.0.1:8083/api/accounts/signup}
 
 En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
@@ -566,7 +611,7 @@ En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
 
 
 \subsubsection{Login}
-\label{manuals:id3}
+\label{manuals:id4}
 \code{POST http://127.0.0.1:8083/api/accounts/login}
 
 En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
@@ -636,10 +681,10 @@ Agregar el header con el token que recibio del endpoint de login
 
 
 \subsection{Shared Server}
-\label{manuals:id4}
+\label{manuals:id5}
 
 \subsubsection{Login}
-\label{manuals:id5}
+\label{manuals:id6}
 \code{POST http://127.0.0.1:8083/api/accounts/login}
 
 En la tab body, seleccionar el radiobutton raw y agregar el siguiente texto
@@ -656,7 +701,7 @@ Agregar headers
 
 
 \subsubsection{Listado de  usuarios}
-\label{manuals:id6}
+\label{manuals:id7}
 \code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/users}
 
 
@@ -686,7 +731,7 @@ Agregar headers
 
 
 \subsubsection{Alta de usuario}
-\label{manuals:id7}
+\label{manuals:id8}
 \code{POST https://tallerdeprogramacionii-1c2016.herokuapp.com/users}
 
 \code{\{
@@ -713,17 +758,17 @@ Agregar headers
 
 
 \subsubsection{Baja de usuario}
-\label{manuals:id8}
+\label{manuals:id9}
 \code{DELETE https://tallerdeprogramacionii-1c2016.herokuapp.com/users/20}
 
 
 \subsubsection{Listado de  intereses}
-\label{manuals:id9}
+\label{manuals:id10}
 \code{GET https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
 
 \subsubsection{Alta de interes}
-\label{manuals:id10}
+\label{manuals:id11}
 \code{POST https://tallerdeprogramacionii-1c2016.herokuapp.com/interests}
 
 \code{\{

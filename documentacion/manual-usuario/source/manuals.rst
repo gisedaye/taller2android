@@ -99,6 +99,9 @@ Shared Server
 - Al aceptar, se mostrará en la parte inferior del formulario de carga de usuario, su localización
 .. image:: Screenshots/shared_localizacion2.png
 
+- Podra seleccionar una imagen de perfil haciendo click en "Pick Photo" y seleccionando una imagen en su PC
+.. image:: Screenshots/profilephoto.png
+
 - Ingrese lo datos requeridos y haga click en el boton “Enviar” para agregar un usuario a Match App.
 
 - Para ver los usuarios registrados seleccione la opción "Usuarios" desde la portada del sitio. Se redireccionara a la pantalla de listado de usuarios
