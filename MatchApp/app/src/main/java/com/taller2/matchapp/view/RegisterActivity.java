@@ -284,7 +284,7 @@ public class RegisterActivity extends BaseActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
 
-        int socketTimeout = 30000;
+        int socketTimeout = 90000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         registerRequest.setRetryPolicy(policy);
 
@@ -344,7 +344,7 @@ public class RegisterActivity extends BaseActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
 
-        int socketTimeout = 30000;
+        int socketTimeout = 90000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         interestsEndpoint.setRetryPolicy(policy);
 

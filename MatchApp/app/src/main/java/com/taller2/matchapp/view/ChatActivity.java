@@ -185,7 +185,7 @@ public class ChatActivity extends BaseActivity {
         requestQueue.getCache().invalidate(messagesEndpoint, true);
         requestQueue.getCache().remove(messagesEndpoint);
 
-        int socketTimeout = 30000;
+        int socketTimeout = 90000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         getMessagesRequest.setRetryPolicy(policy);
 
@@ -236,7 +236,7 @@ public class ChatActivity extends BaseActivity {
         };
 
 
-        int socketTimeout = 30000;
+        int socketTimeout = 90000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         sendMessageRequest.setRetryPolicy(policy);
 

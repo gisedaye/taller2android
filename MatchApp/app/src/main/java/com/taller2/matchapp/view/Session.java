@@ -38,7 +38,7 @@ public class Session {
     private Session(Context context) {
         sharedPreferencesEditor = new SharedPreferencesEditor(context, "session");
         token = sharedPreferencesEditor.valueForKey(TOKEN);
-        searchDistance = sharedPreferencesEditor.valueForKey(SEARCH_DISTANCE, 5);
+        searchDistance = sharedPreferencesEditor.valueForKey(SEARCH_DISTANCE, 100);
         try {
             JSONObject profileJSON = sharedPreferencesEditor.jsonObjectForKey(PROFILE);
             if (profileJSON != null) {
