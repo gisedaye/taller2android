@@ -311,7 +311,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void fetchInterests() {
 
-        final MathAppJsonRequest registerRequest = new MathAppJsonRequest(this, MatchAPI.getInterestsEndpoint()) {
+        final MathAppJsonRequest interestsEndpoint = new MathAppJsonRequest(this, MatchAPI.getInterestsEndpoint()) {
 
             @Override
             public void onSuccess(JSONObject data) {
@@ -343,7 +343,12 @@ public class RegisterActivity extends BaseActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        requestQueue.add(registerRequest);
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        interestsEndpoint.setRetryPolicy(policy);
+
+        requestQueue.add(interestsEndpoint);
     }
 
     private void onEditInterests() {
