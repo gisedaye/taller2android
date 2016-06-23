@@ -89,12 +89,14 @@
 <h3>Application Server<a class="headerlink" href="#application-server" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Cmake</li>
-<li>Ci-Travis</li>
+<li>CI-Travis</li>
 <li>Mongoose-cpp</li>
-<li>RocksDB</li>
+<li>jsoncpp</li>
+<li>casablanca</li>
+<li>RocksDB (librocksdb.so.4.4.1)</li>
 <li>Docker</li>
 <li>Code coverage con gcov</li>
-<li>Unit tests (ctest)</li>
+<li>Unit tests (cppunit)</li>
 <li>Tests de endpoints con postman</li>
 <li>Tests functionales con python, pip y la libreria requests</li>
 </ul>
@@ -132,10 +134,14 @@
 <h3>Appserver<a class="headerlink" href="#appserver" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="esquemas">
 <h4>Esquemas<a class="headerlink" href="#esquemas" title="Permalink to this headline">¶</a></h4>
+<p>Paquetes del appServer</p>
+<img alt="_images/paquetesApp.png" src="_images/paquetesApp.png" />
 <p>Modelos y Controladores basicos del sistema.</p>
 <img alt="_images/classesapp.png" src="_images/classesapp.png" />
 <p>Tablas de rocksDB con el contenido de sus registros.</p>
 <img alt="_images/rocksdb.png" src="_images/rocksdb.png" />
+<p>Diagrama de secuencia</p>
+<p>..image:: Screenshots/secuenciaAppMain.png</p>
 </div>
 <div class="section" id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this headline">¶</a></h4>
@@ -204,13 +210,13 @@
 <ul class="simple">
 <li>En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node_module</li>
 </ul>
-<img alt="_images/componentesShared.png" src="_images/componentesShared.png" />
+<img alt="_images/componentes3Shared.png" src="_images/componentes3Shared.png" />
 <ul class="simple">
 <li>Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente</li>
 </ul>
 <img alt="_images/tablasShared.png" src="_images/tablasShared.png" />
 <ul class="simple">
-<li>EL siguiente es un Diagrama Entidad-Relación utilizado:</li>
+<li>El siguiente es un Diagrama Entidad-Relación utilizado:</li>
 </ul>
 <img alt="_images/derShared.png" src="_images/derShared.png" />
 </div>

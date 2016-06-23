@@ -36,12 +36,14 @@ Cliente
 Application Server
 ----------------------------------------
 - Cmake
-- Ci-Travis
+- CI-Travis
 - Mongoose-cpp
-- RocksDB
+- jsoncpp
+- casablanca
+- RocksDB (librocksdb.so.4.4.1)
 - Docker
 - Code coverage con gcov
-- Unit tests (ctest)
+- Unit tests (cppunit)
 - Tests de endpoints con postman 
 - Tests functionales con python, pip y la libreria requests
 
@@ -80,6 +82,10 @@ Appserver
 
 Esquemas
 """"""""""""""""""
+Paquetes del appServer
+
+.. image:: Screenshots/paquetesApp.png
+
 Modelos y Controladores basicos del sistema.
 
 .. image:: Screenshots/classesapp.png
@@ -87,6 +93,10 @@ Modelos y Controladores basicos del sistema.
 Tablas de rocksDB con el contenido de sus registros.
 
 .. image:: Screenshots/rocksdb.png
+
+Diagrama de secuencia
+
+..image:: Screenshots/secuenciaAppMain.png
 
 
 Endpoints
@@ -152,12 +162,12 @@ Esquemas
 
 - En el siguiente Diagrama de Componentes podemos visualizar la interacción entre los diferentes modulos de Shared Server. Por un lado, todas las librerias necesarias para el funcionamiento dentro de node_modules, como estas son solicitadas por las vistas de la aplicación. La parte central del codigo comandado por el motor donde se encuentra el archivo inicial app.js y la intracción que éstos tienen con los otros componentes, como por ejemplo el node_module
 
-.. image:: Screenshots/componentesShared.png 
+.. image:: Screenshots/componentes3Shared.png 
 
 - Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente
 .. image:: Screenshots/tablasShared.png
 
-- EL siguiente es un Diagrama Entidad-Relación utilizado:
+- El siguiente es un Diagrama Entidad-Relación utilizado:
 
 .. image:: Screenshots/derShared.png
 

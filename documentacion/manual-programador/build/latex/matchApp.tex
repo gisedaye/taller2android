@@ -189,13 +189,19 @@ Material Design para templates
 Cmake
 
 \item {} 
-Ci-Travis
+CI-Travis
 
 \item {} 
 Mongoose-cpp
 
 \item {} 
-RocksDB
+jsoncpp
+
+\item {} 
+casablanca
+
+\item {} 
+RocksDB (librocksdb.so.4.4.1)
 
 \item {} 
 Docker
@@ -204,7 +210,7 @@ Docker
 Code coverage con gcov
 
 \item {} 
-Unit tests (ctest)
+Unit tests (cppunit)
 
 \item {} 
 Tests de endpoints con postman
@@ -265,6 +271,10 @@ Docker
 
 \subsubsection{Esquemas}
 \label{manuals:esquemas}
+Paquetes del appServer
+
+\includegraphics{paquetesApp.png}
+
 Modelos y Controladores basicos del sistema.
 
 \includegraphics{classesapp.png}
@@ -272,6 +282,10 @@ Modelos y Controladores basicos del sistema.
 Tablas de rocksDB con el contenido de sus registros.
 
 \includegraphics{rocksdb.png}
+
+Diagrama de secuencia
+
+..image:: Screenshots/secuenciaAppMain.png
 
 
 \subsubsection{Endpoints}
@@ -399,7 +413,7 @@ En el siguiente Diagrama de Componentes podemos visualizar la interacción entre
 
 \end{itemize}
 
-\includegraphics{componentesShared.png}
+\includegraphics{componentes3Shared.png}
 \begin{itemize}
 \item {} 
 Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la información de los usuarios y sus intereses. EL esquema de tablas utilizados es el siguiente
@@ -409,7 +423,7 @@ Se crearon tres tablas en la base de datos de PostgreSQL para almacenar la infor
 \includegraphics{tablasShared.png}
 \begin{itemize}
 \item {} 
-EL siguiente es un Diagrama Entidad-Relación utilizado:
+El siguiente es un Diagrama Entidad-Relación utilizado:
 
 \end{itemize}
 
