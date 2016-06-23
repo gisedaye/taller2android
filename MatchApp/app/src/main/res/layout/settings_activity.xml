@@ -1,13 +1,74 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              tools:context="com.taller2.matchapp.view.RegisterActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                tools:context="com.taller2.matchapp.view.RegisterActivity">
 
     <include
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/my_toolbar"
             layout="@layout/toolbar"/>
 
-</LinearLayout>
+    <TextView
+            android:id="@+id/my_profile"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingLeft="16dp"
+            android:text="@string/my_profile"
+            android:gravity="center_vertical|left"
+            android:background="@color/card_bg"
+            android:layout_below="@id/my_toolbar"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+    <LinearLayout
+            android:layout_below="@id/my_profile"
+            android:background="@color/card_bg"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent">
+
+        <TextView
+                android:text="@string/select_a_radius"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:paddingLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+
+        <EditText
+                android:id="@+id/radiusEt"
+                android:textColor="@color/black"
+                android:layout_width="50dp"
+                android:inputType="number"
+                android:maxLength="3"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/logout"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/logout"
+            android:gravity="center"
+            android:background="@color/card_bg"
+            android:layout_alignParentBottom="true"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+
+</RelativeLayout>

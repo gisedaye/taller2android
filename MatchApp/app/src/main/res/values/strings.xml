@@ -62,4 +62,6 @@
     <string name="write_a_message">Write a message</string>
     <string name="try_to_send_a_message_without_text">You have to write some text before send a message</string>
     <string name="that_was_a_match">That was a match!</string>
+    <string name="my_profile">My Profile</string>
+    <string name="select_a_radius">Search distance (Km.)</string>
 </resources>
