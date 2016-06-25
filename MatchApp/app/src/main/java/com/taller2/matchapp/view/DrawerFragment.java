@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.http.VolleyClient;
 import com.taller2.matchapp.model.Match;
 import com.taller2.matchapp.util.OnRowClickListener;
 import com.taller2.matchapp.view.adapters.MatchesAdapter;
@@ -138,16 +135,7 @@ public class DrawerFragment extends Fragment {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.getCache().invalidate(matchesEndpoint, true);
-        requestQueue.getCache().remove(matchesEndpoint);
-
-        int socketTimeout = 90000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        getMatchesRequest.setRetryPolicy(policy);
-
-
-        requestQueue.add(getMatchesRequest);
+        VolleyClient.getInstance(getContext()).addToRequestQueue(getMatchesRequest);
     }
 
 }

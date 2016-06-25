@@ -13,12 +13,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.android.volley.DefaultRetryPolicy;
@@ -31,6 +26,7 @@ import com.soundcloud.android.crop.Crop;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.http.VolleyClient;
 import com.taller2.matchapp.model.Interest;
 import com.taller2.matchapp.util.LocationManager;
 import org.json.JSONArray;
@@ -282,13 +278,8 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
 
-        int socketTimeout = 90000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        registerRequest.setRetryPolicy(policy);
-
-        requestQueue.add(registerRequest);
+        VolleyClient.getInstance(getApplicationContext()).addToRequestQueue(registerRequest);
     }
 
     @Override
@@ -311,7 +302,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void fetchInterests() {
 
-        final MathAppJsonRequest interestsEndpoint = new MathAppJsonRequest(this, MatchAPI.getInterestsEndpoint()) {
+        final MathAppJsonRequest interestsRequest = new MathAppJsonRequest(this, MatchAPI.getInterestsEndpoint()) {
 
             @Override
             public void onSuccess(JSONObject data) {
@@ -342,13 +333,7 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-
-        int socketTimeout = 90000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        interestsEndpoint.setRetryPolicy(policy);
-
-        requestQueue.add(interestsEndpoint);
+        VolleyClient.getInstance(getApplicationContext()).addToRequestQueue(interestsRequest);
     }
 
     private void onEditInterests() {

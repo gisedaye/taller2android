@@ -16,14 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.http.VolleyClient;
 import com.taller2.matchapp.model.Profile;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +66,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        //noinspection ConstantConditions
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +76,7 @@ public class LoginActivity extends BaseActivity {
 
         mRegisterView = (TextView) findViewById(R.id.link_register);
 
+        //noinspection ConstantConditions
         Spannable wordtoSpan = new SpannableString(mRegisterView.getText());
         wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, wordtoSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mRegisterView.setText(wordtoSpan);
@@ -175,13 +174,8 @@ public class LoginActivity extends BaseActivity {
                 }
             };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
 
-            int socketTimeout = 90000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            mathAppJsonRequest.setRetryPolicy(policy);
-
-            requestQueue.add(mathAppJsonRequest);
+            VolleyClient.getInstance(LoginActivity.this).getRequestQueue().add(mathAppJsonRequest);
         }
     }
 
@@ -194,7 +188,6 @@ public class LoginActivity extends BaseActivity {
         } catch (JSONException e) {
             Toast.makeText(this, "Missing username or password", Toast.LENGTH_LONG).show();
         }
-
         return requestBody;
     }
 }

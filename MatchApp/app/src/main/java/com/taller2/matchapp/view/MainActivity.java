@@ -16,17 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.Volley;
 import com.andtinder.model.CardModel;
 import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.http.VolleyClient;
 import com.taller2.matchapp.model.Profile;
 import com.taller2.matchapp.util.LocationManager;
 import org.json.JSONObject;
@@ -266,16 +263,7 @@ public class MainActivity extends BaseActivity {
                     return params;
                 }
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-
-            int socketTimeout = 90000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            getCandidatesRequest.setRetryPolicy(policy);
-
-
-            requestQueue.getCache().invalidate(candidatesEndpoint, true);
-            requestQueue.getCache().remove(candidatesEndpoint);
-            requestQueue.add(getCandidatesRequest);
+            VolleyClient.getInstance(MainActivity.this).addToRequestQueue(getCandidatesRequest);
         } else {
             fetching = false;
             progressBar.setVisibility(View.GONE);
@@ -327,7 +315,6 @@ public class MainActivity extends BaseActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(likeOrDislikeRequest);
+        VolleyClient.getInstance(MainActivity.this).addToRequestQueue(likeOrDislikeRequest);
     }
 }

@@ -16,14 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.Volley;
 import com.taller2.matchapp.R;
 import com.taller2.matchapp.api.MatchAPI;
 import com.taller2.matchapp.http.MathAppJsonRequest;
+import com.taller2.matchapp.http.VolleyClient;
 import com.taller2.matchapp.model.Message;
 import com.taller2.matchapp.util.KeyboardUtils;
 import com.taller2.matchapp.view.adapters.MessagesAdapter;
@@ -46,7 +44,6 @@ public class ChatActivity extends BaseActivity {
     public static String CHAT_ID_EXTRA = "CHAT_ID_EXTRA";
 
     private String chatID;
-    private RequestQueue requestQueue;
     private MessagesAdapter messagesAdapter;
     private LinearLayoutManager layoutManager;
 
@@ -67,12 +64,12 @@ public class ChatActivity extends BaseActivity {
         RecyclerView chatRv = (RecyclerView) findViewById(R.id.chatRv);
         //noinspection ConstantConditions
         layoutManager = new LinearLayoutManager(getApplicationContext());
+
+        //noinspection ConstantConditions
         chatRv.setLayoutManager(layoutManager);
 
         messagesAdapter = new MessagesAdapter(getApplicationContext());
         chatRv.setAdapter(messagesAdapter);
-
-        requestQueue = Volley.newRequestQueue(this);
 
         fetchMessages();
 
@@ -152,8 +149,7 @@ public class ChatActivity extends BaseActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
-                            requestQueue.add(updateRequest);
+                            VolleyClient.getInstance(getContext()).addToRequestQueue(updateRequest);
                         }
                     }, 5000);
                 }
@@ -182,15 +178,6 @@ public class ChatActivity extends BaseActivity {
         };
 
         getMessagesRequest.setTag(UPDATE);
-        requestQueue.getCache().invalidate(messagesEndpoint, true);
-        requestQueue.getCache().remove(messagesEndpoint);
-
-        int socketTimeout = 90000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        getMessagesRequest.setRetryPolicy(policy);
-
-
-        requestQueue.add(getMessagesRequest);
     }
 
     void postNewMessage(final String messageText) {
@@ -235,17 +222,13 @@ public class ChatActivity extends BaseActivity {
             }
         };
 
-
-        int socketTimeout = 90000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        sendMessageRequest.setRetryPolicy(policy);
-
-        requestQueue.add(sendMessageRequest);
+        VolleyClient.getInstance(getApplicationContext()).addToRequestQueue(sendMessageRequest);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        final RequestQueue requestQueue = VolleyClient.getInstance(getApplicationContext()).getRequestQueue();
         requestQueue.cancelAll(UPDATE);
     }
 }
