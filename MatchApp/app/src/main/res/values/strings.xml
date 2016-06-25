@@ -64,4 +64,5 @@
     <string name="that_was_a_match">That was a match!</string>
     <string name="my_profile">My Profile</string>
     <string name="select_a_radius">Search distance (Km.)</string>
+    <string name="refresh_to_get_more_candidates">Click refresh to fetch a new candidate.</string>
 </resources>

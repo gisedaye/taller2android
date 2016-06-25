@@ -174,10 +174,14 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject data) {
                     fetching = false;
+                    progressBar.setVisibility(View.GONE);
+                    candidatesTv.setText(R.string.refresh_to_get_more_candidates);
+
                     try {
                         JSONObject profileJSON = data.optJSONObject("profile");
 
                         if (profileJSON != null && !profileJSON.isNull("alias")) {
+
 
                             final Profile profile = new Profile();
 
@@ -227,14 +231,12 @@ public class MainActivity extends BaseActivity {
                                 public void onLike() {
                                     adapter.pop();
                                     performAction(MatchAPI.getLikeEndpoint(username), getString(R.string.liked));
-                                    fetchCandidates();
                                 }
 
                                 @Override
                                 public void onDislike() {
                                     adapter.pop();
                                     performAction(MatchAPI.getDislikeEndpoint(username), getString(R.string.disliked));
-                                    fetchCandidates();
                                 }
                             });
 
@@ -242,7 +244,6 @@ public class MainActivity extends BaseActivity {
                             adapter.add(cardModel);
                             mCardContainer.setAdapter(adapter);
                         } else {
-                            progressBar.setVisibility(View.GONE);
                             candidatesTv.setText(R.string.no_more_candidates);
                         }
                     } catch (Exception e) {
