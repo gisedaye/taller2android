@@ -1,10 +1,6 @@
 package com.andtinder.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.animation.ValueAnimator;
+import android.animation.*;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
@@ -13,13 +9,8 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
+import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
@@ -273,8 +264,7 @@ public class CardContainer extends AdapterView<ListAdapter> {
                 mMatrix.mapPoints(points);
                 mTopCard.setPivotX(points[0]);
                 mTopCard.setPivotY(points[1]);
-
-                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
 
                 pointerIndex = event.findPointerIndex(mActivePointerId);
@@ -301,6 +291,12 @@ public class CardContainer extends AdapterView<ListAdapter> {
                 mLastTouchY = y;
                 break;
             case MotionEvent.ACTION_UP:
+                if (!mDragging) {
+                    CardModel cardModel = (CardModel) getAdapter().getItem(getChildCount() - 1);
+                    if (cardModel.getOnClickListener() != null) {
+                        cardModel.getOnClickListener().OnClickListener();
+                    }
+                }
             case MotionEvent.ACTION_CANCEL:
                 if (!mDragging) {
                     return true;

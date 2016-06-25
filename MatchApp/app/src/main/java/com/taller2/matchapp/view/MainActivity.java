@@ -78,17 +78,24 @@ public class MainActivity extends BaseActivity {
         drawer.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+        ImageView profileIv = (ImageView) findViewById(R.id.profile_image);
         Profile profile = Session.getInstance(this).getProfile();
 
         try {
             String imageData = profile.getProfilePhoto();
-            byte[] decodedBytes = Base64.decode(imageData, 0);
+            byte[] decodedBytes = Base64.decode(imageData, Base64.DEFAULT);
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inScaled = false;
+
+
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-            ImageView profileIv = (ImageView) findViewById(R.id.profile_image);
             //noinspection ConstantConditions
             profileIv.setImageBitmap(bitmap);
         } catch (Exception e) {
             Log.e("Bad base 64", profile == null ? "" : profile.getProfilePhoto());
+            //noinspection ConstantConditions
+            profileIv.setImageResource(R.mipmap.ic_person);
         }
 
         adapter = new SimpleCardStackAdapter(this);
@@ -200,13 +207,18 @@ public class MainActivity extends BaseActivity {
                             }
 
                             cardModel.setData(profile);
+
+                            cardModel.setOnFooterClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    goToProfile(profile);
+                                }
+                            });
+
                             cardModel.setOnClickListener(new CardModel.OnClickListener() {
                                 @Override
                                 public void OnClickListener() {
-                                    Intent intent = new Intent();
-                                    intent.setClass(MainActivity.this, ProfileDetailActivity.class);
-                                    intent.putExtra(ProfileDetailActivity.PROFILE_EXTRA, profile);
-                                    startActivity(intent);
+                                    goToProfile(profile);
                                 }
                             });
 
@@ -269,6 +281,13 @@ public class MainActivity extends BaseActivity {
             progressBar.setVisibility(View.GONE);
             candidatesTv.setText(R.string.cant_fetch_location);
         }
+    }
+
+    private void goToProfile(Profile profile) {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, ProfileDetailActivity.class);
+        intent.putExtra(ProfileDetailActivity.PROFILE_EXTRA, profile);
+        startActivity(intent);
     }
 
     private void performAction(final String endpoint, final String message) {

@@ -22,7 +22,7 @@ public class MatchAPI {
     private static final String POST_A_MESSAGE_ENDPOINT = "/api/matches/%s/message";
 
 
-    private static final String APP_SERVER_IP = "192.168.43.249";
+    private static final String APP_SERVER_IP = "192.168.1.33";
     private static final String APP_SERVER_PORT = "8083";
 
 

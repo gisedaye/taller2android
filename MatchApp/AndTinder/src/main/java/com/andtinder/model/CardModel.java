@@ -19,6 +19,7 @@ package com.andtinder.model;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 public class CardModel {
 
@@ -29,6 +30,7 @@ public class CardModel {
     private OnCardDismissedListener mOnCardDismissedListener = null;
 
     private OnClickListener mOnClickListener = null;
+    private View.OnClickListener mOnFooterClickListener = null;
 
     public interface OnCardDismissedListener {
         void onLike();
@@ -78,6 +80,13 @@ public class CardModel {
         return this.mOnCardDismissedListener;
     }
 
+    public View.OnClickListener getOnFooterClickListener() {
+        return mOnFooterClickListener;
+    }
+
+    public void setOnFooterClickListener(View.OnClickListener listener) {
+        this.mOnFooterClickListener = listener;
+    }
 
     public void setOnClickListener(OnClickListener listener) {
         this.mOnClickListener = listener;
