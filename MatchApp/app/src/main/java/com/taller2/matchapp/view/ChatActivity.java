@@ -41,6 +41,8 @@ import java.util.Map;
 public class ChatActivity extends BaseActivity {
 
     public static final String UPDATE = "update";
+
+    public static String TITLE_EXTRA = "TITLE_EXTRA";
     public static String CHAT_ID_EXTRA = "CHAT_ID_EXTRA";
 
     private String chatID;
@@ -57,6 +59,7 @@ public class ChatActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getIntent().getStringExtra(TITLE_EXTRA));
         }
 
         chatID = getIntent().getStringExtra(CHAT_ID_EXTRA);
@@ -178,6 +181,7 @@ public class ChatActivity extends BaseActivity {
         };
 
         getMessagesRequest.setTag(UPDATE);
+        VolleyClient.getInstance(getApplicationContext()).addToRequestQueue(getMessagesRequest);
     }
 
     void postNewMessage(final String messageText) {

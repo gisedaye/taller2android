@@ -81,6 +81,7 @@ public class DrawerFragment extends Fragment {
             public void onRowClick(int position) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), ChatActivity.class);
+                intent.putExtra(ChatActivity.TITLE_EXTRA, matchesAdapter.getMatch(position).getProfile().getAlias());
                 intent.putExtra(ChatActivity.CHAT_ID_EXTRA, matchesAdapter.getMatch(position).getChatID());
                 startActivity(intent);
             }
