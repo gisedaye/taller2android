@@ -5,6 +5,12 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{sphinxhowto}[2009/06/02 Document class (Sphinx HOWTO)]
 
+\ifx\directlua\undefined\else
+% if compiling with lualatex 0.85 or later load compatibility patch issued by
+% the LaTeX team for older packages relying on \pdf<name> named primitives.
+    \IfFileExists{luatex85.sty}{\RequirePackage{luatex85}}{}
+\fi
+
 % 'oneside' option overriding the 'twoside' default
 \newif\if@oneside
 \DeclareOption{oneside}{\@onesidetrue}
@@ -45,14 +51,15 @@
     \endgroup
   \fi
   \begin{flushright}
-    \sphinxlogo%
-    {\rm\Huge\py@HeaderFamily \@title} \par
-    {\em\large\py@HeaderFamily \py@release\releaseinfo} \par
+    \sphinxlogo
+    \py@HeaderFamily
+    {\Huge \@title }\par
+    {\itshape\large \py@release \releaseinfo}\par
     \vspace{25pt}
-    {\Large\py@HeaderFamily
+    {\Large
       \begin{tabular}[t]{c}
         \@author
-      \end{tabular}} \par
+      \end{tabular}}\par
     \vspace{25pt}
     \@date \par
     \py@authoraddress \par

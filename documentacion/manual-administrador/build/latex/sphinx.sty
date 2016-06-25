@@ -10,15 +10,25 @@
 
 \@ifclassloaded{memoir}{}{\RequirePackage{fancyhdr}}
 
+% for \text macro and \iffirstchoice@ conditional even if amsmath not loaded
+\RequirePackage{amstext}
 \RequirePackage{textcomp}
+% fancybox not used anymore and will be removed at Sphinx-1.5
 \RequirePackage{fancybox}
 \RequirePackage{titlesec}
 \RequirePackage{tabulary}
-\RequirePackage{amsmath} % for \text
 \RequirePackage{makeidx}
+% For framing code-blocks and warning type notices, and shadowing topics
 \RequirePackage{framed}
+\newif\ifSphinx@inframed % flag set if we are in a framed environment
+% ifthen not used anymore and will be removed at Sphinx-1.5
 \RequirePackage{ifthen}
-\RequirePackage{color}
+% The xcolor package draws better fcolorboxes around verbatim code
+\IfFileExists{xcolor.sty}{
+    \RequirePackage{xcolor}
+}{
+    \RequirePackage{color}
+}
 % For highlighted code.
 \RequirePackage{fancyvrb}
 % For table captions.
@@ -39,10 +49,10 @@
 \definecolor{TitleColor}{rgb}{0.126,0.263,0.361}
 \definecolor{InnerLinkColor}{rgb}{0.208,0.374,0.486}
 \definecolor{OuterLinkColor}{rgb}{0.216,0.439,0.388}
-% Redefine these colors to something not white if you want to have colored
+% Redefine these colors to something if you want to have colored
 % background and border for code examples.
 \definecolor{VerbatimColor}{rgb}{1,1,1}
-\definecolor{VerbatimBorderColor}{rgb}{1,1,1}
+\definecolor{VerbatimBorderColor}{rgb}{0,0,0}
 
 % Uncomment these two lines to ignore the paper size and make the page 
 % size more like a typical published manual.
@@ -51,18 +61,12 @@
 %\renewcommand{\paperwidth}{7in}     % O'Reilly ``Programmming Python''
 
 % use pdfoutput for pTeX and dvipdfmx
+% when pTeX (\kanjiskip is defined), set pdfoutput to evade \include{pdfcolor}
 \ifx\kanjiskip\undefined\else
-  \ifx\Gin@driver{dvipdfmx.def}\undefined\else
-    \newcount\pdfoutput\pdfoutput=0
-  \fi
+  \newcount\pdfoutput\pdfoutput=0
 \fi
 
-% For graphicx, check if we are compiling under latex or pdflatex.
-\ifx\pdftexversion\undefined
-  \usepackage{graphicx}
-\else
-  \usepackage[pdftex]{graphicx}
-\fi
+\RequirePackage{graphicx}
 
 % for PDF output, use colors and maximal compression
 \newif\ifsphinxpdfoutput\sphinxpdfoutputfalse
@@ -141,52 +145,318 @@
 % Some custom font markup commands.
 %
 \newcommand{\strong}[1]{{\textbf{#1}}}
-\newcommand{\code}[1]{\texttt{#1}}
+% let \code and \bfcode use straight quotes (\@noligs patched by upquote)
+% use \scantokens to handle e.g. \item[{\code{'fontenc'}}], too late for
+% \code to change catcodes.
+\newcommand{\code}[1]{{\@noligs\scantokens{\texttt{#1}}}}
 \newcommand{\bfcode}[1]{\code{\bfseries#1}}
 \newcommand{\email}[1]{\textsf{#1}}
+\newcommand{\tablecontinued}[1]{\textsf{#1}}
+\newcommand{\titleref}[1]{\emph{#1}}
+\newcommand{\menuselection}[1]{\emph{#1}}
+\newcommand{\accelerator}[1]{\underline{#1}}
+\newcommand{\crossref}[1]{\emph{#1}}
+\newcommand{\termref}[1]{\emph{#1}}
 
-% Redefine the Verbatim environment to allow border and background colors.
+\newcommand*{\sphinxAtStartFootnote}{\mbox{ }}
+
+% Support large numbered footnotes in minipage (cf. admonitions)
+\def\thempfootnote{\arabic{mpfootnote}}
+
+% Redefine the Verbatim environment to allow border and background colors
+% and to handle the top caption in a non separable by pagebreak way.
 % The original environment is still used for verbatims within tables.
 \let\OriginalVerbatim=\Verbatim
 \let\endOriginalVerbatim=\endVerbatim
 
-% Play with vspace to be able to keep the indentation.
-\newlength\distancetoright
-\def\mycolorbox#1{%
-  \setlength\distancetoright{\linewidth}%
-  \advance\distancetoright -\@totalleftmargin %
-  \fcolorbox{VerbatimBorderColor}{VerbatimColor}{%
-  \begin{minipage}{\distancetoright}%
-    #1
-  \end{minipage}%
-  }%
+\newcommand\Sphinx@colorbox [2]{%
+% #1 will be \fcolorbox or, for first part of frame: \Sphinx@fcolorbox
+% let the framing obey the current indentation (adapted from framed.sty's code).
+  \hskip\@totalleftmargin
+  \hskip-\fboxsep\hskip-\fboxrule
+  #1{VerbatimBorderColor}{VerbatimColor}{#2}%
+  \hskip-\fboxsep\hskip-\fboxrule
+  \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth
 }
-\def\FrameCommand{\mycolorbox}
+% use of \color@b@x here is compatible with both xcolor.sty and color.sty
+\def\Sphinx@fcolorbox #1#2%
+  {\color@b@x {\fboxsep\z@\color{#1}\Sphinx@VerbatimFBox}{\color{#2}}}%
+
+% The title is specified from outside as macro \SphinxVerbatimTitle.
+% \SphinxVerbatimTitle is reset to empty after each use of Verbatim.
+\newcommand*\SphinxVerbatimTitle {}
+% Holder macro for labels of literal blocks. Set-up by LaTeX writer.
+\newcommand*\SphinxLiteralBlockLabel {}
+\newcommand*\SphinxSetupCaptionForVerbatim [2]
+{%
+    \needspace{\literalblockneedspace}%
+% insert a \label via \SphinxLiteralBlockLabel
+% reset to normal the color for the literal block caption
+% the caption inserts \abovecaptionskip whitespace above itself (usually 10pt)
+% there is also \belowcaptionskip but it is usually zero, hence the \smallskip
+    \def\SphinxVerbatimTitle
+       {\py@NormalColor\captionof{#1}{\SphinxLiteralBlockLabel #2}\smallskip }%
+}
+
+% Inspired and adapted from framed.sty's \CustomFBox with extra handling
+% of a non separable by pagebreak caption, and controlled counter stepping.
+\newif\ifSphinx@myfirstframedpass
+
+\long\def\Sphinx@VerbatimFBox#1{%
+  \leavevmode
+  \begingroup
+  % framed.sty does some measuring but this macro adds possibly a caption
+  % use amsmath conditional to inhibit the caption counter stepping after
+  % first pass
+  \ifSphinx@myfirstframedpass\else\firstchoice@false\fi
+  \setbox\@tempboxa\hbox{\kern\fboxsep{#1}\kern\fboxsep}%
+   \hbox
+   {\lower\dimexpr\fboxrule+\fboxsep+\dp\@tempboxa
+    \hbox{%
+      \vbox{\ifx\SphinxVerbatimTitle\empty\else
+            % add the caption in a centered way above possibly indented frame
+            % hide its width from framed.sty's measuring step
+            % note that the caption brings \abovecaptionskip top vertical space
+            \moveright\dimexpr\fboxrule+.5\wd\@tempboxa
+                  \hb@xt@\z@{\hss\begin{minipage}{\wd\@tempboxa}%
+                                  \SphinxVerbatimTitle
+                                 \end{minipage}\hss}\fi
+            % draw frame border _latest_ to avoid pdf viewer issue
+            \kern\fboxrule
+            \hbox{\kern\fboxrule
+                  \vbox{\vskip\fboxsep\copy\@tempboxa\vskip\fboxsep}%
+                  \kern-\wd\@tempboxa\kern-\fboxrule
+                  \vrule\@width\fboxrule
+                  \kern\wd\@tempboxa
+                  \vrule\@width\fboxrule}%
+            \kern-\dimexpr\fboxsep+\ht\@tempboxa+\dp\@tempboxa
+                                  +\fboxsep+\fboxrule\relax
+            \hrule\@height\fboxrule
+            \kern\dimexpr\fboxsep+\ht\@tempboxa+\dp\@tempboxa+\fboxsep\relax
+            \hrule\@height\fboxrule}%
+   }}%
+  \endgroup
+  \global\Sphinx@myfirstframedpassfalse
+}
+
+% For linebreaks inside Verbatim environment from package fancyvrb.
+\newbox\Sphinxcontinuationbox
+\newbox\Sphinxvisiblespacebox
+% These are user customizable e.g. from latex_elements's preamble key.
+% Use of \textvisiblespace for compatibility with XeTeX/LuaTeX/fontspec.
+\newcommand*\Sphinxvisiblespace {\textcolor{red}{\textvisiblespace}}
+\newcommand*\Sphinxcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+\newcommand*\Sphinxcontinuationindent {3ex }
+\newcommand*\Sphinxafterbreak {\kern\Sphinxcontinuationindent\copy\Sphinxcontinuationbox}
+
+% Take advantage of the already applied Pygments mark-up to insert
+% potential linebreaks for TeX processing.
+%        {, <, #, %, $, ' and ": go to next line.
+%        _, }, ^, &, >, - and ~: stay at end of broken line.
+% Use of \textquotesingle for straight quote.
+\newcommand*\Sphinxbreaksatspecials {%
+    \def\PYGZus{\discretionary{\char`\_}{\Sphinxafterbreak}{\char`\_}}%
+    \def\PYGZob{\discretionary{}{\Sphinxafterbreak\char`\{}{\char`\{}}%
+    \def\PYGZcb{\discretionary{\char`\}}{\Sphinxafterbreak}{\char`\}}}%
+    \def\PYGZca{\discretionary{\char`\^}{\Sphinxafterbreak}{\char`\^}}%
+    \def\PYGZam{\discretionary{\char`\&}{\Sphinxafterbreak}{\char`\&}}%
+    \def\PYGZlt{\discretionary{}{\Sphinxafterbreak\char`\<}{\char`\<}}%
+    \def\PYGZgt{\discretionary{\char`\>}{\Sphinxafterbreak}{\char`\>}}%
+    \def\PYGZsh{\discretionary{}{\Sphinxafterbreak\char`\#}{\char`\#}}%
+    \def\PYGZpc{\discretionary{}{\Sphinxafterbreak\char`\%}{\char`\%}}%
+    \def\PYGZdl{\discretionary{}{\Sphinxafterbreak\char`\$}{\char`\$}}%
+    \def\PYGZhy{\discretionary{\char`\-}{\Sphinxafterbreak}{\char`\-}}%
+    \def\PYGZsq{\discretionary{}{\Sphinxafterbreak\textquotesingle}{\textquotesingle}}%
+    \def\PYGZdq{\discretionary{}{\Sphinxafterbreak\char`\"}{\char`\"}}%
+    \def\PYGZti{\discretionary{\char`\~}{\Sphinxafterbreak}{\char`\~}}%
+}
+
+% Some characters . , ; ? ! / are not pygmentized.
+% This macro makes them "active" and they will insert potential linebreaks
+\newcommand*\Sphinxbreaksatpunct {%
+   \lccode`\~`\.\lowercase{\def~}{\discretionary{\char`\.}{\Sphinxafterbreak}{\char`\.}}%
+   \lccode`\~`\,\lowercase{\def~}{\discretionary{\char`\,}{\Sphinxafterbreak}{\char`\,}}%
+   \lccode`\~`\;\lowercase{\def~}{\discretionary{\char`\;}{\Sphinxafterbreak}{\char`\;}}%
+   \lccode`\~`\:\lowercase{\def~}{\discretionary{\char`\:}{\Sphinxafterbreak}{\char`\:}}%
+   \lccode`\~`\?\lowercase{\def~}{\discretionary{\char`\?}{\Sphinxafterbreak}{\char`\?}}%
+   \lccode`\~`\!\lowercase{\def~}{\discretionary{\char`\!}{\Sphinxafterbreak}{\char`\!}}%
+   \lccode`\~`\/\lowercase{\def~}{\discretionary{\char`\/}{\Sphinxafterbreak}{\char`\/}}%
+   \catcode`\.\active
+   \catcode`\,\active
+   \catcode`\;\active
+   \catcode`\:\active
+   \catcode`\?\active
+   \catcode`\!\active
+   \catcode`\/\active
+   \lccode`\~`\~
+}
 
 \renewcommand{\Verbatim}[1][1]{%
+  % quit horizontal mode if we are still in a paragraph
+  \par
   % list starts new par, but we don't want it to be set apart vertically
-  \bgroup\parskip=0pt%
-  \smallskip%
-  % The list environement is needed to control perfectly the vertical
-  % space.
-  \list{}{%
-  \setlength\parskip{0pt}%
-  \setlength\itemsep{0ex}%
-  \setlength\topsep{0ex}%
-  \setlength\partopsep{0pt}%
-  \setlength\leftmargin{0pt}%
-  }%
-  \item\MakeFramed {\FrameRestore}%
-     \small%
-    \OriginalVerbatim[#1]%
+  \parskip\z@skip
+  % first, let's check if there is a caption
+  \ifx\SphinxVerbatimTitle\empty
+      \addvspace\z@% counteract possible previous negative skip (French lists!)
+      \smallskip
+      % there was no caption. Check if nevertheless a label was set.
+      \ifx\SphinxLiteralBlockLabel\empty\else
+      % we require some space to be sure hyperlink target from \phantomsection
+      % will not be separated from upcoming verbatim by a page break
+          \needspace{\literalblockwithoutcaptionneedspace}%
+          \phantomsection\SphinxLiteralBlockLabel
+      \fi
+  \fi
+  % non-empty \SphinxVerbatimTitle has label inside it (in case there is one)
+  % Customize framed.sty \MakeFramed to glue caption to literal block
+  \global\Sphinx@myfirstframedpasstrue
+  % via \Sphinx@fcolorbox, will use \Sphinx@VerbatimFBox which inserts title
+  \def\FrameCommand   {\Sphinx@colorbox\Sphinx@fcolorbox }%
+  \let\FirstFrameCommand\FrameCommand
+  % for mid pages and last page portion of (long) split frame:
+  \def\MidFrameCommand{\Sphinx@colorbox\fcolorbox }%
+  \let\LastFrameCommand\MidFrameCommand
+  % fancyvrb's Verbatim puts each input line in (unbreakable) horizontal boxes.
+  % This customization wraps each line from the input in a \vtop, thus
+  % allowing it to wrap and display on two or more lines in the latex output.
+  %     - The codeline counter will be increased only once.
+  %     - The wrapped material will not break across pages, it is impossible
+  %       to achieve this without extensive rewrite of fancyvrb.
+  %     - The (not used in Sphinx) obeytabs option to Verbatim is
+  %       broken by this change (showtabs and tabspace work).
+  \sbox\Sphinxcontinuationbox {\Sphinxcontinuationsymbol}%
+  \sbox\Sphinxvisiblespacebox {\FV@SetupFont\Sphinxvisiblespace}%
+  \def\FancyVerbFormatLine ##1{\hsize\linewidth
+          \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+          }%
+  % If the linebreak is at a space, the latter will be displayed as visible
+  % space at end of first line, and a continuation symbol starts next line.
+  % Stretch/shrink are however usually zero for typewriter font.
+  \def\FV@Space {%
+       \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+       \discretionary{\copy\Sphinxvisiblespacebox}{\Sphinxafterbreak}
+                     {\kern\fontdimen2\font}%
+       }%
+  % go around fancyvrb's check of @currenvir (for case of minipage below)
+  \renewcommand*{\VerbatimEnvironment}{\gdef\FV@EnvironName{Verbatim}}%
+  % go around fancyvrb's check of current list depth
+  \def\@toodeep {\advance\@listdepth\@ne}%
+  % Allow breaks at special characters using \PYG... macros.
+  \Sphinxbreaksatspecials
+  % The list environment is needed to control perfectly the vertical space.
+  % Note: \OuterFrameSep used by framed.sty is later set to \topsep hence 0pt.
+  % - if caption: vertical space above caption = (\abovecaptionskip + D) with
+  %   D = \baselineskip-\FrameHeightAdjust, and then \smallskip above frame.
+  % - if no caption: (\smallskip + D) above frame. By default D=6pt.
+  % Use trivlist rather than list to avoid possible "too deeply nested" error.
+  \itemsep   \z@skip
+  \topsep    \z@skip
+  \partopsep \z@skip% trivlist will set \parsep to \parskip = zero (see above)
+  % \leftmargin will be set to zero by trivlist
+  \rightmargin\z@
+  \parindent  \z@% becomes \itemindent. Default zero, but perhaps overwritten.
+  \trivlist\item\relax
+  % use a minipage if we are already inside a framed environment
+     \ifSphinx@inframed\noindent\begin{minipage}{\linewidth}\fi
+     \MakeFramed {% adapted over from framed.sty's snugshade environment
+     \advance\hsize-\width\@totalleftmargin\z@\linewidth\hsize
+     \@setminipage  }%
+     \small
+     % For grid placement from \strut's in \FancyVerbFormatLine
+     \lineskip\z@skip
+     % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+     \OriginalVerbatim[#1,codes*=\Sphinxbreaksatpunct]%
 }
 \renewcommand{\endVerbatim}{%
-    \endOriginalVerbatim%
-  \endMakeFramed%
-  \endlist%
-  % close group to restore \parskip
-  \egroup%
+  \endOriginalVerbatim
+  \par\unskip\@minipagefalse\endMakeFramed
+  \ifSphinx@inframed\end{minipage}\fi
+  \endtrivlist
 }
+
+% define macro to frame contents and add shadow on right and bottom
+\def\Sphinx@shadowsep     {5\p@}       % \p@ means "pt "
+\def\Sphinx@shadowsize    {4\p@}
+\def\Sphinx@shadowrule    {\fboxrule}
+\long\def\Sphinx@ShadowFBox#1{%
+  \leavevmode\begingroup
+  % first we frame the box #1
+  \setbox\@tempboxa
+   \hbox{\vrule\@width\Sphinx@shadowrule
+         \vbox{\hrule\@height\Sphinx@shadowrule
+               \kern\Sphinx@shadowsep
+               \hbox{\kern\Sphinx@shadowsep #1\kern\Sphinx@shadowsep}%
+               \kern\Sphinx@shadowsep
+               \hrule\@height\Sphinx@shadowrule}%
+         \vrule\@width\Sphinx@shadowrule}%
+  % Now we add the shadow, like \shadowbox from fancybox.sty would do
+  \dimen@\dimexpr.5\Sphinx@shadowrule+\Sphinx@shadowsize\relax
+  \hbox{\vbox{\offinterlineskip
+              \hbox{\copy\@tempboxa\kern-.5\Sphinx@shadowrule
+                    % add shadow on right side
+                    \lower\Sphinx@shadowsize
+                          \hbox{\vrule\@height\ht\@tempboxa \@width\dimen@}%
+                    }%
+              \kern-\dimen@ % shift back vertically to bottom of frame
+              % and add shadow at bottom
+              \moveright\Sphinx@shadowsize
+                    \vbox{\hrule\@width\wd\@tempboxa \@height\dimen@}%
+              }%
+        % move left by the size of right shadow so shadow adds no width
+        \kern-\Sphinx@shadowsize
+       }%
+  \endgroup
+}
+
+% use framed.sty to allow page breaks in frame+shadow
+% works well inside Lists and Quote-like environments
+% produced by ``topic'' directive (or local contents)
+% could nest if LaTeX writer authorized it
+\newenvironment{SphinxShadowBox}
+  {\def\FrameCommand {\Sphinx@ShadowFBox }%
+   % configure framed.sty not to add extra vertical spacing
+   \ifdefined\OuterFrameSep \OuterFrameSep\z@skip \fi
+   % the \trivlist will add the vertical spacing on top and bottom which is
+   % typical of center environment as used in Sphinx <= 1.4.1
+   % the \noindent has the effet of an extra blank line on top, to
+   % imitate closely the layout from Sphinx <= 1.4.1; the \FrameHeightAdjust
+   % will put top part of frame on this baseline.
+   \def\FrameHeightAdjust {\baselineskip}%
+   \trivlist\item\noindent
+    % use a minipage if we are already inside a framed environment
+    \ifSphinx@inframed\begin{minipage}{\linewidth}\fi
+    \MakeFramed {\Sphinx@inframedtrue
+    % framed.sty puts into "\width" the added width (=2shadowsep+2shadowrule)
+    % adjust \hsize to what the contents must use
+    \advance\hsize-\width
+    % adjust LaTeX parameters to behave properly in indented/quoted contexts
+    \FrameRestore
+    % typeset the contents as in a minipage (Sphinx <= 1.4.1 used a minipage and
+    % itemize/enumerate are therein typeset more tightly, we want to keep
+    % that). We copy-paste from LaTeX source code but don't do a real minipage.
+    \@pboxswfalse
+       % for footnotes, but Sphinx inactivates footnotes in topics
+       \def\@mpfn{mpfootnote}\def\thempfn{\thempfootnote}\c@mpfootnote\z@
+       \let\@footnotetext\@mpfootnotetext
+    \let\@listdepth\@mplistdepth \@mplistdepth\z@
+    \@minipagerestore
+    \@setminipage
+    }%
+  }%
+  {% insert the "endminipage" code
+    \par\unskip
+    % handle (currently non existing) minipage style footnotes
+    \ifvoid\@mpfootins\else
+      \vskip\skip\@mpfootins\normalcolor\footnoterule\unvbox\@mpfootins
+    \fi
+    \@minipagefalse
+   \endMakeFramed
+     \ifSphinx@inframed\end{minipage}\fi
+   \endtrivlist
+  }
 
 
 % \moduleauthor{name}{email}
@@ -203,8 +473,12 @@
             {\py@TitleColor\thesubsection}{0.5em}{\py@TitleColor}{\py@NormalColor}
 \titleformat{\subsubsection}{\py@HeaderFamily}%
             {\py@TitleColor\thesubsubsection}{0.5em}{\py@TitleColor}{\py@NormalColor}
-\titleformat{\paragraph}{\small\py@HeaderFamily}%
-            {\py@TitleColor}{0em}{\py@TitleColor}{\py@NormalColor}
+% By default paragraphs (and subsubsections) will not be numbered because
+% sphinxmanual.cls and sphinxhowto.cls set secnumdepth to 2
+\titleformat{\paragraph}{\py@HeaderFamily}%
+            {\py@TitleColor\theparagraph}{0.5em}{\py@TitleColor}{\py@NormalColor}
+\titleformat{\subparagraph}{\py@HeaderFamily}%
+            {\py@TitleColor\thesubparagraph}{0.5em}{\py@TitleColor}{\py@NormalColor}
 
 % {fulllineitems} is the main environment for object descriptions.
 %
@@ -251,34 +525,69 @@
 
 % Notices / Admonitions
 %
-\newlength{\py@noticelength}
 
-\newcommand{\py@heavybox}{
-  \setlength{\fboxrule}{1pt}
-  \setlength{\fboxsep}{6pt}
-  \setlength{\py@noticelength}{\linewidth}
-  \addtolength{\py@noticelength}{-2\fboxsep}
-  \addtolength{\py@noticelength}{-2\fboxrule}
-  %\setlength{\shadowsize}{3pt}
-  \noindent\Sbox
-  \minipage{\py@noticelength}
-}
-\newcommand{\py@endheavybox}{
-  \endminipage
-  \endSbox
-  \fbox{\TheSbox}
-}
+% Code adapted from framed.sty's "snugshade" environment.
+% Nesting works (inner frames do not allow page breaks).
+\newcommand{\py@heavybox}{\par
+   \setlength{\FrameRule}{\p@}% 1pt
+   \setlength{\FrameSep}{\dimexpr.6\baselineskip-\FrameRule\relax}
+   % configure framed.sty's parameters to obtain same vertical spacing
+   % as for "light" boxes. We need for this to manually insert parskip glue and
+   % revert a skip done by framed before the frame.
+    \ifdefined\OuterFrameSep \OuterFrameSep\z@skip \fi
+    \vspace{\FrameHeightAdjust}
+   % copied/adapted from framed.sty's snugshade
+   \def\FrameCommand##1{\hskip\@totalleftmargin
+       \fboxsep\FrameSep \fboxrule\FrameRule\fbox{##1}%
+       \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+   % use a minipage if we are already inside a framed environment
+   \ifSphinx@inframed
+       \noindent\begin{minipage}{\linewidth}
+   \else
+       % handle case where notice is first thing in a list item (or is quoted)
+       \if@inlabel
+        \noindent\par\vspace{-\baselineskip}
+       \else
+        \vspace{\parskip}
+       \fi
+   \fi
+   \MakeFramed {\Sphinx@inframedtrue
+     \advance\hsize-\width \@totalleftmargin\z@ \linewidth\hsize
+     % minipage initialization copied from LaTeX source code.
+     \@pboxswfalse
+       % for footnotes
+       \def\@mpfn{mpfootnote}\def\thempfn{\thempfootnote}\c@mpfootnote\z@
+       \let\@footnotetext\@mpfootnotetext
+     \let\@listdepth\@mplistdepth \@mplistdepth\z@
+     \@minipagerestore
+     \@setminipage }%
+   }
+\newcommand{\py@endheavybox}{%
+   \par\unskip
+   % handles footnotes
+   \ifvoid\@mpfootins\else
+      \vskip\skip\@mpfootins\normalcolor\footnoterule\unvbox\@mpfootins
+   \fi
+   \@minipagefalse
+   \endMakeFramed
+   \ifSphinx@inframed\end{minipage}\fi
+   % arrange for similar spacing below frame as for "light" boxes.
+   \vskip .4\baselineskip
+   }
 
-\newcommand{\py@lightbox}{{%
-  \setlength\parskip{0pt}\par
-  \noindent\rule[0ex]{\linewidth}{0.5pt}%
-  \par\noindent\vspace{-0.5ex}%
-  }}
-\newcommand{\py@endlightbox}{{%
-  \setlength{\parskip}{0pt}%
-  \par\noindent\rule[0.5ex]{\linewidth}{0.5pt}%
-  \par\vspace{-0.5ex}%
-  }}
+\newcommand{\py@lightbox}{%
+  \par\allowbreak
+  \noindent\rule{\linewidth}{0.5pt}\par\nobreak
+  {\parskip\z@skip\noindent}%
+  }
+\newcommand{\py@endlightbox}{%
+  \par
+  % counteract previous possible negative skip (French lists!):
+  % (we can't cancel that any earlier \vskip introduced a potential pagebreak)
+  \ifdim\lastskip<\z@\vskip-\lastskip\fi
+  \nobreak\vbox{\noindent\kern\@totalleftmargin
+           \rule[.4\baselineskip]{\linewidth}{0.5pt}\hss}\allowbreak
+  }
 
 % Some are quite plain:
 \newcommand{\py@noticestart@note}{\py@lightbox}
@@ -420,7 +729,10 @@
 
 % to make pdf with correct encoded bookmarks in Japanese
 % this should precede the hyperref package
-\ifx\kanjiskip\undefined\else
+\ifx\kanjiskip\undefined
+% for non-Japanese: make sure bookmarks are ok also with lualatex
+  \PassOptionsToPackage{pdfencoding=unicode}{hyperref}
+\else
   \usepackage{atbegshi}
   \ifx\ucs\undefined
     \ifnum 42146=\euc"A4A2
@@ -443,24 +755,30 @@
 % \capstart for figures that actually have a caption.)
 \RequirePackage{hypcap}
 
+% Set up styles of URL: it should be placed after hyperref
+\urlstyle{same}
+
 % From docutils.writers.latex2e
-\providecommand{\DUspan}[2]{%
-  {% group ("span") to limit the scope of styling commands
-    \@for\node@class@name:=#1\do{%
-    \ifcsname docutilsrole\node@class@name\endcsname%
-      \csname docutilsrole\node@class@name\endcsname%
+% inline markup (custom roles)
+% \DUrole{#1}{#2} tries \DUrole#1{#2}
+\providecommand*{\DUrole}[2]{%
+  \ifcsname DUrole#1\endcsname%
+    \csname DUrole#1\endcsname{#2}%
+  \else% backwards compatibility: try \docutilsrole#1{#2}
+    \ifcsname docutilsrole#1\endcsname%
+      \csname docutilsrole#1\endcsname{#2}%
+    \else%
+      #2%
     \fi%
-    }%
-    {#2}% node content
-  }% close "span"
+  \fi%
 }
 
-\providecommand*{\DUprovidelength}[2]{
-  \ifthenelse{\isundefined{#1}}{\newlength{#1}\setlength{#1}{#2}}{}
+\providecommand*{\DUprovidelength}[2]{%
+  \ifdefined#1\else\newlength{#1}\setlength{#1}{#2}\fi
 }
 
 \DUprovidelength{\DUlineblockindent}{2.5em}
-\ifthenelse{\isundefined{\DUlineblock}}{
+\ifdefined\DUlineblock\else
   \newenvironment{DUlineblock}[1]{%
     \list{}{\setlength{\partopsep}{\parskip}
             \addtolength{\partopsep}{\baselineskip}
@@ -471,8 +789,7 @@
     \raggedright
   }
   {\endlist}
-}{}
-
+\fi
 
 % From footmisc.sty: allows footnotes in titles
 \let\FN@sf@@footnote\footnote
@@ -522,3 +839,31 @@
     \gdef\@chappos{}
   }
 \fi
+
+% Define literal-block environment
+\RequirePackage{newfloat}
+\DeclareFloatingEnvironment{literal-block}
+\ifx\c@chapter\undefined
+  \SetupFloatingEnvironment{literal-block}{within=section,placement=h}
+\else
+  \SetupFloatingEnvironment{literal-block}{within=chapter,placement=h}
+\fi
+\SetupFloatingEnvironment{literal-block}{name=List}
+% control caption around literal-block
+\RequirePackage{capt-of}
+\RequirePackage{needspace}
+% if the left page space is less than \literalblockneedspace, insert page-break
+\newcommand{\literalblockneedspace}{5\baselineskip}
+\newcommand{\literalblockwithoutcaptionneedspace}{1.5\baselineskip}
+
+% figure in table
+\newenvironment{figure-in-table}[1][\linewidth]{%
+  \def\@captype{figure}%
+  \begin{minipage}{#1}%
+}{\end{minipage}}
+% store original \caption macro for use with figures in longtable and tabulary
+\AtBeginDocument{\let\Sphinx@originalcaption\caption}
+\newcommand*\figcaption
+  {\ifx\equation$%$% this is trick to identify tabulary first pass
+       \firstchoice@false\else\firstchoice@true\fi
+   \Sphinx@originalcaption }
