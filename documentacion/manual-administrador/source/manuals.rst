@@ -61,12 +61,13 @@ Application Server
 		    - sudo ./install.sh
 		    - ./appServer
 
+- Por defecto se encuentra seteada la URL del Shared Server en localhost. En caso de querer utilizar el servidor de Heroku se debe cambiar la URL desde el archivo ConnectionUtils.cpp.
 
 
 Cliente
 --------------------------------------------
 
-- Para ejecutar la aplicación cliente es necesario configurar la IP de la máquina en donde se encuentre corriendo el Application Server. Para esto, se debe cambiar la linea 25 de la clase MatchAPI que contiene la variable APP_SERVER_IP por la IP correspondiente.
+- Para ejecutar la aplicación cliente es necesario configurar la IP de la máquina en donde se encuentre corriendo el Application Server. Para esto, se debe cambiar la linea 25 de la clase MatchAPI.java que contiene la variable APP_SERVER_IP por la IP correspondiente.
 - Son necesarias las siguientes dependencias para compilar la aplicación:
 	- buildToolsVersion "23.0.1"
  	- Android Support Repository
