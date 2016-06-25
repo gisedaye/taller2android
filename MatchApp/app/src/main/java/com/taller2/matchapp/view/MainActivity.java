@@ -90,8 +90,13 @@ public class MainActivity extends BaseActivity {
 
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-            //noinspection ConstantConditions
-            profileIv.setImageBitmap(bitmap);
+            if (bitmap == null) {
+                //noinspection ConstantConditions
+                profileIv.setImageResource(R.mipmap.ic_person);
+            } else {
+                //noinspection ConstantConditions
+                profileIv.setImageBitmap(bitmap);
+            }
         } catch (Exception e) {
             Log.e("Bad base 64", profile == null ? "" : profile.getProfilePhoto());
             //noinspection ConstantConditions

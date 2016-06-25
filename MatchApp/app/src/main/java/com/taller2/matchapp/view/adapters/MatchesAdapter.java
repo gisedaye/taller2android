@@ -49,9 +49,14 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVH>
         try {
             byte[] decodedBytes = Base64.decode(imageData, 0);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-            holder.profileIv.setImageBitmap(bitmap);
+            if (bitmap == null) {
+                holder.profileIv.setImageResource(R.mipmap.ic_person);
+            } else {
+                holder.profileIv.setImageBitmap(bitmap);
+            }
         } catch (Exception e) {
             Log.e("Bad base 64", imageData);
+            holder.profileIv.setImageResource(R.mipmap.ic_person);
         }
 
         holder.usernameTv.setText(profile.getAlias());
