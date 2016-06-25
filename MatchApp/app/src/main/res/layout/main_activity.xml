@@ -26,7 +26,6 @@
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_centerInParent="true"
-                    android:background="@color/card_bg"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:src="@mipmap/ic_user"
