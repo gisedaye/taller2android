@@ -110,6 +110,10 @@ public class MainActivity extends BaseActivity {
                 if (!fetching) {
                     adapter.pop();
                     fetchCandidates();
+                    DrawerFragment drawerFragment = (DrawerFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+                    if (drawerFragment != null) {
+                        drawerFragment.fetchMatches();
+                    }
                 }
             }
         });
